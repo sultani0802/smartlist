@@ -12,11 +12,6 @@ import XCTest
 
 class Smart_ListTests: XCTestCase {
     
-    // Core Data Context
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
-    //Variables
-    
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

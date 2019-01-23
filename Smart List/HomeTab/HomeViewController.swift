@@ -46,10 +46,7 @@ class HomeViewController: UITableViewController {
         setupView() // Set up the view
         setupModels() // Set up the models
         
-//        add(itemName: "", toCategory: categories[6])
-        //deleteItem(itemName: "my new item 4")
-
-        tableView.reloadData()
+        coreDataManager.deleteItem(itemName: "")
     }
     
     
@@ -85,13 +82,6 @@ class HomeViewController: UITableViewController {
         loadItemsFromContext() // Load the items
     }
     
-//    func createPlaceHolderCells() {
-//        for index in 0..<items.count {
-//            if items[index].count == 0 {
-//                items[index].append(<#T##newElement: Item##Item#>)
-//            }
-//        }
-//    }
     
     
     /****************************************/

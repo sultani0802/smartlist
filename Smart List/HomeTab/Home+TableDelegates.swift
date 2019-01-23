@@ -61,30 +61,33 @@ extension HomeViewController {
     
     
     
-    // Customize the contents of the cell
+    /// Customize the contents of the cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: homeCellId, for: indexPath) as! HomeTableViewCell
         let item = items[indexPath.section][indexPath.row]
         
         cell.nameText.text = item.name
         
-        // Called when user hits Enter on the keyboard
-        // This allows them to enter a new item
-        
+        /// Called when user hits Enter on the keyboard
+        /// This allows them to enter a new item
         cell.callback = { [weak self] newTitle in
             guard let `self` = self else {return} // Capture self
             
-            // Save the change that the user made to the cell he just edited
-            self.items[indexPath.section][indexPath.row].name = cell.nameText.text
-            self.coreDataManager.saveContext()
-            
-            // Create reference to indexpath below the existing cell
-            let newIndexPath = IndexPath(row: indexPath.row+1, section: indexPath.section) // Set the indexPath to the cell below
-            // Create new dummy item
-            let newPlaceholderItem = self.coreDataManager.addItem(toCategory: self.categories[indexPath.section], withItemName: "")
-            // Add dummy item to tableview array
-            self.items[indexPath.section].append(newPlaceholderItem)
-            self.tableView.insertRows(at: [newIndexPath], with: .automatic) // Insert it into the tableView
+            if cell.nameText.text != "" {
+                // Save the change that the user made to the cell he just edited
+                self.items[indexPath.section][indexPath.row].name = cell.nameText.text
+                self.coreDataManager.saveContext()
+                
+                // Create reference to indexpath below the existing cell
+                let newIndexPath = IndexPath(row: indexPath.row+1, section: indexPath.section) // Set the indexPath to the cell below
+                // Create new dummy item
+                let newPlaceholderItem = self.coreDataManager.addItem(toCategory: self.categories[indexPath.section], withItemName: "")
+                // Add dummy item to tableview array
+                self.items[indexPath.section].append(newPlaceholderItem)
+                self.tableView.insertRows(at: [newIndexPath], with: .automatic) // Insert it into the tableView
+            } else {
+                print("Can not add new cell since current cell is empty")
+            }
         }
         
         return cell
