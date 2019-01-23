@@ -1,0 +1,73 @@
+//
+//  HomeTableViewCell.swift
+//  Smart List
+//
+//  Created by Haamed Sultani on Jan/1/19.
+//  Copyright © 2019 Haamed Sultani. All rights reserved.
+//
+
+import UIKit
+
+class HomeTableViewCell: UITableViewCell {
+    
+    //MARK: - UI Elements
+    var nameText: UITextField = {
+        var textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "enter item here"
+        textField.textAlignment = .left
+        
+        return textField
+    }()
+    
+    
+    //MARK: - Callbacks
+    // This is called when the user hits 'Enter' on the keyboard
+    var callback: ((_ text: String) -> Void)?
+    
+    //MARK: - Init Methods
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        nameText.delegate = self
+        
+        // Configure UI elements
+        setupUI()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    func setupUI() {
+        // Adding the UI elements to our cell
+        addSubview(nameText)
+        
+        // Setting up the constraints
+        NSLayoutConstraint.activate([
+            nameText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            nameText.topAnchor.constraint(equalTo: topAnchor),
+            nameText.trailingAnchor.constraint(equalTo: trailingAnchor),
+            nameText.bottomAnchor.constraint(equalTo: bottomAnchor)
+            ])
+    }
+    
+    //MARK: - My Methods
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        print("editing textfield")
+    }
+    
+}
+
+
+extension HomeTableViewCell: UITextFieldDelegate {
+    // This delegate method is called when the user hits 'Enter' when they're done typing in the item
+    // Once they are done adding an item to the list it creates a new empty cell below it
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        nameText.resignFirstResponder() // Hide the keyboard
+        callback?(nameText.text!)       // Call the callback
+        
+        return true
+    }
+}
