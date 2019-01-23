@@ -73,7 +73,7 @@ class HomeViewController: UITableViewController {
         tableView.keyboardDismissMode = .interactive
         
         // Set navigation bar to big title
-        self.navigationItem.title = "InteList"
+        self.navigationItem.title = "Intelli List"
         self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
