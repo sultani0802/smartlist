@@ -15,7 +15,7 @@ class HomeTableViewCell: SwipeTableViewCell {
     var nameText: UITextField = {
         var textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "enter item here"
+        textField.placeholder = "tap here to start"
         textField.textAlignment = .left
         
         return textField

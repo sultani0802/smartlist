@@ -96,6 +96,18 @@ class CoreDataManager {
         saveContext()
     }
     
+    func deleteAllCategories() {
+        let deleteFetch: NSFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        
+        do {
+            try context.execute(deleteRequest)
+            saveContext()
+        } catch {
+            print("There was an error deleting all Categories: \(error)")
+        }
+    }
+    
     
     /// Checks if a Category entity exists in the Data Model
     ///

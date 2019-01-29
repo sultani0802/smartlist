@@ -112,26 +112,26 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
         categories = coreDataManager.loadCategories() // Make a request to fetch the Category entities in the database
         
         // Create our categories
-        if !categoryExists(categoryName: CategoryEnum.Produce.rawValue) {
-            addCategory(categoryName: CategoryEnum.Produce.rawValue)
+        if !categoryExists(categoryName: Constants.DefaultCategories.Produce) {
+            addCategory(categoryName: Constants.DefaultCategories.Produce)
         }
-        if !categoryExists(categoryName: CategoryEnum.Bakery.rawValue) {
-            addCategory(categoryName: CategoryEnum.Bakery.rawValue)
+        if !categoryExists(categoryName: Constants.DefaultCategories.Bakery) {
+            addCategory(categoryName: Constants.DefaultCategories.Bakery)
         }
-        if !categoryExists(categoryName: CategoryEnum.Meat.rawValue) {
-            addCategory(categoryName: CategoryEnum.Meat.rawValue)
+        if !categoryExists(categoryName: Constants.DefaultCategories.MeatSeafood) {
+            addCategory(categoryName: Constants.DefaultCategories.MeatSeafood)
         }
-        if !categoryExists(categoryName: CategoryEnum.Dairy.rawValue) {
-            addCategory(categoryName: CategoryEnum.Dairy.rawValue)
+        if !categoryExists(categoryName: Constants.DefaultCategories.Dairy) {
+            addCategory(categoryName: Constants.DefaultCategories.Dairy)
         }
-        if !categoryExists(categoryName: CategoryEnum.Packaged.rawValue) {
-            addCategory(categoryName: CategoryEnum.Packaged.rawValue)
+        if !categoryExists(categoryName: Constants.DefaultCategories.PackagedCanned) {
+            addCategory(categoryName: Constants.DefaultCategories.PackagedCanned)
         }
-        if !categoryExists(categoryName: CategoryEnum.Frozen.rawValue) {
-            addCategory(categoryName: CategoryEnum.Frozen.rawValue)
+        if !categoryExists(categoryName: Constants.DefaultCategories.Frozen) {
+            addCategory(categoryName: Constants.DefaultCategories.Frozen)
         }
-        if !categoryExists(categoryName: CategoryEnum.Other.rawValue) {
-            addCategory(categoryName: CategoryEnum.Other.rawValue)
+        if !categoryExists(categoryName: Constants.DefaultCategories.Other) {
+            addCategory(categoryName: Constants.DefaultCategories.Other)
         }
     }
     
@@ -156,14 +156,8 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     }
     
     /// Deletes all Category entities from the Data Model
-    private func deleteAllCategory() {
-        deleteCategory(categoryName: "Produce")
-        deleteCategory(categoryName: "Bakery")
-        deleteCategory(categoryName: "Meat/Seafood")
-        deleteCategory(categoryName: "Dairy")
-        deleteCategory(categoryName: "Packaged/Canned")
-        deleteCategory(categoryName: "Frozen")
-        deleteCategory(categoryName: "Other")
+    private func deleteAllCategories() {
+        coreDataManager.deleteAllCategories()
     }
     
     /// Checks if a Category exists in the Data Model
@@ -201,7 +195,7 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
             // Instantiate the items tableView array with the loaded Item entities
             items[index] = coreDataManager.fetchItems(request: requestItems)
             
-            guard let _ = items[index].first(where: {$0.cellType == "dummy"}) else {
+            guard let _ = items[index].first(where: {$0.cellType == Constants.CellType.DummyCell}) else {
                 // Add a placeholder cell to the category if it doesn't have one already
                 addPlaceHolderCell(toCategory: categories[index])
                 
@@ -212,7 +206,7 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     }
     
     func addPlaceHolderCell(toCategory category: Category) {
-        let newDummyItem: Item = coreDataManager.addItem(toCategory: category, withItemName: "", cellType: "dummy")
+        let newDummyItem: Item = coreDataManager.addItem(toCategory: category, withItemName: "", cellType: Constants.CellType.DummyCell)
         items[categories.firstIndex(of: category)!].append(newDummyItem)
         tableView.reloadData()
     }
@@ -233,6 +227,8 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
         tableView.reloadData()
     }
     
+    
+    /// Delete all Item entities from Core Data model
     private func deleteAllItems() {
         coreDataManager.deleteAllItems()
     }

@@ -83,7 +83,7 @@ extension HomeViewController {
                 
                 // Update the Item entity's values in Core Data and save
                 itemToUpdate.setValue(newTitle, forKey: "name")
-                itemToUpdate.setValue("valid", forKey: "cellType")
+                itemToUpdate.setValue(Constants.CellType.ValidCell, forKey: "cellType")
                 self.coreDataManager.saveContext()
                 
                 // Add a place holder cell (AKA a dummy cell) right below it
@@ -110,10 +110,12 @@ extension HomeViewController {
         
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") {
             (action, indexPath) in
+            
             if let itemName = self.items[indexPath.section][indexPath.row].name {
-                print(itemName)
-                self.deleteItem(itemName: itemName)
-                self.tableView.reloadData()
+                print("\nDELETING ITEM: \(itemName)\n")
+                self.items[indexPath.section].remove(at: indexPath.row) // Delete the Item from the tableView array
+                action.fulfill(with: .delete) // Fulfill the delete action BEFORE deleting from Core Data
+                self.deleteItem(itemName: itemName) // Delete from Core Data
             }
         }
         
