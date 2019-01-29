@@ -208,14 +208,6 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
                 // Go to the next category index in the for loop
                 continue
             }
-            
-            
-            // Add placeholder cells
-            //            if items[index].count == 0 {
-            //                let placeholderItem: Item = coreDataManager.addItem(toCategory: categories[index], withItemName: "")
-            //                items[index].append(placeholderItem)
-            //            }
-            
         }
     }
     
@@ -239,5 +231,9 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     func deleteItem(itemName: String) {
         coreDataManager.deleteItem(itemName: itemName)
         tableView.reloadData()
+    }
+    
+    private func deleteAllItems() {
+        coreDataManager.deleteAllItems()
     }
 }

@@ -173,5 +173,16 @@ class CoreDataManager {
         
         saveContext()
     }
-
+    
+    func deleteAllItems() {
+        let deleteFetch: NSFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Item")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        
+        do {
+            try context.execute(deleteRequest)
+            saveContext()
+        } catch {
+            print("There was an error deleting all Items: \(error)")
+        }
+    }
 }
