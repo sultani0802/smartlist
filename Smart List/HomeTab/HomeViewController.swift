@@ -9,8 +9,9 @@
 
 import UIKit
 import CoreData
+import SwipeCellKit
 
-class HomeViewController: UITableViewController {
+class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     
     /****************************************/
     /****************************************/
@@ -41,12 +42,13 @@ class HomeViewController: UITableViewController {
         // Register our cell to the tableview
         self.tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: homeCellId)
         
-
+        
         // Initialization
         setupView() // Set up the view
         setupModels() // Set up the models
         
-        coreDataManager.deleteItem(itemName: "")
+        // Print the location of the simulator's documents
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
     }
     
     
@@ -72,6 +74,9 @@ class HomeViewController: UITableViewController {
         // Set navigation bar to big title
         self.navigationItem.title = "Intelli List"
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        
+        // Remove cell seperators
+        tableView.separatorStyle = .none
     }
     
     
@@ -169,7 +174,7 @@ class HomeViewController: UITableViewController {
         return coreDataManager.categoryExists(categoryName: categoryName)
     }
     
-
+    
     
     
     /****************************************/
@@ -187,25 +192,42 @@ class HomeViewController: UITableViewController {
     private func loadItemsFromContext() {
         let requestItems: NSFetchRequest<Item> = Item.fetchRequest()
         
-        for index in 0..<7 {
+        // Cycle through the categories and load all the items related to each Category entity
+        for index in 0..<categories.count {
+            // Predicate = all items in this category
             let itemPredicate = NSPredicate(format: "ANY category.name in %@", [categories[index].name])
             requestItems.predicate = itemPredicate
             
-            items[index] = coreDataManager.loadItems(request: requestItems)
+            // Instantiate the items tableView array with the loaded Item entities
+            items[index] = coreDataManager.fetchItems(request: requestItems)
             
-            // TODO: Add placeholder cells
-            if items[index].count == 0 {
-                let placeholderItem: Item = coreDataManager.addItem(toCategory: categories[index], withItemName: "")
-                items[index].append(placeholderItem)
+            guard let _ = items[index].first(where: {$0.cellType == "dummy"}) else {
+                // Add a placeholder cell to the category if it doesn't have one already
+                addPlaceHolderCell(toCategory: categories[index])
+                
+                // Go to the next category index in the for loop
+                continue
             }
+            
+            
+            // Add placeholder cells
+            //            if items[index].count == 0 {
+            //                let placeholderItem: Item = coreDataManager.addItem(toCategory: categories[index], withItemName: "")
+            //                items[index].append(placeholderItem)
+            //            }
+            
         }
-        
-        
     }
     
-    func add(itemName name:String, toCategory category: Category) {
+    func addPlaceHolderCell(toCategory category: Category) {
+        let newDummyItem: Item = coreDataManager.addItem(toCategory: category, withItemName: "", cellType: "dummy")
+        items[categories.firstIndex(of: category)!].append(newDummyItem)
+        tableView.reloadData()
+    }
+    
+    func add(itemName name:String, toCategory category: Category, type cellType: String) {
         let index = categories.firstIndex(of: category)! // Get the index of the Category we are adding to
-        let newItem = coreDataManager.addItem(toCategory: category, withItemName: name)
+        let newItem = coreDataManager.addItem(toCategory: category, withItemName: name, cellType: cellType)
         
         items[index].append(newItem) // Add to items tableview array
     }

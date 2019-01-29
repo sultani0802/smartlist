@@ -129,7 +129,7 @@ class CoreDataManager {
     ///
     /// - Parameter request: The fetch request for Item entity
     /// - Returns: An array of Item entities
-    func loadItems(request: NSFetchRequest<Item>)-> [Item] {
+    func fetchItems(request: NSFetchRequest<Item>)-> [Item] {
         var result: [Item] = []
         
         do {
@@ -148,9 +148,10 @@ class CoreDataManager {
     ///   - category: The Category entity we want the Item to relate to
     ///   - name: The title of the Item entity
     /// - Returns: The new Item entity to be added to the Table View
-    func addItem(toCategory category: Category, withItemName name: String) -> Item {
+    func addItem(toCategory category: Category, withItemName name: String, cellType: String) -> Item {
         let newItem = Item(context: context) // Create new Item
         newItem.name = name // Set the name
+        newItem.cellType = cellType // Set the type to a real or dummy cell
         category.addToItems(newItem) // Create relationship with appropriate Category
         saveContext()
         

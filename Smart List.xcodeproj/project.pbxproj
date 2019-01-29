@@ -18,6 +18,7 @@
 		0CC767B021F0306F00752517 /* Home+TableDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC767AF21F0306F00752517 /* Home+TableDelegates.swift */; };
 		0CC767B221F0307D00752517 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC767B121F0307D00752517 /* HomeTableViewCell.swift */; };
 		0CF47D9621F3E8240084C1BA /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CF47D9421F3E8240084C1BA /* DataModel.xcdatamodeld */; };
+		6AD46FD32B7849D34129B106 /* Pods_Smart_List.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0672B81491D7590A183BA6 /* Pods_Smart_List.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,9 @@
 		0CC767AF21F0306F00752517 /* Home+TableDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+TableDelegates.swift"; sourceTree = "<group>"; };
 		0CC767B121F0307D00752517 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		0CF47D9521F3E8240084C1BA /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		4056A61150399B24007E5368 /* Pods-Smart List.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smart List.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Smart List/Pods-Smart List.debug.xcconfig"; sourceTree = "<group>"; };
+		57987DCAE25D18D1C486881E /* Pods-Smart List.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smart List.release.xcconfig"; path = "Pods/Target Support Files/Pods-Smart List/Pods-Smart List.release.xcconfig"; sourceTree = "<group>"; };
+		EB0672B81491D7590A183BA6 /* Pods_Smart_List.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Smart_List.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AD46FD32B7849D34129B106 /* Pods_Smart_List.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +76,8 @@
 				0CC7678421F0262300752517 /* Smart List */,
 				0CC7679921F0262400752517 /* Smart ListTests */,
 				0CC7678321F0262300752517 /* Products */,
+				65E6C4252016A518B15D2836 /* Pods */,
+				2DE74AC1936D1BC669290EBB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,6 +132,23 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		2DE74AC1936D1BC669290EBB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EB0672B81491D7590A183BA6 /* Pods_Smart_List.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		65E6C4252016A518B15D2836 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4056A61150399B24007E5368 /* Pods-Smart List.debug.xcconfig */,
+				57987DCAE25D18D1C486881E /* Pods-Smart List.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +156,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0CC7679F21F0262400752517 /* Build configuration list for PBXNativeTarget "Smart List" */;
 			buildPhases = (
+				68F66BB96AC881A46DF54DF8 /* [CP] Check Pods Manifest.lock */,
 				0CC7677E21F0262300752517 /* Sources */,
 				0CC7677F21F0262300752517 /* Frameworks */,
 				0CC7678021F0262300752517 /* Resources */,
+				FFFD8E9F25BD6CEB661538DA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -218,6 +244,53 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		68F66BB96AC881A46DF54DF8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Smart List-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FFFD8E9F25BD6CEB661538DA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Smart List/Pods-Smart List-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Smart List/Pods-Smart List-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0CC7677E21F0262300752517 /* Sources */ = {
@@ -373,6 +446,7 @@
 		};
 		0CC767A021F0262400752517 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4056A61150399B24007E5368 /* Pods-Smart List.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -392,6 +466,7 @@
 		};
 		0CC767A121F0262400752517 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 57987DCAE25D18D1C486881E /* Pods-Smart List.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

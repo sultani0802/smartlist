@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SwipeCellKit
 
-class HomeTableViewCell: UITableViewCell {
+class HomeTableViewCell: SwipeTableViewCell {
     
     //MARK: - UI Elements
     var nameText: UITextField = {
@@ -23,7 +24,7 @@ class HomeTableViewCell: UITableViewCell {
     
     //MARK: - Callbacks
     // This is called when the user hits 'Enter' on the keyboard
-    var callback: ((_ text: String) -> Void)?
+    var addNewCell: ((_ text: String) -> Void)?
     
     //MARK: - Init Methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -66,7 +67,7 @@ extension HomeTableViewCell: UITextFieldDelegate {
     // Once they are done adding an item to the list it creates a new empty cell below it
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         nameText.resignFirstResponder() // Hide the keyboard
-        callback?(nameText.text!)       // Call the callback
+        addNewCell?(nameText.text!)       // Call the callback
         
         return true
     }
