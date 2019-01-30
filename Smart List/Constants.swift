@@ -23,4 +23,13 @@ struct Constants {
         static let Frozen = "Frozen"
         static let Other = "Other"
     }
+    
+    struct TableView {
+        static let HeaderHeight = 50
+    }
+    
+    struct CellID {
+        static let HomeHeaderID = "homeHeaderCellID"
+        static let HomeTableViewCellID = "homeCellID"
+    }
 }

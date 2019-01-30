@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0C3F4A9721F7B47F00003A86 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CF47D9421F3E8240084C1BA /* DataModel.xcdatamodeld */; };
 		0C3F4A9921F7BAD700003A86 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3F4A9821F7BAD700003A86 /* CoreDataManager.swift */; };
+		0C97799D22020C73009C3161 /* HomeTableviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C97799C22020C73009C3161 /* HomeTableviewHeader.swift */; };
 		0CBE4B8D2200C39000A23330 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBE4B8C2200C39000A23330 /* Constants.swift */; };
 		0CC7678621F0262300752517 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC7678521F0262300752517 /* AppDelegate.swift */; };
 		0CC7678D21F0262400752517 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CC7678C21F0262400752517 /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		0C3F4A9821F7BAD700003A86 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		0C97799C22020C73009C3161 /* HomeTableviewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableviewHeader.swift; sourceTree = "<group>"; };
 		0CBE4B8C2200C39000A23330 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0CC7678221F0262300752517 /* Smart List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smart List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CC7678521F0262300752517 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				0CC767A721F026B600752517 /* HomeViewController.swift */,
 				0CC767AF21F0306F00752517 /* Home+TableDelegates.swift */,
 				0CC767B121F0307D00752517 /* HomeTableViewCell.swift */,
+				0C97799C22020C73009C3161 /* HomeTableviewHeader.swift */,
 			);
 			path = HomeTab;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 				0CC767B021F0306F00752517 /* Home+TableDelegates.swift in Sources */,
 				0CF47D9621F3E8240084C1BA /* DataModel.xcdatamodeld in Sources */,
 				0CC7678621F0262300752517 /* AppDelegate.swift in Sources */,
+				0C97799D22020C73009C3161 /* HomeTableviewHeader.swift in Sources */,
 				0CC767A621F0268C00752517 /* TabBarController.swift in Sources */,
 				0C3F4A9921F7BAD700003A86 /* CoreDataManager.swift in Sources */,
 				0CC767A821F026B600752517 /* HomeViewController.swift in Sources */,

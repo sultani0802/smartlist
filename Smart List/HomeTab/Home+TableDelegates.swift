@@ -12,9 +12,22 @@ import SwipeCellKit
 
 extension HomeViewController {
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let headerView = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: headerCellReuseIdentifier) as?  HomeTableviewHeader else {
+            return nil
+        }
+        
+        
+        if section < categories.count {
+            headerView.title.text = categories[section].name
+        }
+        
+        return headerView
+    }
+    
     // Set the height of the section label
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return CGFloat(Constants.TableView.HeaderHeight)
     }
     
     // Set the number of sections
@@ -23,13 +36,13 @@ extension HomeViewController {
     }
     
     // Set the title of each section
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section < categories.count {
-            return categories[section].name
-        }
-        
-        return nil
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        if section < categories.count {
+//            return categories[section].name
+//        }
+//
+//        return nil
+//    }
     
     // Set the number of rows for each section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,11 +77,12 @@ extension HomeViewController {
     
     /// Customize the contents of the cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: homeCellId, for: indexPath) as! HomeTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: homeCellReuseIdentifier, for: indexPath) as! HomeTableViewCell
         cell.delegate = self
         let item = items[indexPath.section][indexPath.row]
         
         cell.nameText.text = item.name
+        cell.accessoryType = item.completed ? .checkmark : .none
         
         /// Called when user hits Enter on the keyboard
         /// This allows them to enter a new item
@@ -105,31 +119,60 @@ extension HomeViewController {
     
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        // Only perform swipe actions if the cell is not a Dummy cell
+        guard orientation == .right, self.items[indexPath.section][indexPath.row].cellType != Constants.CellType.DummyCell else {return nil}
         
-        guard orientation == .right else {return nil}
+        // Our array of the different Swipe Actions available on each 'Valid' cell
+        var swipeActions: [SwipeAction]?
+        // The Item entity the user just swiped on
+        let item = self.items[indexPath.section][indexPath.row]
         
-        let deleteAction = SwipeAction(style: .destructive, title: "Delete") {
+        
+        /// Swipe action to delete the Item
+        let deleteAction = SwipeAction(style: .default, title: "Delete") {
             (action, indexPath) in
             
-            if let itemName = self.items[indexPath.section][indexPath.row].name {
+            if let itemName = item.name {
                 print("\nDELETING ITEM: \(itemName)\n")
                 self.items[indexPath.section].remove(at: indexPath.row) // Delete the Item from the tableView array
                 action.fulfill(with: .delete) // Fulfill the delete action BEFORE deleting from Core Data
                 self.deleteItem(itemName: itemName) // Delete from Core Data
             }
         }
-        
         deleteAction.image = UIImage(named: "delete") // Set the image of the delete icon
+        deleteAction.backgroundColor = .red
         
-        return [deleteAction]
+        
+        /// Swipe action to mark an Item entity as done
+        let completedAction = SwipeAction(style: .default, title: "Done") {
+            (action, indexPath) in
+            
+            if (item.completed == false){
+                item.completed = true
+                self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            } else {
+                item.completed = false
+                self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
+            }
+            
+            self.coreDataManager.saveContext()
+        }
+        completedAction.backgroundColor = .green
+        completedAction.hidesWhenSelected = true
+        
+        // The array of the different actions
+        swipeActions = [deleteAction, completedAction]
+        
+        return swipeActions
     }
     
     
     func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
         
         var options = SwipeTableOptions()
-        options.expansionStyle = .destructive
+        options.expansionStyle = .selection
         options.transitionStyle = .border
+        
         
         return options
     }

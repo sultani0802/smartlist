@@ -22,7 +22,8 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     let coreDataManager = CoreDataManager.shared
     
     //MARK: - Constants
-    let homeCellId: String = "homeCell"
+    let homeCellReuseIdentifier: String = Constants.CellID.HomeTableViewCellID
+    let headerCellReuseIdentifier: String = Constants.CellID.HomeHeaderID
     
     //MARK: - Variables
     var categories: [Category] = []
@@ -40,8 +41,8 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
         super.viewDidLoad()
         
         // Register our cell to the tableview
-        self.tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: homeCellId)
-        
+        self.tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: homeCellReuseIdentifier)
+        self.tableView.register(HomeTableviewHeader.self, forHeaderFooterViewReuseIdentifier: headerCellReuseIdentifier)
         
         // Initialization
         setupView() // Set up the view
