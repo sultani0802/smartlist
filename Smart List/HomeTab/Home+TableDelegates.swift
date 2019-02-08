@@ -35,41 +35,10 @@ extension HomeViewController {
         return categories.count
     }
     
-    // Set the title of each section
-    //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    //        if section < categories.count {
-    //            return categories[section].name
-    //        }
-    //
-    //        return nil
-    //    }
     
     // Set the number of rows for each section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        var rowCount = 0
-        
-        switch section
-        {
-        case 0:
-            rowCount = items[0].count
-        case 1:
-            rowCount = items[1].count
-        case 2:
-            rowCount = items[2].count
-        case 3:
-            rowCount = items[3].count
-        case 4:
-            rowCount = items[4].count
-        case 5:
-            rowCount = items[5].count
-        case 6:
-            rowCount = items[6].count
-        default:
-            rowCount = 0
-        }
-        
-        return rowCount
+        return items[section].count
     }
     
     

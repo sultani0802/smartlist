@@ -74,7 +74,7 @@ class CoreDataManager {
             newCategory.name = categoryName
             newCategory.hasDummy = false
             saveContext()
-
+            
             return newCategory
         }
         

@@ -21,7 +21,6 @@ struct Constants {
         static let Dairy =              "Dairy"
         static let PackagedCanned =     "Packaged/Canned"
         static let Frozen =             "Frozen"
-        static let Other =              "Other"
     }
     
     
