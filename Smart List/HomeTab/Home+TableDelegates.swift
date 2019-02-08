@@ -36,13 +36,13 @@ extension HomeViewController {
     }
     
     // Set the title of each section
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        if section < categories.count {
-//            return categories[section].name
-//        }
-//
-//        return nil
-//    }
+    //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    //        if section < categories.count {
+    //            return categories[section].name
+    //        }
+    //
+    //        return nil
+    //    }
     
     // Set the number of rows for each section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -89,9 +89,8 @@ extension HomeViewController {
         cell.addNewCell = { [weak self] newTitle in
             guard let `self` = self else {return} // Capture self
             
-            // If the user entered a new item
-            if cell.nameText.text != "" {
-                
+            // If the user hits RETURN on a cell that isn't empty
+            if cell.nameText.text != ""{
                 let newTitle: String = cell.nameText.text! // Grab the name øf the item the user just entered
                 let itemToUpdate = self.items[indexPath.section][indexPath.row] // Grab the item they typed
                 
@@ -100,13 +99,19 @@ extension HomeViewController {
                 itemToUpdate.setValue(Constants.CellType.ValidCell, forKey: "cellType")
                 self.coreDataManager.saveContext()
                 
-                // Add a place holder cell (AKA a dummy cell) right below it
-                self.addPlaceHolderCell(toCategory: self.categories[indexPath.section])
+                // If the Category entity doesn't already have a dummy cell then...
+                if !self.categoryHasDummy(categoryIndex: indexPath.section) {
+                    // Add a place holder cell (AKA a dummy cell) right below it
+                    self.addPlaceHolderCell(toCategory: self.categories[indexPath.section])
+                    self.categories[indexPath.section].hasDummy = true // Set the Dummy boolean indicator to true for the category
+                } else {
+                    print("Cannot add dummy cell because there is already a dummy cell under that category")
+                }
             } else {
                 print("Can not add new cell since current cell is empty")
             }
         }
-
+        
         return cell
     }
     

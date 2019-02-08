@@ -11,6 +11,7 @@ import UIKit
 import CoreData
 import SwipeCellKit
 
+
 class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     
     /****************************************/
@@ -47,7 +48,7 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
         // Initialization
         setupView() // Set up the view
         setupModels() // Set up the models
-        
+        deleteAllCategories()
         // Print the location of the simulator's documents
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
     }
@@ -66,19 +67,27 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     
     /// Sets all visual settings of this view
     private func setupView() {
+        // Customize navigation bar elements
+        self.navigationItem.title = "App Name"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        
+        // Add plus button to navigation bar to allow the user to add catogories
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+        
+        // Set background color
+        self.view.backgroundColor = .white
+        
         // Set the cell row height
         self.tableView.rowHeight = 50
         
         // Dismiss the keyboard when the user drags the table
         tableView.keyboardDismissMode = .interactive
         
-        // Set navigation bar to big title
-        self.navigationItem.title = "Intelli List"
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        
         // Remove cell seperators
         tableView.separatorStyle = .none
     }
+    
+    
     
     
     /// Purpose: Sets up all the models
@@ -89,6 +98,150 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     }
     
     
+    /// Checks a certain Category for dummy cells
+    ///
+    /// - Parameter categoryIndex: The index (Section) of the Category we are validating
+    /// - Returns: True if there is a dummy cell, false otherwise
+    func categoryHasDummy(categoryIndex: Int) -> Bool {
+        if let _ = self.items[categoryIndex].first(where: {$0.name == ""}) {
+            return true
+        } else {
+            self.categories[categoryIndex].hasDummy = false // Set the dummy indicator to false
+            return false
+        }
+    }
+    
+    /// Purpose: This method is called when the user taps on the + sign at the top right
+    ///
+    /// Allows the user to add a category to the TableView
+    /// They are presented with a list of options, one of them being an option to add their own
+    @objc func addButtonTapped() {
+        // Create the alert controller
+        let alert = UIAlertController(title: "New category", message: "Which category would you like to create?", preferredStyle: .actionSheet)
+        
+        
+        // Add the different options for the user
+        alert.addAction(UIAlertAction(title: "Produce", style: .default, handler:{ (UIAlertAction) in
+            print("User selected Produce")
+            
+            self.tableView.beginUpdates()
+            
+            self.addCategory(categoryName: Constants.DefaultCategories.Produce) // Add the Category entity to Core Data
+            self.tableView.insertSections(NSIndexSet(index: self.categories.count - 1) as IndexSet, with: .bottom) // Insert the Category section into the table view
+            self.addPlaceHolderCell(toCategory: self.categories[self.categories.count-1]) // Insert the dummy cell into the new Category
+            
+            self.tableView.endUpdates()
+            // Scroll to the category the user just added
+            let indexPath = IndexPath(row: 0, section: self.categories.count-1)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Bakery", style: .default, handler:{ (UIAlertAction) in
+            print("User selected Bakery")
+            self.tableView.beginUpdates()
+            
+            self.addCategory(categoryName: Constants.DefaultCategories.Bakery) // Add the Category entity to Core Data
+            self.tableView.insertSections(NSIndexSet(index: self.categories.count - 1) as IndexSet, with: .bottom) // Insert the Category section into the table view
+            self.addPlaceHolderCell(toCategory: self.categories[self.categories.count-1]) // Insert the dummy cell into the new Category
+            
+            self.tableView.endUpdates()
+            // Scroll to the category the user just added
+            let indexPath = IndexPath(row: 0, section: self.categories.count-1)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Meat/Seafood", style: .default, handler:{ (UIAlertAction) in
+            print("User selected Meat")
+            self.tableView.beginUpdates()
+            
+            self.addCategory(categoryName: Constants.DefaultCategories.MeatSeafood) // Add the Category entity to Core Data
+            self.tableView.insertSections(NSIndexSet(index: self.categories.count - 1) as IndexSet, with: .bottom) // Insert the Category section into the table view
+            self.addPlaceHolderCell(toCategory: self.categories[self.categories.count-1]) // Insert the dummy cell into the new Category
+            
+            self.tableView.endUpdates()
+            // Scroll to the category the user just added
+            let indexPath = IndexPath(row: 0, section: self.categories.count-1)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Dairy", style: .default, handler:{ (UIAlertAction) in
+            print("User selected Dairy")
+            self.tableView.beginUpdates()
+            
+            self.addCategory(categoryName: Constants.DefaultCategories.Dairy) // Add the Category entity to Core Data
+            self.tableView.insertSections(NSIndexSet(index: self.categories.count - 1) as IndexSet, with: .bottom) // Insert the Category section into the table view
+            self.addPlaceHolderCell(toCategory: self.categories[self.categories.count-1]) // Insert the dummy cell into the new Category
+            
+            self.tableView.endUpdates()
+            // Scroll to the category the user just added
+            let indexPath = IndexPath(row: 0, section: self.categories.count-1)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Packaged/Canned", style: .default, handler:{ (UIAlertAction) in
+            print("User selected Packaged")
+            self.tableView.beginUpdates()
+            
+            self.addCategory(categoryName: Constants.DefaultCategories.PackagedCanned) // Add the Category entity to Core Data
+            self.tableView.insertSections(NSIndexSet(index: self.categories.count - 1) as IndexSet, with: .bottom) // Insert the Category section into the table view
+            self.addPlaceHolderCell(toCategory: self.categories[self.categories.count-1]) // Insert the dummy cell into the new Category
+            
+            self.tableView.endUpdates()
+            // Scroll to the category the user just added
+            let indexPath = IndexPath(row: 0, section: self.categories.count-1)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Frozen", style: .default, handler:{ (UIAlertAction) in
+            print("User selected Frozen")
+            self.tableView.beginUpdates()
+            
+            self.addCategory(categoryName: Constants.DefaultCategories.Frozen) // Add the Category entity to Core Data
+            self.tableView.insertSections(NSIndexSet(index: self.categories.count - 1) as IndexSet, with: .bottom) // Insert the Category section into the table view
+            self.addPlaceHolderCell(toCategory: self.categories[self.categories.count-1]) // Insert the dummy cell into the new Category
+            
+            self.tableView.endUpdates()
+            
+            // Scroll to the category the user just added
+            let indexPath = IndexPath(row: 0, section: self.categories.count-1)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }))
+        
+        
+        
+        alert.addAction(UIAlertAction(title: "Create my own", style: .default, handler:{ (UIAlertAction) in
+            print("User selected Custom")
+            // Create another alert that allows the user to type a name for their category
+            let customAlert = UIAlertController(title: "Title", message: "Enter the name of your category", preferredStyle: .alert)
+            customAlert.addTextField { (textField) in
+                textField.placeholder = "Category name"
+            }
+            
+            customAlert.addAction(UIKit.UIAlertAction(title: "Ok", style: .default, handler: {(UIAlertAction) in
+                let textField = customAlert.textFields![0]
+                print("The text the user entered: \(textField.text!)")
+            }))
+            
+            // Lets the user go back to the previous action sheet that lets them choose a category
+            customAlert.addAction(UIKit.UIAlertAction(title: "Go back", style: .cancel, handler: {(UIAlertAction) in
+                self.present(alert, animated: true, completion: nil)
+            }))
+            
+            self.present(customAlert, animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(UIAlertAction) in
+            print("User cancelled selection")
+        }))
+        
+        
+        // Display the Alert Controller
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
+        
+
+    }
     
     /****************************************/
     /****************************************/
@@ -111,29 +264,6 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     /// Loads the Categories from Data Model
     private func loadCategoriesFromContext() {
         categories = coreDataManager.loadCategories() // Make a request to fetch the Category entities in the database
-        
-        // Create our categories
-        if !categoryExists(categoryName: Constants.DefaultCategories.Produce) {
-            addCategory(categoryName: Constants.DefaultCategories.Produce)
-        }
-        if !categoryExists(categoryName: Constants.DefaultCategories.Bakery) {
-            addCategory(categoryName: Constants.DefaultCategories.Bakery)
-        }
-        if !categoryExists(categoryName: Constants.DefaultCategories.MeatSeafood) {
-            addCategory(categoryName: Constants.DefaultCategories.MeatSeafood)
-        }
-        if !categoryExists(categoryName: Constants.DefaultCategories.Dairy) {
-            addCategory(categoryName: Constants.DefaultCategories.Dairy)
-        }
-        if !categoryExists(categoryName: Constants.DefaultCategories.PackagedCanned) {
-            addCategory(categoryName: Constants.DefaultCategories.PackagedCanned)
-        }
-        if !categoryExists(categoryName: Constants.DefaultCategories.Frozen) {
-            addCategory(categoryName: Constants.DefaultCategories.Frozen)
-        }
-        if !categoryExists(categoryName: Constants.DefaultCategories.Other) {
-            addCategory(categoryName: Constants.DefaultCategories.Other)
-        }
     }
     
     /// Adds a Category to the Data Model and the Table View
@@ -157,8 +287,10 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     }
     
     /// Deletes all Category entities from the Data Model
+    /// !!! ONLY TO BE USED FOR TESTING !!!
     private func deleteAllCategories() {
         coreDataManager.deleteAllCategories()
+        tableView.reloadData()
     }
     
     /// Checks if a Category exists in the Data Model
@@ -207,9 +339,19 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     }
     
     func addPlaceHolderCell(toCategory category: Category) {
-        let newDummyItem: Item = coreDataManager.addItem(toCategory: category, withItemName: "", cellType: Constants.CellType.DummyCell)
-        items[categories.firstIndex(of: category)!].append(newDummyItem)
-        tableView.reloadData()
+        self.tableView.beginUpdates()
+        
+        let categoryIndex = categories.firstIndex(of: category) // Grab the index of the Category entity we are working in
+        
+        let newDummyItem: Item = coreDataManager.addItem(toCategory: category, withItemName: "", cellType: Constants.CellType.DummyCell) // Create a new dummmy Item entity
+        items[categoryIndex!].append(newDummyItem) // Add the dummy entity to our tableView array
+        
+        let itemIndex = self.items[categoryIndex!].count-1 // Get the index of the dummy Item we just added to our tableView array
+        
+        let indexPath: IndexPath = IndexPath(row: itemIndex, section: categoryIndex!) // Set the indexPath
+        self.tableView.insertRows(at: [indexPath], with: .bottom)
+        
+        self.tableView.endUpdates()
     }
     
     func add(itemName name:String, toCategory category: Category, type cellType: String) {
@@ -230,7 +372,9 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     
     
     /// Delete all Item entities from Core Data model
+    /// !!! ONLY TO BE USED FOR TESTING !!!
     private func deleteAllItems() {
         coreDataManager.deleteAllItems()
+        tableView.reloadData()
     }
 }

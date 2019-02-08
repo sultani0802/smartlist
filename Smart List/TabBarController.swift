@@ -13,6 +13,13 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set the color of the tab bar
+        tabBar.barTintColor = .white
+        // Set the color of the selected tab bar button
+        tabBar.tintColor = Constants.ColorPalette.Yellow
+        // Set the color of the unselected tab bar button
+        tabBar.unselectedItemTintColor = Constants.ColorPalette.DarkGray
+        
         // The first tab in the tab bar
         let vc1 = HomeViewController()
         // The second tab in the tab bar

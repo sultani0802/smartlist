@@ -72,6 +72,7 @@ class CoreDataManager {
             // Create new category
             let newCategory = Category(context: context)
             newCategory.name = categoryName
+            newCategory.hasDummy = false
             saveContext()
 
             return newCategory

@@ -14,9 +14,12 @@ class HomeTableViewCell: SwipeTableViewCell {
     //MARK: - UI Elements
     var nameText: UITextField = {
         var textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "tap here to start"
+        textField.translatesAutoresizingMaskIntoConstraints = false // Use Auto Layout
         textField.textAlignment = .left
+        textField.textColor = Constants.ColorPalette.DarkGray
+        textField.attributedPlaceholder = NSAttributedString(string: "tap here to start",
+                                                             attributes: [
+                                                                NSAttributedString.Key.foregroundColor: Constants.ColorPalette.BabyBlue]) // Set placeholder text for the cell
         
         return textField
     }()
@@ -42,12 +45,15 @@ class HomeTableViewCell: SwipeTableViewCell {
     
     
     func setupUI() {
+        // Customize View visual
+        self.backgroundColor = .white
+        
         // Adding the UI elements to our cell
         addSubview(nameText)
         
         // Setting up the constraints
         NSLayoutConstraint.activate([
-            nameText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            nameText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             nameText.topAnchor.constraint(equalTo: topAnchor),
             nameText.trailingAnchor.constraint(equalTo: trailingAnchor),
             nameText.bottomAnchor.constraint(equalTo: bottomAnchor)
@@ -58,7 +64,6 @@ class HomeTableViewCell: SwipeTableViewCell {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         print("editing textfield")
     }
-    
 }
 
 
@@ -72,43 +77,9 @@ extension HomeTableViewCell: UITextFieldDelegate {
         return true
     }
     
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        print("editing ended")
-//    }
-    
-    
-}
-
-extension UITextField{
-    
-    @IBInspectable var doneAccessory: Bool{
-        get{
-            return self.doneAccessory
-        }
-        set (hasDone) {
-            if hasDone{
-                addDoneButtonOnKeyboard()
-            }
-        }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        print("editing ended")
     }
     
-    func addDoneButtonOnKeyboard()
-    {
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
-        doneToolbar.barStyle = .default
-        
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonAction))
-        
-        let items = [flexSpace, done]
-        doneToolbar.items = items
-        doneToolbar.sizeToFit()
-        
-        self.inputAccessoryView = doneToolbar
-    }
     
-    @objc func doneButtonAction()
-    {
-        self.resignFirstResponder()
-    }
 }
