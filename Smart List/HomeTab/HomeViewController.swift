@@ -12,11 +12,11 @@ import CoreData
 import SwipeCellKit
 
 
-class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwipeTableViewCellDelegate {
     
     /****************************************/
     /****************************************/
-    //MARK: - Variables
+    //MARK: - Class Properties
     /****************************************/
     /****************************************/
     // Core Data Manager (Singleton)
@@ -36,29 +36,44 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
         Constants.DefaultCategories.Frozen
     ]
     
+    //MARK: - Data Sources
     var categories: [Category] = [Category]()
     var items: [[Item]] = [[Item]]()
     
+    //MARK: - Views
+    var tableView: UITableView!
+    
+    var getStartedView: HomeGetStartedView = {
+        var view = HomeGetStartedView()
+        view.translatesAutoresizingMaskIntoConstraints = false // Conforms to auto-layout
+        view.backgroundColor = Constants.ColorPalette.Yellow.withAlphaComponent(0.7)
+        view.isHidden = true // Instruction view is hidden unless the table view is empty
+        
+        return view
+    }()
     
     
     
     /****************************************/
     /****************************************/
-    //MARK: - View Methods
+    //MARK: - View Controller Delegate Methods
     /****************************************/
     /****************************************/
     override func viewDidLoad() {
         super.viewDidLoad()
-        //deleteAllCategories()
-
-        // Register our cell to the tableview
-        self.tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: homeCellReuseIdentifier)
-        self.tableView.register(HomeTableviewHeader.self, forHeaderFooterViewReuseIdentifier: headerCellReuseIdentifier)
+        
+//        deleteAllCategories()
+//        deleteAllItems()
         
         // Initialization
         setupView() // Set up the view
         setupModels() // Set up the models
-        print(validateCategories())
+        
+        // Show/hide instructions
+        toggleInstructions()
+        
+        // Enable edit button if there are categories
+        editButtonIsEnabled()
         
         // Print the location of the device's documents
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
@@ -66,12 +81,37 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     
     
     
+    /****************************************/
+    /****************************************/
+    //MARK: - Initialization Methods
+    /****************************************/
+    /****************************************/
     
-    /****************************************/
-    /****************************************/
-    //MARK: - My Methods
-    /****************************************/
-    /****************************************/
+    
+    /// Adds the instruction view to the view controller and sets its constraints
+    private func setupGetStartedView() {
+        self.view.addSubview(getStartedView)
+        
+        NSLayoutConstraint.activate([
+            getStartedView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            getStartedView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            getStartedView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.8),
+            getStartedView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.3)
+            ])
+    }
+    
+    private func setupTableview() {
+        // Instantiate the tableView
+        tableView = UITableView(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.size.height, width: self.view.frame.width
+            , height: self.view.frame.height))
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        // Register our cells to the tableview
+        self.tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: homeCellReuseIdentifier)
+        self.tableView.register(HomeTableviewHeader.self, forHeaderFooterViewReuseIdentifier: headerCellReuseIdentifier)
+        tableView.dataSource = self
+        tableView.delegate = self
+        self.view.addSubview(tableView)
+    }
     
     // Purpose: Sets up all the view elements of the list page
     // Called in viewDidLoad
@@ -82,8 +122,14 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
         self.navigationItem.title = "App Name"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        // Add plus button to navigation bar to allow the user to add catogories
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addButtonTapped))
+        // Add the tableview
+        setupTableview()
+        
+        // Add instruction view
+        setupGetStartedView()
+        
+        // Add navigation bar buttons
+        setupNavItems()
         
         // Set background color
         self.view.backgroundColor = .white
@@ -99,8 +145,6 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     }
     
     
-    
-    
     /// Purpose: Sets up all the models
     /// Called in viewDidLoad
     private func setupModels() {
@@ -108,6 +152,11 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
         loadItemsFromContext() // Load the items
     }
     
+    /****************************************/
+    /****************************************/
+    //MARK: - My Methods
+    /****************************************/
+    /****************************************/
     
     /// Checks a certain Category for dummy cells
     ///
@@ -123,18 +172,47 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     }
     
     
+    /// 1) Checks the category entities loaded from Core Data
+    /// 2) Filters the options displayed in the action sheet when the user wants to add a category
+    ///
+    /// - Returns: A String array of the categories that AREN'T in use
     func validateCategories() -> [String] {
+        // Initialize the result to the full list of default categories
         var result : [String] = defaultCategories
         
+        // Go through them and remove the categories that already exist
         for i in defaultCategories {
+            // If the category exists in tableview array...
             if let existingCategory = categories.first(where: {$0.name == i}) {
                 print("default category: \(i) matches categories array: \(existingCategory.name!)")
-                
+                // then filter it out of the result
                 result.remove(at: result.firstIndex(of: i)!)
             }
         }
         
+        // Return the modified array of Categories that are not in use
         return result
+    }
+    
+    
+    /// Allows the user to remove categories
+    @objc func editButtonPressed() {
+        print("edit button pressed")
+        tableView.setEditing(!tableView.isEditing, animated: true)
+    }
+    
+    func toggleInstructions() {
+//        if categories.count <= 0 {
+//            getStartedView.isHidden = false
+//        } else {
+//            getStartedView.isHidden = true
+//        }
+        
+        if tableView.visibleCells.isEmpty && categories.count <= 0 && items.count <= 0 {
+            getStartedView.isHidden = false
+        } else {
+            getStartedView.isHidden = true
+        }
     }
     
     /****************************************/
@@ -170,6 +248,11 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
                 // Add new category to table View's array
                 self.categories.append(newCategory)
                 self.items.append([])
+                
+                // Enable the edit button
+                navigationItem.leftBarButtonItem?.isEnabled = true
+                
+                toggleInstructions()
             }
         }
     }
@@ -177,8 +260,9 @@ class HomeViewController: UITableViewController, SwipeTableViewCellDelegate {
     /// Deletes a Category entity
     ///
     /// - Parameter categoryName: The title of the Category entity
-    private func deleteCategory(categoryName: String) {
+    func deleteCategory(categoryName: String) {
         coreDataManager.deleteCategory(categoryName: categoryName)
+        toggleInstructions()
     }
     
     /// Deletes all Category entities from the Data Model

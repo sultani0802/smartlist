@@ -14,6 +14,7 @@ class HomeTableViewCell: SwipeTableViewCell {
     //MARK: - UI Elements
     var nameText: UITextField = {
         var textField = UITextField()
+        textField.returnKeyType = .done // Change the return key to "Done" instead of "return"
         textField.translatesAutoresizingMaskIntoConstraints = false // Use Auto Layout
         textField.textAlignment = .left
         textField.textColor = Constants.ColorPalette.DarkGray

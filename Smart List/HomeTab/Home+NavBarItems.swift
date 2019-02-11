@@ -1,5 +1,5 @@
 //
-//  Home+AddButtonPressed.swift
+//  Home+NavBarItems.swift
 //  Smart List
 //
 //  Created by Haamed Sultani on Feb/1/19.
@@ -9,6 +9,27 @@
 import UIKit
 
 extension HomeViewController {
+    
+    /// Sets up the navigation bar buttons
+    func setupNavItems() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addButtonTapped))
+        navigationItem.rightBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(self.editButtonPressed))
+//        navigationItem.leftBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
+    }
+    
+    
+    /// Checks if the table has any categories
+    /// If there are none then the Edit button is disabled, otherwise it is enabled
+    func editButtonIsEnabled() {
+        if categories.count <= 0 {
+            navigationItem.leftBarButtonItem?.isEnabled = false
+        } else {
+            navigationItem.leftBarButtonItem?.isEnabled = true
+        }
+    }
+    
+    
     /// Purpose: This method is called when the user taps on the + sign at the top right
     ///
     /// Allows the user to add a category to the TableView
@@ -17,7 +38,7 @@ extension HomeViewController {
         // Create the alert controller
         let alert = UIAlertController(title: "New category", message: "Which category would you like to create?", preferredStyle: .actionSheet)
         
-        
+        // Goes through the filtered list of categories and adds the action to the alert controller
         for cat in validateCategories() {
             alert.addAction(UIAlertAction(title: cat, style: .default, handler: {(UIAlertAction) in
                 self.tableView.beginUpdates()
