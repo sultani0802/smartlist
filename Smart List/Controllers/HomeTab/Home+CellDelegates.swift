@@ -25,7 +25,9 @@ extension HomeViewController {
         let item = items[indexPath.section][indexPath.row]
         
         cell.nameText.text = item.name
-        cell.accessoryType = item.completed ? .checkmark : .none
+        cell.accessoryType = item.completed ? .checkmark : .none // Display a checkmark if the item is completed
+        cell.completed = item.completed // Synchronize completion state of cell with core data
+
         
         /// Called when user hits Enter on the keyboard
         /// This allows them to enter a new item
@@ -136,12 +138,17 @@ extension HomeViewController {
             /// Swipe action to mark an Item entity as done
             let completedAction = SwipeAction(style: .default, title: "Done") {
                 (action, indexPath) in
+
+                let cell : HomeTableViewCell = self.tableView.cellForRow(at: indexPath) as! HomeTableViewCell
                 
                 if (item.completed == false){
                     item.completed = true
+                    cell.completed = true
                     self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+                    item.date = DateHelper.shared.getCurrentDateObject()
                 } else {
                     item.completed = false
+                    cell.completed = false
                     self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
                 }
                 
@@ -162,7 +169,6 @@ extension HomeViewController {
     
     
     
-    
     func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
         
         var options = SwipeTableOptions()
@@ -172,4 +178,29 @@ extension HomeViewController {
         
         return options
     }
+    
+    
+    
+    /// Segue's to the Detail View of the cell
+    ///
+    /// - Parameters:
+    ///   - tableView: This view's tableView
+    ///   - indexPath: the index of the cell
+    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let item: Item = self.items[indexPath.section][indexPath.row]
+        
+        let detailVC = DetailViewController()
+        detailVC.item = item
+        self.navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    
+    func prepare(for segue: UIStoryboardSegue, sender: Item) {
+        if let detailVC = segue.destination as? DetailViewController {
+            detailVC.item = sender
+        }
+    }
+    
+    
+
 }

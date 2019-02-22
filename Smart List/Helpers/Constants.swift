@@ -9,6 +9,11 @@
 import UIKit
 
 struct Constants {
+    
+    struct Visuals {
+        static let fontName = "Gill Sans"
+    }
+    
     struct CellType {
         static let ValidCell = "valid"
         static let DummyCell = "dummy"
@@ -40,5 +45,11 @@ struct Constants {
         static let BabyBlue = UIColor(hexString: "#86BBD8")
         static let Yellow = UIColor(hexString: "#F6AE2D")
         static let Orange = UIColor(hexString: "#F26419")
+    }
+    
+    struct Units {
+        static let WeightsPlural = ["milligrams", "grams", "kilograms", "pounds"]
+        static let LiquidsPlural = ["millilitres", "litres"]
+        static let Other = ["teaspoons", "tablespoons", "cups", "oz"]
     }
 }

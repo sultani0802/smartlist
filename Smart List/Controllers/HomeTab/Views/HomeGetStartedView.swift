@@ -10,7 +10,7 @@ import UIKit
 
 class HomeGetStartedView: UIView {
     
-    //MARK: -
+    //MARK: - Views
     var instructionText: UITextView = {
         var textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false // Conform to auto-layout
@@ -42,7 +42,6 @@ class HomeGetStartedView: UIView {
     private func setupViews() {
         // Rounded borders for the view
         self.layer.cornerRadius = 30
-        self.backgroundColor = .red
         setConstraints()
     }
     

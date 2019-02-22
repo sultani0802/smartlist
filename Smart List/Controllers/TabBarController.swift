@@ -22,12 +22,12 @@ class TabBarController: UITabBarController {
         
         // The first tab in the tab bar
         let vc1 = HomeViewController()
+        vc1.tabBarItem = UITabBarItem(title: "List", image: UIImage(named: "list"), tag: 0)
         // The second tab in the tab bar
         let vc2 = HomeViewController()
+        vc2.tabBarItem = UITabBarItem(title: "Kitchen", image: UIImage(named: "kitchen"), tag: 1)
         
-        // Adding the tabs...
-        vc1.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 0)
-        vc2.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 1)
+        
         
         // Setting our view controllers for the tab bar
         let tabBarList = [vc1, vc2]

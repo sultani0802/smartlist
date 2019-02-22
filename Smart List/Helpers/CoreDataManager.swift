@@ -17,7 +17,7 @@ class CoreDataManager {
     /****************************************/
     /****************************************/
     static let shared = CoreDataManager()
-    private init() {} // Prevents creationg of another instance
+    private init() {} // Prevents creation of another instances
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     

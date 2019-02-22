@@ -4,12 +4,13 @@
 //
 //  Created by Haamed Sultani on Jan/1/19.
 //  Copyright © 2019 Haamed Sultani. All rights reserved.
-//
 
 import UIKit
 import SwipeCellKit
 
 class HomeTableViewCell: SwipeTableViewCell {
+    
+    var completed: Bool = false
     
     //MARK: - UI Elements
     var nameText: UITextField = {
@@ -64,7 +65,17 @@ class HomeTableViewCell: SwipeTableViewCell {
     //MARK: - My Methods
     func textFieldDidBeginEditing(_ textField: UITextField) {
         print("editing textfield")
+        print(completed)
+        self.accessoryType = .detailDisclosureButton
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        print("editing ended")
+        print(completed)
+        self.accessoryType = self.completed ? .checkmark : .none
+    }
+    
+    
 }
 
 
@@ -77,10 +88,4 @@ extension HomeTableViewCell: UITextFieldDelegate {
         
         return true
     }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        print("editing ended")
-    }
-    
-    
 }

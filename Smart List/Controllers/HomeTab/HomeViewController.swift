@@ -61,7 +61,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     /****************************************/
     override func viewDidLoad() {
         super.viewDidLoad()
-        
 //        deleteAllCategories()
 //        deleteAllItems()
         
@@ -202,12 +201,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func toggleInstructions() {
-//        if categories.count <= 0 {
-//            getStartedView.isHidden = false
-//        } else {
-//            getStartedView.isHidden = true
-//        }
-        
         if tableView.visibleCells.isEmpty && categories.count <= 0 && items.count <= 0 {
             getStartedView.isHidden = false
         } else {

@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.rootViewController = TabBarController()
+//        window?.rootViewController = DetailViewController()
         window?.makeKeyAndVisible()
         
         UINavigationBar.appearance().barTintColor = Constants.ColorPalette.DarkGray
