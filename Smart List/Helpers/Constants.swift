@@ -47,9 +47,15 @@ struct Constants {
         static let Orange = UIColor(hexString: "#F26419")
     }
     
-    struct Units {
-        static let WeightsPlural = ["milligrams", "grams", "kilograms", "pounds"]
-        static let LiquidsPlural = ["millilitres", "litres"]
-        static let Other = ["units", "teaspoons", "tablespoons", "cups", "ounces", "quarts"]
-    }
+    static let Units = ["milligrams":"mgs",
+                                "grams":"gs",
+                                "kilograms":"kgs",
+                                "pounds":"lbs",
+                                "millilitres":"mls",
+                                "litres":"ls",
+                                "units":"units",
+                                "teaspoons":"tsps",
+                                "tablespoons":"tbsps",
+                                "cups":"cups",
+                                "ounces":"oz"]
 }

@@ -13,6 +13,10 @@ class DetailViewController: UIViewController {
     //MARK: - Variables
     var units = [String]()
     
+    
+    
+    
+    
     //MARK: - Views
     var topContainer: DetailTopContainer = {
         var view = DetailTopContainer()
@@ -38,11 +42,19 @@ class DetailViewController: UIViewController {
         return view
     }()
     
+    
+    
+    
+    
     //MARK: - Data Source
     var item : Item?
     
     
-    //MARK: - Constructors
+    
+    
+    
+    
+    //MARK: - View Delegates
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,24 +71,28 @@ class DetailViewController: UIViewController {
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        abbreviateUnit(u: (item?.quantity)!)
+        loadQuantityPopUpModel()
+    }
+    
+    
+    
+    
     //MARK: - Initializers
     func setupModels() {
         // Populate the Units of measurement array
-        units.append(contentsOf: Constants.Units.LiquidsPlural)
-        units.append(contentsOf: Constants.Units.WeightsPlural)
-        units.append(contentsOf: Constants.Units.Other)
+        units.append(contentsOf: Constants.Units.keys)
         
         // Set the name of the Item
         midContainer.nameLabel.text = item?.name
         // Set the quantity of the Item
         midContainer.quantityButton.setTitle(item?.quantity, for: .normal)
         
-        // Set the Expiry date to today's date
-        if let date = item?.date {
-            midContainer.expiryDate.setTitle(DateHelper.shared.getDateString(of: date), for: .normal)
-        } else {
-            midContainer.expiryDate.setTitle(DateHelper.shared.getCurrentDate(), for: .normal)
-        }
+        // Set the dates for the Item
+        setItemDates()
     }
     
     
@@ -135,4 +151,40 @@ class DetailViewController: UIViewController {
             ])
     }
     
+    
+    
+    
+    
+    
+    //MARK: - My Methods
+    
+    /// Sets up the date elements of the Detail View
+    func setItemDates() {
+        if let date = item?.purchaseDate { // Get the Item's purchaseDate if it hasn't been set
+            midContainer.purchaseDate.text = DateHelper.shared.getDateString(of: date)
+        } else { // If it hasn't been set, display a message
+            midContainer.purchaseDate.text = "Not purchased yet"
+        }
+    }
+    
+    func abbreviateUnit(u : String) {
+        let components = u.components(separatedBy: " ") // Separate the numeral and unit
+        let unit : String = components[1]               // Grab the unit
+        let shortUnit : String = Constants.Units[unit]! // Grab the short-hand version of it
+        
+        let result = components[0] + " " + shortUnit    // Combine the numeral and short-hand unit
+        self.midContainer.quantityButton.setTitle(result, for: .normal) // Change the view
+    }
+    
+    func loadQuantityPopUpModel() {
+        // Scroll the pickerview to the corresponding unit of measurement in the pop up view
+        guard let components = item?.quantity?.components(separatedBy: " ") else {return}
+        if components.count == 2 {
+            let unit = components[1]
+            guard let unitIndex = units.firstIndex(of: unit) else {return}
+
+            quantityView.pickerView.selectRow(unitIndex, inComponent: 0, animated: true)
+            quantityView.quantityTextField.text = components[0]
+        }
+    }
 }

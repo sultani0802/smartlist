@@ -149,7 +149,7 @@ extension HomeViewController {
                     item.completed = true
                     cell.completed = true
                     self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-                    item.date = DateHelper.shared.getCurrentDateObject()
+                    item.purchaseDate = DateHelper.shared.getCurrentDateObject()
                 } else {
                     item.completed = false
                     cell.completed = false

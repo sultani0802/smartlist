@@ -67,7 +67,7 @@ class DetailMidContainer: UIView {
     var purchaseDate: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = ""
+        label.text = "Today"
         label.textAlignment = .left
         label.textColor = Constants.ColorPalette.BabyBlue
         label.font = UIFont(name: Constants.Visuals.fontName, size: 20)

@@ -30,6 +30,9 @@ extension DetailViewController {
         
         // Hide the pop up view
         self.quantityView.fadeOut()
+        
+        // Change the unit of measurement to the short-hand version
+        abbreviateUnit(u: ((self.item?.quantity)!))
     }
     
     
