@@ -5,6 +5,8 @@
 //  Created by Haamed Sultani on Feb/1/19.
 //  Copyright © 2019 Haamed Sultani. All rights reserved.
 //
+//
+//  This class is to be subclassed to create popup views
 
 import UIKit
 
@@ -37,5 +39,6 @@ class PopUpCardView: UIView {
         
     }
     
+    // Method to be overidden by the inheriting view
     func setupUIComponents() { }
 }

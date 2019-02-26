@@ -61,7 +61,10 @@ class QuantityPopUpView: PopUpCardView {
         textfield.font = UIFont(name: Constants.Visuals.fontName, size: 40)
         textfield.textColor = Constants.ColorPalette.Orange
         textfield.textAlignment = .center
+        textfield.adjustsFontSizeToFitWidth = true
         textfield.borders(for: [.top, .right], width: 1, color: Constants.ColorPalette.Charcoal.withAlphaComponent(0.3))
+        textfield.addDoneToolbar()
+        
         
         return textfield
     }()
@@ -83,6 +86,7 @@ class QuantityPopUpView: PopUpCardView {
     
     //MARK: - Setup Methods
     override func setupUIComponents() {
+        
         // Title Stack View
         titleStackView.addArrangedSubview(viewTitleLabel)   // Add 'Quantity' title to stack
         titleStackView.addArrangedSubview(saveButton)       // Add SAVE button to stack

@@ -47,12 +47,24 @@ extension DetailViewController: UITextFieldDelegate {
     /// Everytime the user types in the numpad, this will check if it is a decimal
     /// If it is a decimal then it won't allow more than 1 decimal
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        guard let text = textField.text else { return true }
         let dotCount: Int = (textField.text?.components(separatedBy: ".").count)! - 1
+        let newLength = text.count + string.count - range.length
         
         if dotCount > 0 && string == "."
         {
             return false
+        } else if newLength > 7 {
+            return false
         }
+        
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
         return true
     }
 }

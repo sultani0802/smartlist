@@ -5,6 +5,8 @@
 //  Created by Haamed Sultani on Feb/1/19.
 //  Copyright © 2019 Haamed Sultani. All rights reserved.
 //
+//
+//  The methods for the navigation bar
 
 import UIKit
 

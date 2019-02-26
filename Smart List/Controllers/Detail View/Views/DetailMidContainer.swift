@@ -20,6 +20,8 @@ class DetailMidContainer: UIView {
         label.text = "Tomato"
         label.textColor = Constants.ColorPalette.TealBlue
         label.font = UIFont(name: Constants.Visuals.fontName, size: 35)
+        label.backgroundColor = .orange
+        label.adjustsFontSizeToFitWidth = true
         
         return label
     }()
@@ -27,11 +29,10 @@ class DetailMidContainer: UIView {
     var quantityButton: UIButton = {
         var button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = Constants.ColorPalette.Yellow
-        button.setTitle("4 units", for: .normal)
+        button.setTitle("tap here change quantity", for: .normal)
+        button.sizeToFit()
         button.titleLabel?.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         button.contentEdgeInsets = UIEdgeInsets(top: 1, left: 4, bottom: 1, right: 4)
-        button.setBackgroundColor(color: Constants.ColorPalette.Yellow, forState: .normal)
         button.addTarget(self, action: #selector(DetailViewController.quantityButtonTapped(_:)), for: .touchUpInside)
         
         return button
@@ -187,7 +188,7 @@ class DetailMidContainer: UIView {
         return view
     }()
     
-
+    
 
 
     //MARK: - Constructors
@@ -255,11 +256,12 @@ class DetailMidContainer: UIView {
     
     func titlePriority() {
         quantityButton.heightAnchor.constraint(equalTo: nameLabel.heightAnchor).isActive = true
-        quantityButton.widthAnchor.constraint(lessThanOrEqualTo: purchaseStackView.widthAnchor, multiplier: 0.3).isActive = true
+        quantityButton.widthAnchor.constraint(greaterThanOrEqualTo: titleStackView.widthAnchor, multiplier: 0.3).isActive = true
+        quantityButton.setContentHuggingPriority(UILayoutPriority(995), for: .horizontal)
+//        nameLabel.setContentHuggingPriority(UILayoutPriority(990), for: .horizontal)
     }
     
     func purchasePriority() {
-//        purchasedLabel.setContentHuggingPriority(UILayoutPriority(990), for: .horizontal)
         purchaseDate.setContentHuggingPriority(UILayoutPriority(995), for: .horizontal)
         storeLabel.setContentHuggingPriority(UILayoutPriority(990), for: .horizontal)
     }

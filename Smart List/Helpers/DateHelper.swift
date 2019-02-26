@@ -4,8 +4,8 @@
 //
 //  Created by Haamed Sultani on Feb/1/19.
 //  Copyright © 2019 Haamed Sultani. All rights reserved.
-// Thanks to Scott Gardner for the insight
-// https://stackoverflow.com/a/33343958/3365488
+//  Thanks to Scott Gardner for the insight
+//  https://stackoverflow.com/a/33343958/3365488
 //
 
 import Foundation

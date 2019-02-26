@@ -43,6 +43,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     //MARK: - Views
     var tableView: UITableView!
     
+    // The view that tells the user how to add categories/sections to the table
+    // It is only visible when the tableview is empty
     var getStartedView: HomeGetStartedView = {
         var view = HomeGetStartedView()
         view.translatesAutoresizingMaskIntoConstraints = false // Conforms to auto-layout
@@ -112,10 +114,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.view.addSubview(tableView)
     }
     
-    // Purpose: Sets up all the view elements of the list page
-    // Called in viewDidLoad
+
     
     /// Sets all visual settings of this view
+    /// Called in viewDidLoad
     private func setupView() {
         // Customize navigation bar elements
         self.navigationItem.title = "App Name"
@@ -150,6 +152,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         loadCategoriesFromContext() // Load the categories
         loadItemsFromContext() // Load the items
     }
+    
+    
+    
     
     /****************************************/
     /****************************************/
@@ -208,6 +213,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    
     /****************************************/
     /****************************************/
     //MARK: - General Core Data Methods
@@ -219,6 +225,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         coreDataManager.saveContext() // Go to Data Model and save context
         self.tableView.reloadData() // Update the view
     }
+    
+    
     
     /****************************************/
     /****************************************/
@@ -311,7 +319,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    
+    
+
+    
+    /// Adds empty placeholder cells that the user uses to add new items
+    ///
+    /// This is called when loading the app after loading context data
+    /// When the user adds a new Item to the section
+    ///
+    /// - Parameter category: The Category entity that the use is adding the new Item to
     func addPlaceHolderCell(toCategory category: Category) {
+        // Toggle on tableview updating
         self.tableView.beginUpdates()
         
         let categoryIndex = categories.firstIndex(of: category) // Grab the index of the Category entity we are working in
@@ -322,11 +341,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let itemIndex = self.items[categoryIndex!].count-1 // Get the index of the dummy Item we just added to our tableView array
         
         let indexPath: IndexPath = IndexPath(row: itemIndex, section: categoryIndex!) // Set the indexPath
-        self.tableView.insertRows(at: [indexPath], with: .bottom)
+        self.tableView.insertRows(at: [indexPath], with: .bottom) // Finally add it to our visible tableview
         
+        // Toggle off tableview updating
         self.tableView.endUpdates()
     }
     
+    
+    
+    /// Adds a new Item entity to the specified Category
+    ///
+    /// - Parameters:
+    ///   - name: The name of the Item
+    ///   - category: The Category entity
+    ///   - cellType: Used to distinguish between dummy placeholder cells and real ones
     func add(itemName name:String, toCategory category: Category, type cellType: String) {
         let index = categories.firstIndex(of: category)! // Get the index of the Category we are adding to
         let newItem = coreDataManager.addItem(toCategory: category, withItemName: name, cellType: cellType)

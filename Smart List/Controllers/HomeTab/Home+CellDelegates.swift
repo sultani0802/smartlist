@@ -5,6 +5,10 @@
 //  Created by Haamed Sultani on Jan/1/19.
 //  Copyright © 2019 Haamed Sultani. All rights reserved.
 //
+//
+//  The delegate methods associated with a tableview's cells
+//
+//  SwipeCellKit: https://github.com/SwipeCellKit/SwipeCellKit
 
 
 import UIKit
@@ -12,7 +16,7 @@ import SwipeCellKit
 
 extension HomeViewController {
     
-    // Set the number of rows for each section
+    /// Set the number of rows for each section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items[section].count
     }
@@ -62,15 +66,15 @@ extension HomeViewController {
     
     
     
-    
+    /// What happens when you click on a tableview cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        // Deselect animation so that the cell doesn't stay highlighted even after touching
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     
     
-    
+    /// The functionality when the user swipes on a cell
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         // Only perform swipe actions if the user swipes from the right
         guard orientation == .right else {return nil}
@@ -110,7 +114,7 @@ extension HomeViewController {
             // Set the button(s) to the swipe options
             swipeActions = [deleteCategorySwipe]
         }
-            
+        
             
             
             
@@ -168,7 +172,7 @@ extension HomeViewController {
     }
     
     
-    
+    /// Options for SwipeCellKit
     func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
         
         var options = SwipeTableOptions()

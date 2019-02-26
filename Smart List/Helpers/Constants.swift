@@ -50,6 +50,6 @@ struct Constants {
     struct Units {
         static let WeightsPlural = ["milligrams", "grams", "kilograms", "pounds"]
         static let LiquidsPlural = ["millilitres", "litres"]
-        static let Other = ["teaspoons", "tablespoons", "cups", "oz"]
+        static let Other = ["units", "teaspoons", "tablespoons", "cups", "ounces", "quarts"]
     }
 }

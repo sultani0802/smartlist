@@ -8,6 +8,9 @@
 //  Thanks to user 'seeppp' for the code
 //  https://stackoverflow.com/a/42654937/3365488
 //
+//
+//
+// Allows me to draw borders for specific sides of views
 
 import UIKit
 

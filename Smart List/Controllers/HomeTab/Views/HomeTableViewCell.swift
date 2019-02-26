@@ -19,6 +19,7 @@ class HomeTableViewCell: SwipeTableViewCell {
         textField.translatesAutoresizingMaskIntoConstraints = false // Use Auto Layout
         textField.textAlignment = .left
         textField.textColor = Constants.ColorPalette.DarkGray
+        textField.setRightPaddingPoints(55) // Add padding to the right side
         textField.attributedPlaceholder = NSAttributedString(string: "tap here to start",
                                                              attributes: [
                                                                 NSAttributedString.Key.foregroundColor: Constants.ColorPalette.BabyBlue]) // Set placeholder text for the cell
@@ -87,5 +88,15 @@ extension HomeTableViewCell: UITextFieldDelegate {
         addNewCell?(nameText.text!)       // Call the callback
         
         return true
+    }
+    
+    /// Limits the number of characters the user can type (24)
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        guard let text = textField.text else { return true }
+        
+        let newLength = text.count + string.count - range.length
+        
+        return newLength <= 18
     }
 }

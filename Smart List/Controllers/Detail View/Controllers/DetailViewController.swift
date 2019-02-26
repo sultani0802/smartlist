@@ -52,6 +52,8 @@ class DetailViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        quantityView.quantityTextField.delegate = self
+        
         setupViews()
         setupModels()
     }
@@ -66,6 +68,8 @@ class DetailViewController: UIViewController {
         
         // Set the name of the Item
         midContainer.nameLabel.text = item?.name
+        // Set the quantity of the Item
+        midContainer.quantityButton.setTitle(item?.quantity, for: .normal)
         
         // Set the Expiry date to today's date
         if let date = item?.date {

@@ -7,6 +7,9 @@
 //
 // Special thanks to Luca Torella for this code
 // https://stackoverflow.com/users/1363156/luca-torella
+//
+//
+// This extension allows me to create colors using hex code
 
 import UIKit
 
