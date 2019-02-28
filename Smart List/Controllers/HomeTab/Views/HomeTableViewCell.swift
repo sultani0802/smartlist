@@ -65,13 +65,11 @@ class HomeTableViewCell: SwipeTableViewCell {
     
     //MARK: - My Methods
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("editing textfield")
         print(completed)
         self.accessoryType = .detailDisclosureButton
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        print("editing ended")
         print(completed)
         self.accessoryType = self.completed ? .checkmark : .none
     }

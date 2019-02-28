@@ -16,12 +16,12 @@ extension DetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     /// The number of different units
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return units.count
+        return workingUnits.count
     }
     
     /// Populate the pickerview with the different units of measurement
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let title = self.units[row]
+        let title = self.workingUnits[row]
         
         return title
     }
@@ -66,9 +66,15 @@ extension DetailViewController: UITextFieldDelegate {
         return true
     }
     
+    /// This method is called everytime the user hits the Enter key on the keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
         return true
+    }
+    
+    /// This method is called everytime the user types or deletes in the quantity textfield
+    @objc func textFieldDidChange(textField: UITextField) {
+        self.updateUnitDataSource()
     }
 }

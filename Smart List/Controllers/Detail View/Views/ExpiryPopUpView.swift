@@ -1,5 +1,5 @@
 //
-//  QuantityPopUpView.swift
+//  ExpiryPopUpView.swift
 //  Smart List
 //
 //  Created by Haamed Sultani on Feb/1/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class QuantityPopUpView: PopUpCardView {
+class ExpiryPopUpView: PopUpCardView {
     
     /****************************************/
     //MARK: - 1: Title Section
@@ -16,7 +16,7 @@ class QuantityPopUpView: PopUpCardView {
     var viewTitleLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Quantity"
+        label.text = "Expiration Date"
         label.textColor = Constants.ColorPalette.Orange
         label.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         label.textAlignment = .center
@@ -49,46 +49,28 @@ class QuantityPopUpView: PopUpCardView {
         return view
     }()
     
-    
     /****************************************/
-    //MARK: - 2: Quantity Section
+    //MARK: - 2: Date Picker Section
     /****************************************/
-    var quantityTextField: UITextField = {
-        var textfield = UITextField()
-        textfield.translatesAutoresizingMaskIntoConstraints = false
-        textfield.keyboardType = .decimalPad
-        textfield.text = "0"
-        textfield.font = UIFont(name: Constants.Visuals.fontName, size: 40)
-        textfield.textColor = Constants.ColorPalette.Orange
-        textfield.textAlignment = .center
-        textfield.adjustsFontSizeToFitWidth = true
-        textfield.borders(for: [.top, .right], width: 1, color: Constants.ColorPalette.Charcoal.withAlphaComponent(0.3))
-        textfield.addDoneToolbar()
-        
-        
-        return textfield
-    }()
     
-    
-    
-    /****************************************/
-    //MARK: - 3: Picker View Section
-    /****************************************/
-    var pickerView: UIPickerView = {
-        var picker = UIPickerView()
+    var datePicker: UIDatePicker = {
+        var picker = UIDatePicker()
         picker.translatesAutoresizingMaskIntoConstraints = false
-        picker.borders(for: [.top], width: 1, color: Constants.ColorPalette.Charcoal.withAlphaComponent(0.3))
+        picker.datePickerMode = .date
         
         return picker
     }()
     
     
     
-    //MARK: - Setup Methods
+    /****************************************/
+    //MARK: Setup Methods
+    /****************************************/
     override func setupUIComponents() {
-        
+        //
         // Title Stack View
-        titleStackView.addArrangedSubview(viewTitleLabel)   // Add 'Quantity' title to stack
+        //
+        titleStackView.addArrangedSubview(viewTitleLabel)   // Add 'Expiration Date' title to stack
         titleStackView.addArrangedSubview(saveButton)       // Add SAVE button to stack
         addSubview(titleStackView)                          // Add the stack to the view
         
@@ -106,26 +88,15 @@ class QuantityPopUpView: PopUpCardView {
             ])
         
         
-        // Quantity Field
-        addSubview(quantityTextField)                   // Add the textfield to the view
-        
-        // Activate the textfield constraints
+        //
+        // Date Picker View
+        //
+        addSubview(datePicker)
         NSLayoutConstraint.activate([
-            NSLayoutConstraint(item: quantityTextField, attribute: .top, relatedBy: .equal, toItem: titleStackView, attribute: .bottom, multiplier: 1.0, constant: 0),
-            quantityTextField.leadingAnchor.constraint(equalTo: leadingAnchor),
-            quantityTextField.bottomAnchor.constraint(equalTo: bottomAnchor),
-            quantityTextField.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.4)
-            ])
-        
-        // Picker View
-        addSubview(pickerView)                          // Add the pickerview to the view
-        
-        // Activate the pickerview constraints
-        NSLayoutConstraint.activate([
-            NSLayoutConstraint(item: pickerView, attribute: .top, relatedBy: .equal, toItem: titleStackView, attribute: .bottom, multiplier: 1, constant: 0),
-            pickerView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            pickerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            NSLayoutConstraint(item: pickerView, attribute: .leading, relatedBy: .equal, toItem: quantityTextField, attribute: .trailing, multiplier: 1, constant: 0)
+            datePicker.leadingAnchor.constraint(equalTo: leadingAnchor),
+            datePicker.bottomAnchor.constraint(equalTo: bottomAnchor),
+            datePicker.trailingAnchor.constraint(equalTo: trailingAnchor),
+            NSLayoutConstraint(item: datePicker, attribute: .top, relatedBy: .equal, toItem: titleStackView, attribute: .bottom, multiplier: 1, constant: 0)
             ])
     }
 }

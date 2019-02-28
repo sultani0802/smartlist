@@ -114,10 +114,11 @@ class DetailMidContainer: UIView {
     var expiryDate: UIButton = {
         var button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("2 weeks from now", for: .normal)
+        button.setTitle("Tap to set expiry", for: .normal)
         button.titleLabel?.textAlignment = .left
         button.setTitleColor(Constants.ColorPalette.BabyBlue, for: .normal)
         button.titleLabel?.font = UIFont(name: Constants.Visuals.fontName, size: 20)
+        button.addTarget(self, action: #selector(DetailViewController.expiryButtonTapped(_:)), for: .touchUpInside)
 
         return button
     }()

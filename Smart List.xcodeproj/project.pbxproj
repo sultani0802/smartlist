@@ -21,6 +21,7 @@
 		0C6F5840220DC92B00C730CB /* Home+NavBarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */; };
 		0C97799D22020C73009C3161 /* HomeTableviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C97799C22020C73009C3161 /* HomeTableviewHeader.swift */; };
 		0C97799F22024068009C3161 /* HexColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C97799E22024068009C3161 /* HexColorExtension.swift */; };
+		0CA2CCF32226D5970093DA1A /* ExpiryPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA2CCF22226D5970093DA1A /* ExpiryPopUpView.swift */; };
 		0CAE5C6E221B761B00F764CB /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE5C6D221B761B00F764CB /* DateHelper.swift */; };
 		0CBDC87E2220653000A4B7FF /* Detail+ViewActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBDC87D2220653000A4B7FF /* Detail+ViewActions.swift */; };
 		0CBDC8802220684100A4B7FF /* UIView+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBDC87F2220684100A4B7FF /* UIView+Animations.swift */; };
@@ -64,6 +65,7 @@
 		0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+NavBarItems.swift"; sourceTree = "<group>"; };
 		0C97799C22020C73009C3161 /* HomeTableviewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableviewHeader.swift; sourceTree = "<group>"; };
 		0C97799E22024068009C3161 /* HexColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorExtension.swift; sourceTree = "<group>"; };
+		0CA2CCF22226D5970093DA1A /* ExpiryPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryPopUpView.swift; sourceTree = "<group>"; };
 		0CAE5C6D221B761B00F764CB /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		0CBDC87D2220653000A4B7FF /* Detail+ViewActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Detail+ViewActions.swift"; sourceTree = "<group>"; };
 		0CBDC87F2220684100A4B7FF /* UIView+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animations.swift"; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				0C11B9B922138BC80003A87D /* DetailTopContainer.swift */,
 				0C11B9BB22138E420003A87D /* DetailMidContainer.swift */,
 				0C03948E221E37B700A7BEBF /* QuantityPopUpView.swift */,
+				0CA2CCF22226D5970093DA1A /* ExpiryPopUpView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CBDC8802220684100A4B7FF /* UIView+Animations.swift in Sources */,
+				0CA2CCF32226D5970093DA1A /* ExpiryPopUpView.swift in Sources */,
 				0C11B9BC22138E420003A87D /* DetailMidContainer.swift in Sources */,
 				0CF6B5802210ECA30049CF63 /* Home+SectionDelegates.swift in Sources */,
 				0CC767AD21F0304900752517 /* CategoryEnum.swift in Sources */,
