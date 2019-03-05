@@ -47,6 +47,8 @@ class HomeTableViewCell: SwipeTableViewCell {
     }
     
     
+
+    
     func setupUI() {
         // Customize View visual
         self.backgroundColor = .white
@@ -62,8 +64,13 @@ class HomeTableViewCell: SwipeTableViewCell {
             nameText.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
     }
-    
-    //MARK: - My Methods
+}
+
+
+
+
+
+extension HomeTableViewCell: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         print(completed)
         self.accessoryType = .detailDisclosureButton
@@ -74,11 +81,6 @@ class HomeTableViewCell: SwipeTableViewCell {
         self.accessoryType = self.completed ? .checkmark : .none
     }
     
-    
-}
-
-
-extension HomeTableViewCell: UITextFieldDelegate {
     // This delegate method is called when the user hits 'Enter' when they're done typing in the item
     // Once they are done adding an item to the list it creates a new empty cell below it
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

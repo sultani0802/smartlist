@@ -16,8 +16,6 @@ extension HomeViewController {
     func setupNavItems() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addButtonTapped))
         navigationItem.rightBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(self.editButtonPressed))
-//        navigationItem.leftBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
     }
     
     

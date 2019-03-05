@@ -156,7 +156,7 @@ class DetailMidContainer: UIView {
         view.sizeToFit()
         view.isEditable = true
         view.isScrollEnabled = false
-        view.text = "Here is some text about this food"
+        view.text = "Here is some text about this food\n\n\nHere is some text about this food\n\nHere is some text about this food"
         view.textAlignment = .left
         view.backgroundColor = Constants.ColorPalette.Yellow
         

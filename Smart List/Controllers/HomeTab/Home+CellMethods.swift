@@ -196,6 +196,9 @@ extension HomeViewController {
         let detailVC = DetailViewController()
         detailVC.item = item
         self.navigationController?.pushViewController(detailVC, animated: true)
+        
+        // Hide the keyboard
+        self.view.endEditing(true)
     }
     
     
@@ -206,5 +209,5 @@ extension HomeViewController {
     }
     
     
-
+    
 }

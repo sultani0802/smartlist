@@ -14,14 +14,29 @@ class DetailViewController: UIViewController {
     var originalUnits = [String]()
     var workingUnits = [String]()
     
-    
-    
+    // This variable is used to keep track of the tab bar's height
+    // so that when the user is finished editing, the insets for this view
+    // are maintained properly
+    public var tabBarHeight: CGFloat?
+
+    var activeText: UIView?
     
     
     //MARK: - Views
+    var scrollView: UIScrollView = {
+        var view = UIScrollView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        return view
+    }()
+    
+
+
     var topContainer: DetailTopContainer = {
         var view = DetailTopContainer()
         view.translatesAutoresizingMaskIntoConstraints = false
+        
         
         return view
     }()
@@ -29,6 +44,7 @@ class DetailViewController: UIViewController {
     var midContainer: DetailMidContainer = {
         var view = DetailMidContainer()
         view.translatesAutoresizingMaskIntoConstraints = false
+        
         
         return view
     }()
@@ -67,7 +83,10 @@ class DetailViewController: UIViewController {
         
         // Customize nav bar elements
         self.navigationItem.title = item?.name
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        
+        // Save the height of the tab bar
+        self.tabBarHeight = self.tabBarController!.tabBar.frame.height
         
         view.backgroundColor = .white
         
@@ -75,10 +94,27 @@ class DetailViewController: UIViewController {
         // Detect each time the user types in the quantity textfield
         quantityView.quantityTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
         
-        
+        midContainer.noteTextView.delegate = self
         
         setupViews()
         setupModels()
+        
+        
+        // Listen for keyboard events that will adjust the view
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        // Hide the keyboard if the user taps outside the keyboard
+        self.hideKeyboardWhenTappedAround()
+    }
+    
+    
+    deinit {
+        // Unregister for the keyboard notifications. Therefore, stop listening for the events
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     
@@ -91,7 +127,11 @@ class DetailViewController: UIViewController {
         updateUnitDataSource()
     }
     
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        self.view.endEditing(true)
+    }
     
     
     //MARK: - Initializers
@@ -111,15 +151,7 @@ class DetailViewController: UIViewController {
     
     
     
-
-    
-    
     func setupViews() {
-        view.addSubview(topContainer)
-        view.addSubview(midContainer)
-        view.addSubview(quantityView)
-        view.addSubview(expiryDateView)
-        
         setupConstraints()
         
         quantityView.pickerView.dataSource = self
@@ -128,21 +160,41 @@ class DetailViewController: UIViewController {
     }
     
     func setupConstraints() {
-        // Top Container
+        // Scroll View
+        view.addSubview(scrollView) // Add the scrollView to the view
+
         NSLayoutConstraint.activate([
-            topContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            topContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            topContainer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
-            topContainer.heightAnchor.constraint(greaterThanOrEqualTo: topContainer.widthAnchor, constant: 0)
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor)
             ])
         
-        // Mid Container
+        scrollView.addSubview(topContainer) // Add the top container (image view) to the Scroll View
+        scrollView.addSubview(midContainer) // Add the mid container (stackview) to the Scroll View
+        
         NSLayoutConstraint.activate([
+            
+            topContainer.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
+            topContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            topContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            
+            
             NSLayoutConstraint(item: midContainer, attribute: .top, relatedBy: .equal, toItem: topContainer, attribute: .bottom, multiplier: 1, constant: 30),
-            midContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
-            midContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5)
+            midContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            midContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            
+            midContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20),
+            midContainer.rightAnchor.constraint(equalTo: scrollView.rightAnchor)
             ])
         
+        
+  
+        scrollView.addSubview(quantityView)
+        scrollView.addSubview(expiryDateView)
         
         // Quantity Pop Up View
         NSLayoutConstraint.activate([
@@ -151,8 +203,8 @@ class DetailViewController: UIViewController {
             quantityView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
             quantityView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
             ])
-        
-        
+
+
         // Expiration Date Pop Up View
         NSLayoutConstraint.activate([
             expiryDateView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -160,6 +212,9 @@ class DetailViewController: UIViewController {
             expiryDateView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
             expiryDateView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
             ])
+        
+        
+        
     }
     
     
@@ -198,7 +253,6 @@ class DetailViewController: UIViewController {
     func abbreviateUnit(u : String) {
         let components = u.components(separatedBy: " ") // Separate the numeral and unit
         let unit : String = components[1]               // Grab the unit
-        print(unit)
         var shortUnit : String = Constants.Units[unit]! // Grab the short-hand version of it in Costants
         
         // Change unit to singular form iff quantity equals 1

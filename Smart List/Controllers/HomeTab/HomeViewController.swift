@@ -27,6 +27,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     let headerCellReuseIdentifier: String = Constants.CellID.HomeHeaderID
     
     //MARK: - Variables
+
+    // This variable is used to keep track of the tab bar's height
+    // so that when the user is finished editing, the insets for this view
+    // are maintained properly
+    public var tabBarHeight: CGFloat?
+
+    
     var defaultCategories : [String] = [
         Constants.DefaultCategories.Produce,
         Constants.DefaultCategories.Bakery,
@@ -66,9 +73,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        deleteAllCategories()
 //        deleteAllItems()
         
+        
+        
         // Initialization
         setupView() // Set up the view
         setupModels() // Set up the models
+        
+        // Save the height of the tab bar
+        self.tabBarHeight = self.tabBarController!.tabBar.frame.height
         
         // Show/hide instructions
         toggleInstructions()
@@ -78,10 +90,33 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Print the location of the device's documents
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        
+        
+        // Listen for keyboard events that will adjust the view
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        // Enable the keyboard hiding functionality
+        self.hideKeyboardWhenTappedAround()
     }
     
     
+    deinit {
+        // Unregister for the keyboard notifications. Therefore, stop listening for the events
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
     /****************************************/
     /****************************************/
     //MARK: - Initialization Methods
@@ -106,11 +141,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView = UITableView(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.size.height, width: self.view.frame.width
             , height: self.view.frame.height))
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Constraints applied so that the tableView isn't displayed behind the tab bar
+        let adjustForTabbarInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: self.tabBarController!.tabBar.frame.height, right: 0)
+        tableView.contentInset = adjustForTabbarInsets
+        tableView.scrollIndicatorInsets = adjustForTabbarInsets
+        
         // Register our cells to the tableview
         self.tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: homeCellReuseIdentifier)
         self.tableView.register(HomeTableviewHeader.self, forHeaderFooterViewReuseIdentifier: headerCellReuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
+        
         self.view.addSubview(tableView)
     }
     
@@ -138,8 +180,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Set the cell row height
         self.tableView.rowHeight = 50
         
-        // Dismiss the keyboard when the user drags the table
-        tableView.keyboardDismissMode = .interactive
+        // Dismiss the keyboard when the user scrolls the table view
+//        tableView.keyboardDismissMode = .onDrag
         
         // Remove cell seperators
         tableView.separatorStyle = .none
@@ -212,6 +254,35 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             getStartedView.isHidden = true
         }
     }
+    
+    
+    /// This method is called whenever the user triggers the keyboard to be shown or hidden
+    ///
+    /// - Parameter notification: the notification we listened to
+    @objc func keyboardWillChange(notification: Notification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size else {
+            return
+        }
+        
+        if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification
+        {
+            let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
+            
+            self.tableView.contentInset = contentInsets
+            self.tableView.scrollIndicatorInsets = contentInsets
+
+        } else if notification.name == UIResponder.keyboardWillHideNotification {
+            //Once keyboard disappears, restore original positions
+            var info = notification.userInfo!
+            let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+            let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: -keyboardSize!.height, right: 0.0)
+            self.tableView.contentInset = UIEdgeInsets.zero
+            self.tableView.scrollIndicatorInsets = contentInsets
+            self.view.endEditing(true)
+        }
+    }
+    
+    
     
     
     /****************************************/
@@ -379,3 +450,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.reloadData()
     }
 }
+
+
+

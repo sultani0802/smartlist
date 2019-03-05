@@ -50,8 +50,6 @@ class HomeGetStartedView: UIView {
         
         NSLayoutConstraint.activate([
             instructionText.widthAnchor.constraint(equalTo: self.widthAnchor),
-//            instructionText.heightAnchor.constraint(lessThanOrEqualTo: self.heightAnchor, multiplier: 0.7),
-//            instructionText.heightAnchor.constraint(equalTo: self.heightAnchor),
             instructionText.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             instructionText.centerYAnchor.constraint(equalTo: self.centerYAnchor)
             ])
