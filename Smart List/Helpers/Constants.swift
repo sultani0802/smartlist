@@ -49,14 +49,14 @@ struct Constants {
     }
     
     static let Units = ["milligrams":"mgs",
-                                "grams":"gs",
-                                "kilograms":"kgs",
-                                "pounds":"lbs",
-                                "millilitres":"mLs",
-                                "litres":"Ls",
-                                "units":"units",
-                                "teaspoons":"tsps",
-                                "tablespoons":"tbsps",
-                                "cups":"cups",
-                                "ounces":"oz"]
+                        "grams":"gs",
+                        "kilograms":"kgs",
+                        "pounds":"lbs",
+                        "millilitres":"mLs",
+                        "litres":"Ls",
+                        "units":"units",
+                        "teaspoons":"tsps",
+                        "tablespoons":"tbsps",
+                        "cups":"cups",
+                        "ounces":"oz"]
 }

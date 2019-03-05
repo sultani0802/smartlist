@@ -198,19 +198,19 @@ class DetailViewController: UIViewController {
         
         // Quantity Pop Up View
         NSLayoutConstraint.activate([
-            quantityView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            quantityView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            quantityView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
-            quantityView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
+            quantityView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            quantityView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
+            quantityView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.3),
+            quantityView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8)
             ])
 
 
         // Expiration Date Pop Up View
         NSLayoutConstraint.activate([
-            expiryDateView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            expiryDateView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            expiryDateView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
-            expiryDateView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
+            expiryDateView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            expiryDateView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
+            expiryDateView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.3),
+            expiryDateView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8)
             ])
         
         
@@ -313,4 +313,8 @@ class DetailViewController: UIViewController {
         
         expiryDateView.datePicker.setDate(expiryDate, animated: true)
     }
+    
+    
+    @objc func doneButtonTapped() { self.resignFirstResponder() }
+
 }

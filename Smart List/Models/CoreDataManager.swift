@@ -187,10 +187,13 @@ class CoreDataManager {
         saveContext()
     }
     
+    
+    /// Deletes all the Item entities saved to the device's Core Data DB
     func deleteAllItems() {
-        let deleteFetch: NSFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Item")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        let deleteFetch: NSFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Item") // Get the "Item" entity column
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch) // Create the request
         
+        // Try to delete all Item entities
         do {
             try context.execute(deleteRequest)
             saveContext()

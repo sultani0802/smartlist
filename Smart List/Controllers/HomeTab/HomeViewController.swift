@@ -63,6 +63,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     
+    
+    
+    
     /****************************************/
     /****************************************/
     //MARK: - View Controller Delegate Methods
@@ -70,6 +73,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     /****************************************/
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 //        deleteAllCategories()
 //        deleteAllItems()
         
@@ -109,14 +113,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
+    
+    
+    
+    
+    
     /****************************************/
     /****************************************/
     //MARK: - Initialization Methods
@@ -140,6 +142,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Instantiate the tableView
         tableView = UITableView(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.size.height, width: self.view.frame.width
             , height: self.view.frame.height))
+        // Use auto-layout for the tableView
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         // Constraints applied so that the tableView isn't displayed behind the tab bar

@@ -87,3 +87,30 @@ extension UITextField {
     }
     
 }
+
+
+
+extension UITextView {
+    /// Adds a "Done" button above the keyboard
+    ///
+    /// - Parameter onDone: Takes a target and selector function for customized functionality. Otherwise, it performs the default.
+    func addDoneToolbar(onDone: (target: Any, action: Selector)? = nil) {
+        // If no custom functionality is provided then perform the default
+        let onDone = onDone ?? (target: self, action: #selector(doneButtonTapped))
+        
+        // Create the toolbar
+        let toolbar: UIToolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.items = [
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+            UIBarButtonItem(title: "Done", style: .done, target: onDone.target, action: onDone.action)
+        ]
+        toolbar.sizeToFit()
+        
+        // Finally add the toolbar above the keyboard
+        self.inputAccessoryView = toolbar
+    }
+    
+    // Default actions: Hides the keyboard
+    @objc func doneButtonTapped() { self.resignFirstResponder() }
+}

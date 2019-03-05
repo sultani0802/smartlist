@@ -27,15 +27,10 @@ class PopUpCardView: UIView {
     
     // MARK - Setup Methods
     func setupView() {
+        // Rounded borders around the pop up
         self.layer.cornerRadius = 10
+        // Make the pop up a little transparent
         self.backgroundColor = Constants.ColorPalette.BabyBlue.withAlphaComponent(0.95)
-        
-        // Apply Gaussian blur to view
-        let blurEffect = UIBlurEffect(style: .dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = layer.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        view.addSubview(blurEffectView)
         
     }
     

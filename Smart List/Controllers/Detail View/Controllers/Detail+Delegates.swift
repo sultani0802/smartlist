@@ -79,6 +79,10 @@ extension DetailViewController: UITextFieldDelegate, UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         self.activeText = nil
+        
+        if textView == midContainer.noteTextView {
+            print("save notes to DB")
+        }
     }
     
     
@@ -87,11 +91,11 @@ extension DetailViewController: UITextFieldDelegate, UITextViewDelegate {
     //Mark: - TextField Delegates
     //
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        
         self.activeText = textField
         
         // When the user selects the quantity textfield it will clear the text if it's a 0
         if textField == quantityView.quantityTextField {
+            
             if textField.text == "0" {
                 textField.text = ""
             }
@@ -105,6 +109,16 @@ extension DetailViewController: UITextFieldDelegate, UITextViewDelegate {
     /// Everytime the user types in the numpad, this will check if it is a decimal
     /// If it is a decimal then it won't allow more than 1 decimal
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        // This was added to force the centering of the textfield when the user begins editing the quantity in the pop up
+        if textField == quantityView.quantityTextField {
+            NSLayoutConstraint.activate([
+                NSLayoutConstraint(item: quantityView.quantityTextField, attribute: .top, relatedBy: .equal, toItem: quantityView.titleStackView, attribute: .bottom, multiplier: 1.0, constant: 0),
+                quantityView.quantityTextField.leadingAnchor.constraint(equalTo: quantityView.leadingAnchor),
+                quantityView.quantityTextField.bottomAnchor.constraint(equalTo: quantityView.bottomAnchor),
+                quantityView.quantityTextField.widthAnchor.constraint(equalTo: quantityView.widthAnchor, multiplier: 0.4)
+                ])
+        }
         
         guard let text = textField.text else { return true }
         let dotCount: Int = (textField.text?.components(separatedBy: ".").count)! - 1
