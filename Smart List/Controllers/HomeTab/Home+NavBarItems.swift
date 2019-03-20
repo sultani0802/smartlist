@@ -19,16 +19,6 @@ extension HomeViewController {
     }
     
     
-    /// Checks if the table has any categories
-    /// If there are none then the Edit button is disabled, otherwise it is enabled
-    func editButtonIsEnabled() {
-        if categories.count <= 0 {
-            navigationItem.leftBarButtonItem?.isEnabled = false
-        } else {
-            navigationItem.leftBarButtonItem?.isEnabled = true
-        }
-    }
-    
     
     /// Purpose: This method is called when the user taps on the + sign at the top right
     ///
@@ -43,9 +33,9 @@ extension HomeViewController {
             alert.addAction(UIAlertAction(title: cat, style: .default, handler: {(UIAlertAction) in
                 self.tableView.beginUpdates()
                 
-                self.addCategory(categoryName: cat) // Add the Category entity to Core Data
-                self.tableView.insertSections(NSIndexSet(index: self.categories.count - 1) as IndexSet, with: .bottom) // Insert the Category section into the table view
-                self.addPlaceHolderCell(toCategory: self.categories[self.categories.count-1]) // Insert the dummy cell into the new Category
+                self.addCategory(categoryName: cat)                                                                         // Add the Category entity to Core Data
+                self.tableView.insertSections(NSIndexSet(index: self.categories.count - 1) as IndexSet, with: .bottom)      // Insert the Category section into the table view
+                self.addPlaceHolderCell(toCategory: self.categories[self.categories.count-1])                               // Insert the dummy cell into the new Category
                 
                 self.tableView.endUpdates()
                 // Scroll to the category the user just added
@@ -69,12 +59,11 @@ extension HomeViewController {
             // Lets the user confirm and add their custom category
             let okAction = UIKit.UIAlertAction(title: "Ok", style: .default, handler: {(UIAlertAction) in
                 let textField = customAlert.textFields![0]
-                //textField.text!
                 self.tableView.beginUpdates()
                 
-                self.addCategory(categoryName: textField.text!) // Add the Category entity to Core Data
-                self.tableView.insertSections(NSIndexSet(index: self.categories.count - 1) as IndexSet, with: .bottom) // Insert the Category section into the table view
-                self.addPlaceHolderCell(toCategory: self.categories[self.categories.count-1]) // Insert the dummy cell into the new Category
+                self.addCategory(categoryName: textField.text!)                                                             // Add the Category entity to Core Data
+                self.tableView.insertSections(NSIndexSet(index: self.categories.count - 1) as IndexSet, with: .bottom)      // Insert the Category section into the table view
+                self.addPlaceHolderCell(toCategory: self.categories[self.categories.count-1])                               // Insert the dummy cell into the new Category
                 
                 self.tableView.endUpdates()
                 
@@ -111,13 +100,11 @@ extension HomeViewController {
         
         // Cancel action
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(UIAlertAction) in
-            print("User cancelled selection")
         }))
         
         
         // Display the Alert Controller
         self.present(alert, animated: true, completion: {
-            print("completion block")
         })
     }
 }

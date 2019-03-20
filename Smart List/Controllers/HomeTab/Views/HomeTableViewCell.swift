@@ -8,18 +8,39 @@
 import UIKit
 import SwipeCellKit
 
+
+
+protocol HomeTableViewCellDelegate: class {
+    
+    // Called when the user finished typing
+    func didEndEditing(onCell cell: HomeTableViewCell)
+}
+
+
+
+
 class HomeTableViewCell: SwipeTableViewCell {
     
+    // Variable used to keep track of whether the user purchased the Item
+    // With this variable, the cell's accessory type is defined and set to either a checkmark or none
     var completed: Bool = false
+    
+    // The delegate class (the HomeTableViewController)
+    // This will be set in cellForRowAt()
+    weak var textDelegate: HomeTableViewCellDelegate?
+    
+    
     
     //MARK: - UI Elements
     var nameText: UITextField = {
         var textField = UITextField()
-        textField.returnKeyType = .done // Change the return key to "Done" instead of "return"
-        textField.translatesAutoresizingMaskIntoConstraints = false // Use Auto Layout
+        textField.returnKeyType = .done                                 // Change the return key to "Done" instead of "return"
+        textField.translatesAutoresizingMaskIntoConstraints = false     // Use Auto Layout
         textField.textAlignment = .left
-        textField.textColor = Constants.ColorPalette.DarkGray
-        textField.setRightPaddingPoints(55) // Add padding to the right side
+        textField.adjustsFontSizeToFitWidth = true
+        textField.font = UIFont(name: Constants.Visuals.fontName, size: 20)
+        textField.textColor = Constants.ColorPalette.TealBlue
+        textField.setRightPaddingPoints(55)                             // Add padding to the right side
         textField.attributedPlaceholder = NSAttributedString(string: "tap here to start",
                                                              attributes: [
                                                                 NSAttributedString.Key.foregroundColor: Constants.ColorPalette.BabyBlue]) // Set placeholder text for the cell
@@ -27,10 +48,38 @@ class HomeTableViewCell: SwipeTableViewCell {
         return textField
     }()
     
+    var itemImageView: UIImageView = {
+        var imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        
+        return imageView
+    }()
+    
+    var quantityLabel: UILabel = {
+        var label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .left
+        label.text = ""
+        label.borders(for: [.left], width: 0.5, color: .black)
+        
+        if DeviceType.IS_IPHONE_5 {
+            label.font = UIFont(name: Constants.Visuals.fontName, size: 15)
+        }
+        else {
+            label.font = UIFont(name: Constants.Visuals.fontName, size: 20)
+        }
+        
+        return label
+    }()
+    
+    
     
     //MARK: - Callbacks
     // This is called when the user hits 'Enter' on the keyboard
     var addNewCell: ((_ text: String) -> Void)?
+    
     
     //MARK: - Init Methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -47,56 +96,31 @@ class HomeTableViewCell: SwipeTableViewCell {
     }
     
     
-
+    
     
     func setupUI() {
         // Customize View visual
         self.backgroundColor = .white
         
         // Adding the UI elements to our cell
+        addSubview(itemImageView)
         addSubview(nameText)
         
         // Setting up the constraints
         NSLayoutConstraint.activate([
-            nameText.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            
+            // Item's image
+            itemImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            itemImageView.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+            itemImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+            itemImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
+            
+            
+            // Item's name textfield
+            nameText.leadingAnchor.constraint(equalTo: itemImageView.trailingAnchor, constant: 4),
             nameText.topAnchor.constraint(equalTo: topAnchor),
             nameText.trailingAnchor.constraint(equalTo: trailingAnchor),
             nameText.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
-    }
-}
-
-
-
-
-
-extension HomeTableViewCell: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        print(completed)
-        self.accessoryType = .detailDisclosureButton
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        print(completed)
-        self.accessoryType = self.completed ? .checkmark : .none
-    }
-    
-    // This delegate method is called when the user hits 'Enter' when they're done typing in the item
-    // Once they are done adding an item to the list it creates a new empty cell below it
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        nameText.resignFirstResponder() // Hide the keyboard
-        addNewCell?(nameText.text!)       // Call the callback
-        
-        return true
-    }
-    
-    /// Limits the number of characters the user can type (24)
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        guard let text = textField.text else { return true }
-        
-        let newLength = text.count + string.count - range.length
-        
-        return newLength <= 18
     }
 }

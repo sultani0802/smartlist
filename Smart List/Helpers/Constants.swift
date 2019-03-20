@@ -10,6 +10,10 @@ import UIKit
 
 struct Constants {
     
+    struct General {
+        static let AppName = "Smart Kitchen"
+    }
+    
     struct Visuals {
         static let fontName = "Gill Sans"
     }
@@ -33,10 +37,15 @@ struct Constants {
         static let HeaderHeight = 50
     }
     
+    struct DetailView {
+        static let notesPlaceholder = "Write some notes about the item here.\n\nFavorite recipes, etc."
+    }
     
     struct CellID {
-        static let HomeHeaderID =           "homeHeaderCellID"
-        static let HomeTableViewCellID =    "homeCellID"
+        static let HomeHeaderID =               "homeHeaderCellID"
+        static let HomeTableViewCellID =        "homeCellID"
+        static let KitchenTableViewCellID =     "kitchenTVCellID"
+        static let KitchenCollectionViewCellID = "kitchenCVCellID"
     }
     
     struct ColorPalette {
@@ -59,4 +68,103 @@ struct Constants {
                         "tablespoons":"tbsps",
                         "cups":"cups",
                         "ounces":"oz"]
+    
+    static let ItemImages : [String] = [
+                        "apples",
+                        "asparagus",
+                        "avocados",
+                        "bacon",
+                        "baguette",
+                        "bananas",
+                        "beer",
+                        "bell peppers",
+                        "biscuits",
+                        "black pepper",
+                        "blueberries",
+                        "blueberry jam",
+                        "bottle thermos",
+                        "bowl",
+                        "bread",
+                        "broccoli",
+                        "burgers",
+                        "cabbage",
+                        "cake",
+                        "candy",
+                        "canned food",
+                        "carrots",
+                        "cauliflower",
+                        "cereals",
+                        "cheese",
+                        "cherries",
+                        "chicken drumsticks",
+                        "chives",
+                        "chocolate bar",
+                        "coconut",
+                        "coffee",
+                        "cookies",
+                        "corn",
+                        "croissant",
+                        "cupcakes",
+                        "doughnuts",
+                        "eggs",
+                        "eggplant",
+                        "fig",
+                        "fish",
+                        "flour",
+                        "garlic",
+                        "gingerbead",
+                        "grapes",
+                        "grean peas",
+                        "groceries",
+                        "ham",
+                        "honey",
+                        "hot dogs",
+                        "ice cream",
+                        "ketchup",
+                        "lemon",
+                        "limes",
+                        "milk",
+                        "mushrooms",
+                        "nutella",
+                        "octopus",
+                        "olives",
+                        "onions",
+                        "oranges",
+                        "pancakes",
+                        "pasta",
+                        "peaches",
+                        "pears",
+                        "peppers",
+                        "pepsi",
+                        "pickles",
+                        "pie",
+                        "pineapple",
+                        "pizza",
+                        "pomegranates",
+                        "popsicles",
+                        "potato wedges",
+                        "potatoes",
+                        "pretzels",
+                        "pumpkin",
+                        "radish",
+                        "raspberries",
+                        "rice",
+                        "salad",
+                        "salami",
+                        "salmon",
+                        "salt",
+                        "sausages",
+                        "shrimp",
+                        "soda pop",
+                        "spaghetti",
+                        "steak",
+                        "strawberries",
+                        "strawberry jam",
+                        "sushi",
+                        "tea",
+                        "tomatoes",
+                        "turkey",
+                        "watermelon",
+                        "wine"
+    ]
 }

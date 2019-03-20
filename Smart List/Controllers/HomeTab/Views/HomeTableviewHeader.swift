@@ -14,7 +14,6 @@ class HomeTableviewHeader: UITableViewHeaderFooterView {
     //MARK: - UI Elements
     var separatorView: UIView = {
         var view = UIView()
-        
         view.backgroundColor = .gray
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -23,11 +22,10 @@ class HomeTableviewHeader: UITableViewHeaderFooterView {
     
     let title: UILabel = {
         var lbl = UILabel()
-        
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textAlignment = .left
         lbl.textColor = Constants.ColorPalette.Charcoal
-        lbl.font = UIFont.boldSystemFont(ofSize: 20)
+        lbl.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         
         return lbl
     }()

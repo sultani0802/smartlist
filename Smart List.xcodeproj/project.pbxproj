@@ -15,14 +15,24 @@
 		0C11B9BA22138BC80003A87D /* DetailTopContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11B9B922138BC80003A87D /* DetailTopContainer.swift */; };
 		0C11B9BC22138E420003A87D /* DetailMidContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11B9BB22138E420003A87D /* DetailMidContainer.swift */; };
 		0C13BC4C2223581E0027BABD /* UITextfieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13BC4B2223581E0027BABD /* UITextfieldExtensions.swift */; };
+		0C232ED522319BF500F05BC5 /* DeviceTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C232ED422319BF500F05BC5 /* DeviceTypes.swift */; };
+		0C2541B722419D13003901CA /* KitchenPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2541B622419D13003901CA /* KitchenPageViewController.swift */; };
+		0C2541B92241A06C003901CA /* KitchenPage+PageDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2541B82241A06C003901CA /* KitchenPage+PageDelegates.swift */; };
+		0C296E3F2239952000188959 /* ItemImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C296E3E2239952000188959 /* ItemImageHelper.swift */; };
 		0C3F4A9721F7B47F00003A86 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CF47D9421F3E8240084C1BA /* DataModel.xcdatamodeld */; };
 		0C3F4A9921F7BAD700003A86 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3F4A9821F7BAD700003A86 /* CoreDataManager.swift */; };
 		0C49DA3D2211D7090081D811 /* HomeGetStartedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */; };
 		0C6F5840220DC92B00C730CB /* Home+NavBarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */; };
+		0C96BF43223D904F00C9F00C /* UnitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96BF42223D904F00C9F00C /* UnitHelper.swift */; };
 		0C97799D22020C73009C3161 /* HomeTableviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C97799C22020C73009C3161 /* HomeTableviewHeader.swift */; };
 		0C97799F22024068009C3161 /* HexColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C97799E22024068009C3161 /* HexColorExtension.swift */; };
+		0C97DCC02240723300D49241 /* Kitchen+CollectionViewDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C97DCBF2240723300D49241 /* Kitchen+CollectionViewDelegates.swift */; };
+		0C97DCC22240776E00D49241 /* KitchenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C97DCC12240776E00D49241 /* KitchenCollectionViewCell.swift */; };
 		0CA2CCF32226D5970093DA1A /* ExpiryPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA2CCF22226D5970093DA1A /* ExpiryPopUpView.swift */; };
 		0CAE5C6E221B761B00F764CB /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE5C6D221B761B00F764CB /* DateHelper.swift */; };
+		0CB180C6223EE71E00927014 /* Home+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB180C5223EE71E00927014 /* Home+TextFieldDelegate.swift */; };
+		0CB180C8223EFB2E00927014 /* HomeTVCell+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB180C7223EFB2E00927014 /* HomeTVCell+Delegates.swift */; };
+		0CB180CA223F4CEE00927014 /* KitchenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB180C9223F4CEE00927014 /* KitchenViewController.swift */; };
 		0CBDC87E2220653000A4B7FF /* Detail+ViewActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBDC87D2220653000A4B7FF /* Detail+ViewActions.swift */; };
 		0CBDC8802220684100A4B7FF /* UIView+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBDC87F2220684100A4B7FF /* UIView+Animations.swift */; };
 		0CBE4B8D2200C39000A23330 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBE4B8C2200C39000A23330 /* Constants.swift */; };
@@ -34,6 +44,7 @@
 		0CC767AD21F0304900752517 /* CategoryEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC767AC21F0304900752517 /* CategoryEnum.swift */; };
 		0CC767B021F0306F00752517 /* Home+CellMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC767AF21F0306F00752517 /* Home+CellMethods.swift */; };
 		0CC767B221F0307D00752517 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC767B121F0307D00752517 /* HomeTableViewCell.swift */; };
+		0CCD9E4A2232E11E0075D8AD /* Levenshtein.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD9E492232E11E0075D8AD /* Levenshtein.swift */; };
 		0CD0F50E2214C3EC0018982E /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CD0F50D2214C3EC0018982E /* Storyboard.storyboard */; };
 		0CD0F5102214FC720018982E /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD0F50F2214FC720018982E /* UIButton+Extensions.swift */; };
 		0CE00E0122288FCE00BA0C43 /* UIViewController+keyboardHiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE00E0022288FCE00BA0C43 /* UIViewController+keyboardHiding.swift */; };
@@ -61,13 +72,23 @@
 		0C11B9B922138BC80003A87D /* DetailTopContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTopContainer.swift; sourceTree = "<group>"; };
 		0C11B9BB22138E420003A87D /* DetailMidContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMidContainer.swift; sourceTree = "<group>"; };
 		0C13BC4B2223581E0027BABD /* UITextfieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextfieldExtensions.swift; sourceTree = "<group>"; };
+		0C232ED422319BF500F05BC5 /* DeviceTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypes.swift; sourceTree = "<group>"; };
+		0C2541B622419D13003901CA /* KitchenPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenPageViewController.swift; sourceTree = "<group>"; };
+		0C2541B82241A06C003901CA /* KitchenPage+PageDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KitchenPage+PageDelegates.swift"; sourceTree = "<group>"; };
+		0C296E3E2239952000188959 /* ItemImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemImageHelper.swift; sourceTree = "<group>"; };
 		0C3F4A9821F7BAD700003A86 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGetStartedView.swift; sourceTree = "<group>"; };
 		0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+NavBarItems.swift"; sourceTree = "<group>"; };
+		0C96BF42223D904F00C9F00C /* UnitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitHelper.swift; sourceTree = "<group>"; };
 		0C97799C22020C73009C3161 /* HomeTableviewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableviewHeader.swift; sourceTree = "<group>"; };
 		0C97799E22024068009C3161 /* HexColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorExtension.swift; sourceTree = "<group>"; };
+		0C97DCBF2240723300D49241 /* Kitchen+CollectionViewDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Kitchen+CollectionViewDelegates.swift"; sourceTree = "<group>"; };
+		0C97DCC12240776E00D49241 /* KitchenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenCollectionViewCell.swift; sourceTree = "<group>"; };
 		0CA2CCF22226D5970093DA1A /* ExpiryPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiryPopUpView.swift; sourceTree = "<group>"; };
 		0CAE5C6D221B761B00F764CB /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		0CB180C5223EE71E00927014 /* Home+TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+TextFieldDelegate.swift"; sourceTree = "<group>"; };
+		0CB180C7223EFB2E00927014 /* HomeTVCell+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeTVCell+Delegates.swift"; sourceTree = "<group>"; };
+		0CB180C9223F4CEE00927014 /* KitchenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenViewController.swift; sourceTree = "<group>"; };
 		0CBDC87D2220653000A4B7FF /* Detail+ViewActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Detail+ViewActions.swift"; sourceTree = "<group>"; };
 		0CBDC87F2220684100A4B7FF /* UIView+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animations.swift"; sourceTree = "<group>"; };
 		0CBE4B8C2200C39000A23330 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -83,6 +104,7 @@
 		0CC767AC21F0304900752517 /* CategoryEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEnum.swift; sourceTree = "<group>"; };
 		0CC767AF21F0306F00752517 /* Home+CellMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+CellMethods.swift"; sourceTree = "<group>"; };
 		0CC767B121F0307D00752517 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		0CCD9E492232E11E0075D8AD /* Levenshtein.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Levenshtein.swift; sourceTree = "<group>"; };
 		0CD0F50D2214C3EC0018982E /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		0CD0F50F2214FC720018982E /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		0CE00E0022288FCE00BA0C43 /* UIViewController+keyboardHiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+keyboardHiding.swift"; sourceTree = "<group>"; };
@@ -118,24 +140,27 @@
 				0CC767A521F0268C00752517 /* TabBarController.swift */,
 				0C08646E221C623A0017AA6D /* PopUpCardView.swift */,
 				0CC767A921F0302800752517 /* HomeTab */,
-				0C11B9B822138B4E0003A87D /* Detail View */,
+				0C11B9B822138B4E0003A87D /* Home Detail View */,
+				0CB180CB223F4CF300927014 /* Kitchen Tab */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		0C11B9B822138B4E0003A87D /* Detail View */ = {
+		0C11B9B822138B4E0003A87D /* Home Detail View */ = {
 			isa = PBXGroup;
 			children = (
 				0CBDC88222206EB800A4B7FF /* Controllers */,
 				0CBDC88122206EAF00A4B7FF /* Views */,
 			);
-			path = "Detail View";
+			path = "Home Detail View";
 			sourceTree = "<group>";
 		};
 		0C9779A022024173009C3161 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				0CBE4B8C2200C39000A23330 /* Constants.swift */,
+				0CCD9E492232E11E0075D8AD /* Levenshtein.swift */,
+				0C232ED422319BF500F05BC5 /* DeviceTypes.swift */,
 				0CAE5C6D221B761B00F764CB /* DateHelper.swift */,
 				0CE00E0022288FCE00BA0C43 /* UIViewController+keyboardHiding.swift */,
 				0C13BC4B2223581E0027BABD /* UITextfieldExtensions.swift */,
@@ -143,8 +168,30 @@
 				0CD0F50F2214FC720018982E /* UIButton+Extensions.swift */,
 				0C06D571221F677700E48F21 /* UIViewBordersExtension.swift */,
 				0CBDC87F2220684100A4B7FF /* UIView+Animations.swift */,
+				0C296E3E2239952000188959 /* ItemImageHelper.swift */,
+				0C96BF42223D904F00C9F00C /* UnitHelper.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		0C97DCBC224058AA00D49241 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0C97DCC12240776E00D49241 /* KitchenCollectionViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0CB180CB223F4CF300927014 /* Kitchen Tab */ = {
+			isa = PBXGroup;
+			children = (
+				0C2541B622419D13003901CA /* KitchenPageViewController.swift */,
+				0C2541B82241A06C003901CA /* KitchenPage+PageDelegates.swift */,
+				0CB180C9223F4CEE00927014 /* KitchenViewController.swift */,
+				0C97DCBF2240723300D49241 /* Kitchen+CollectionViewDelegates.swift */,
+				0C97DCBC224058AA00D49241 /* Views */,
+			);
+			path = "Kitchen Tab";
 			sourceTree = "<group>";
 		};
 		0CBDC88122206EAF00A4B7FF /* Views */ = {
@@ -218,6 +265,8 @@
 				0CF6B57F2210ECA30049CF63 /* Home+SectionMethods.swift */,
 				0CC767AF21F0306F00752517 /* Home+CellMethods.swift */,
 				0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */,
+				0CB180C5223EE71E00927014 /* Home+TextFieldDelegate.swift */,
+				0CB180C7223EFB2E00927014 /* HomeTVCell+Delegates.swift */,
 				0CF6B5812210ED940049CF63 /* Views */,
 			);
 			path = HomeTab;
@@ -417,22 +466,33 @@
 				0C6F5840220DC92B00C730CB /* Home+NavBarItems.swift in Sources */,
 				0CE00E0122288FCE00BA0C43 /* UIViewController+keyboardHiding.swift in Sources */,
 				0CC767B221F0307D00752517 /* HomeTableViewCell.swift in Sources */,
+				0C296E3F2239952000188959 /* ItemImageHelper.swift in Sources */,
+				0CB180C6223EE71E00927014 /* Home+TextFieldDelegate.swift in Sources */,
+				0CB180CA223F4CEE00927014 /* KitchenViewController.swift in Sources */,
 				0C039491221E420400A7BEBF /* Detail+Delegates.swift in Sources */,
 				0C13BC4C2223581E0027BABD /* UITextfieldExtensions.swift in Sources */,
+				0C96BF43223D904F00C9F00C /* UnitHelper.swift in Sources */,
 				0C06D572221F677700E48F21 /* UIViewBordersExtension.swift in Sources */,
 				0CC767B021F0306F00752517 /* Home+CellMethods.swift in Sources */,
+				0C232ED522319BF500F05BC5 /* DeviceTypes.swift in Sources */,
 				0CF47D9621F3E8240084C1BA /* DataModel.xcdatamodeld in Sources */,
 				0C08646F221C623A0017AA6D /* PopUpCardView.swift in Sources */,
 				0CC7678621F0262300752517 /* AppDelegate.swift in Sources */,
+				0C2541B92241A06C003901CA /* KitchenPage+PageDelegates.swift in Sources */,
 				0C97799D22020C73009C3161 /* HomeTableviewHeader.swift in Sources */,
 				0CAE5C6E221B761B00F764CB /* DateHelper.swift in Sources */,
 				0C49DA3D2211D7090081D811 /* HomeGetStartedView.swift in Sources */,
+				0CCD9E4A2232E11E0075D8AD /* Levenshtein.swift in Sources */,
+				0C97DCC02240723300D49241 /* Kitchen+CollectionViewDelegates.swift in Sources */,
 				0CC767A621F0268C00752517 /* TabBarController.swift in Sources */,
 				0C97799F22024068009C3161 /* HexColorExtension.swift in Sources */,
 				0C3F4A9921F7BAD700003A86 /* CoreDataManager.swift in Sources */,
+				0C97DCC22240776E00D49241 /* KitchenCollectionViewCell.swift in Sources */,
 				0CBDC87E2220653000A4B7FF /* Detail+ViewActions.swift in Sources */,
 				0CD0F5102214FC720018982E /* UIButton+Extensions.swift in Sources */,
 				0C11B9BA22138BC80003A87D /* DetailTopContainer.swift in Sources */,
+				0C2541B722419D13003901CA /* KitchenPageViewController.swift in Sources */,
+				0CB180C8223EFB2E00927014 /* HomeTVCell+Delegates.swift in Sources */,
 				0CC767A821F026B600752517 /* HomeViewController.swift in Sources */,
 				0C11B9B722137F770003A87D /* DetailViewController.swift in Sources */,
 				0CBE4B8D2200C39000A23330 /* Constants.swift in Sources */,

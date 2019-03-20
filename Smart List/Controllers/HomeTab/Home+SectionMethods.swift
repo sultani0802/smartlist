@@ -28,13 +28,13 @@ extension HomeViewController {
     }
     
     
-    // Set the height of the section label
+    /// Set the height of the section label
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat(Constants.TableView.HeaderHeight)
     }
     
     
-    // Set the number of sections
+    /// Set the number of sections
     func numberOfSections(in tableView: UITableView) -> Int {
         return categories.count
     }

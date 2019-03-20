@@ -39,11 +39,6 @@ class CoreDataManager {
     /****************************************/
     /****************************************/
     
-    /**
-     - Description: Loads the categories that are saved in Core Data
-     
-     - returns: An array of all the Category entities
-    */
     
     /// Loads the categories that are saved in Core Data
     ///
@@ -116,7 +111,7 @@ class CoreDataManager {
     /// - Returns: A boolean if the Category title is found in the Data Model
     func categoryExists(categoryName: String) -> Bool {
         let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
-        let predicate = NSPredicate(format: "name CONTAINS[cd] %@", categoryName)
+        let predicate = NSPredicate(format: "name ==[cd] %@", categoryName)
         fetchRequest.predicate = predicate
         
         var results: [Category] = []
@@ -162,10 +157,10 @@ class CoreDataManager {
     ///   - name: The title of the Item entity
     /// - Returns: The new Item entity to be added to the Table View
     func addItem(toCategory category: Category, withItemName name: String, cellType: String) -> Item {
-        let newItem = Item(context: context) // Create new Item
-        newItem.name = name // Set the name
-        newItem.cellType = cellType // Set the type to a real or dummy cell
-        category.addToItems(newItem) // Create relationship with appropriate Category
+        let newItem = Item(context: context)                                    // Create new Item
+        newItem.name = name                                                     // Set the name
+        newItem.cellType = cellType                                             // Set the type to a real or dummy cell
+        category.addToItems(newItem)                                            // Create relationship with appropriate Category
         saveContext()
         
         return newItem
@@ -175,9 +170,9 @@ class CoreDataManager {
     /// Delete an Item entity from the Data Model and save the context
     ///
     /// - Parameter itemName: The title of the Item entity
-    func deleteItem(itemName: String) {
+    func deleteItem(itemName: String, categoryName: String) {
         let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "name = %@", itemName)
+        fetchRequest.predicate = NSPredicate(format: "name = %@ && category.name = %@", itemName, categoryName)
         let results: [Item] = try! context.fetch(fetchRequest)
         
         for obj in results {
@@ -190,8 +185,8 @@ class CoreDataManager {
     
     /// Deletes all the Item entities saved to the device's Core Data DB
     func deleteAllItems() {
-        let deleteFetch: NSFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Item") // Get the "Item" entity column
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch) // Create the request
+        let deleteFetch: NSFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Item")          // Get the "Item" entity column
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)                                 // Create the request
         
         // Try to delete all Item entities
         do {

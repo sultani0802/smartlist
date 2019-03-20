@@ -7,5 +7,6 @@ platform :ios, '11.0'
 target 'Smart List' do
   # Pods for To Do List
     pod 'SwipeCellKit'
+    Pod 'Segmentio'
     
 end

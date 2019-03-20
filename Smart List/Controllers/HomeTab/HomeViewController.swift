@@ -27,7 +27,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     let headerCellReuseIdentifier: String = Constants.CellID.HomeHeaderID
     
     //MARK: - Variables
-
+    
     // This variable is used to keep track of the tab bar's height
     // so that when the user is finished editing, the insets for this view
     // are maintained properly
@@ -54,9 +54,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     // It is only visible when the tableview is empty
     var getStartedView: HomeGetStartedView = {
         var view = HomeGetStartedView()
-        view.translatesAutoresizingMaskIntoConstraints = false // Conforms to auto-layout
+        view.translatesAutoresizingMaskIntoConstraints = false                          // Conforms to auto-layout
         view.backgroundColor = Constants.ColorPalette.Yellow.withAlphaComponent(0.7)
-        view.isHidden = true // Instruction view is hidden unless the table view is empty
+        view.isHidden = true                                                            // Instruction view is hidden unless the table view is empty
         
         return view
     }()
@@ -71,6 +71,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     //MARK: - View Controller Delegate Methods
     /****************************************/
     /****************************************/
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,19 +79,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        deleteAllItems()
         
         
-        
         // Initialization
-        setupView() // Set up the view
-        setupModels() // Set up the models
+        setupView()                                 // Set up the view
+        setupModels()                               // Set up the models
         
         // Save the height of the tab bar
         self.tabBarHeight = self.tabBarController!.tabBar.frame.height
         
         // Show/hide instructions
         toggleInstructions()
-        
-        // Enable edit button if there are categories
-        editButtonIsEnabled()
         
         // Print the location of the device's documents
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
@@ -138,10 +135,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             ])
     }
     
+    
+    /// Create the tableview, set it's content insets, set delegate/datasource, and register cells
+    /// Called in setupView()
     private func setupTableview() {
         // Instantiate the tableView
-        tableView = UITableView(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.size.height, width: self.view.frame.width
-            , height: self.view.frame.height))
+        tableView = UITableView(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.size.height, width: self.view.frame.width, height: self.view.frame.height))
         // Use auto-layout for the tableView
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -153,10 +152,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Register our cells to the tableview
         self.tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: homeCellReuseIdentifier)
         self.tableView.register(HomeTableviewHeader.self, forHeaderFooterViewReuseIdentifier: headerCellReuseIdentifier)
+        
         tableView.dataSource = self
         tableView.delegate = self
         
+        // Add tableview to the view
         self.view.addSubview(tableView)
+        
+        self.tableView.rowHeight = 65           // Set the cell row height
+        
+        tableView.keyboardDismissMode = .onDrag // Dismiss the keyboard when the user scrolls the table view
+        
+        tableView.separatorStyle = .none        // Remove cell seperators
     }
     
 
@@ -165,37 +172,24 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     /// Called in viewDidLoad
     private func setupView() {
         // Customize navigation bar elements
-        self.navigationItem.title = "App Name"
+        self.navigationItem.title = Constants.General.AppName
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        // Add the tableview
-        setupTableview()
+        setupTableview()                        // Add the tableview
+
+        setupGetStartedView()                   // Add instruction view
         
-        // Add instruction view
-        setupGetStartedView()
+        setupNavItems()                         // Add navigation bar buttons
         
-        // Add navigation bar buttons
-        setupNavItems()
-        
-        // Set background color
-        self.view.backgroundColor = .white
-        
-        // Set the cell row height
-        self.tableView.rowHeight = 50
-        
-        // Dismiss the keyboard when the user scrolls the table view
-//        tableView.keyboardDismissMode = .onDrag
-        
-        // Remove cell seperators
-        tableView.separatorStyle = .none
+        self.view.backgroundColor = .white      // Set background color
     }
     
     
     /// Purpose: Sets up all the models
     /// Called in viewDidLoad
     private func setupModels() {
-        loadCategoriesFromContext() // Load the categories
-        loadItemsFromContext() // Load the items
+        loadCategoriesFromContext()     // Load the categories
+        loadItemsFromContext()          // Load the items
     }
     
     
@@ -215,7 +209,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let _ = self.items[categoryIndex].first(where: {$0.name == ""}) {
             return true
         } else {
-            self.categories[categoryIndex].hasDummy = false // Set the dummy indicator to false
+            self.categories[categoryIndex].hasDummy = false         // Set the dummy indicator to false
             return false
         }
     }
@@ -244,44 +238,44 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-    /// Allows the user to remove categories
-    @objc func editButtonPressed() {
-        print("edit button pressed")
-        tableView.setEditing(!tableView.isEditing, animated: true)
-    }
-    
+    /// Displays or hides the get started pop up depending on whether there are categories in the tableview
+    /// This method is called in viewDidLoad and whenever the user adds/removes a category
     func toggleInstructions() {
+        // If there are no visible cells in the tableview, category array and item array is empty
+        // Display the get started view
         if tableView.visibleCells.isEmpty && categories.count <= 0 && items.count <= 0 {
             getStartedView.isHidden = false
-        } else {
+        } else {    // Otherwise, hide the get started view
             getStartedView.isHidden = true
         }
     }
     
     
-    /// This method is called whenever the user triggers the keyboard to be shown or hidden
+    /// This view listens for keyboard events so this method is called whenever the user
+    /// triggers the keyboard to be shown or hidden
     ///
     /// - Parameter notification: the notification we listened to
     @objc func keyboardWillChange(notification: Notification) {
+        // Get the keyboard size
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size else {
             return
         }
         
+        // Check the notification that we listened to
+        // If the keyboard became visible
         if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification
         {
+            // Set the content and scroll indicator's insets to above the keyboard
             let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
             
             self.tableView.contentInset = contentInsets
             self.tableView.scrollIndicatorInsets = contentInsets
 
-        } else if notification.name == UIResponder.keyboardWillHideNotification {
+        } else if notification.name == UIResponder.keyboardWillHideNotification {    // If the keyboard is hidden
             //Once keyboard disappears, restore original positions
-            var info = notification.userInfo!
-            let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
-            let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: -keyboardSize!.height, right: 0.0)
-            self.tableView.contentInset = UIEdgeInsets.zero
+            let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: self.tabBarController!.tabBar.frame.height, right: 0.0)
+            self.tableView.contentInset = contentInsets
             self.tableView.scrollIndicatorInsets = contentInsets
-            self.view.endEditing(true)
         }
     }
     
@@ -296,8 +290,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     /// Saves the current working data to the Data Model
     func saveContext() {
-        coreDataManager.saveContext() // Go to Data Model and save context
-        self.tableView.reloadData() // Update the view
+        coreDataManager.saveContext()           // Go to Data Model and save context
+        self.tableView.reloadData()             // Update the view
     }
     
     
@@ -310,7 +304,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     /// Loads the Categories from Data Model
     private func loadCategoriesFromContext() {
-        categories = coreDataManager.loadCategories() // Make a request to fetch the Category entities in the database
+        categories = coreDataManager.loadCategories()   // Make a request to fetch the Category entities in the database
     }
     
     /// Adds a Category to the Data Model and the Table View
@@ -323,9 +317,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 // Add new category to table View's array
                 self.categories.append(newCategory)
                 self.items.append([])
-                
-                // Enable the edit button
-                navigationItem.leftBarButtonItem?.isEnabled = true
                 
                 toggleInstructions()
             }
@@ -407,15 +398,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Toggle on tableview updating
         self.tableView.beginUpdates()
         
-        let categoryIndex = categories.firstIndex(of: category) // Grab the index of the Category entity we are working in
+        let categoryIndex = categories.firstIndex(of: category)                             // Grab the index of the Category entity we are working in
         
         let newDummyItem: Item = coreDataManager.addItem(toCategory: category, withItemName: "", cellType: Constants.CellType.DummyCell) // Create a new dummmy Item entity
-        items[categoryIndex!].append(newDummyItem) // Add the dummy entity to our tableView array
+        items[categoryIndex!].append(newDummyItem)                                          // Add the dummy entity to our tableView array
         
-        let itemIndex = self.items[categoryIndex!].count-1 // Get the index of the dummy Item we just added to our tableView array
+        let itemIndex = self.items[categoryIndex!].count-1                                  // Get the index of the dummy Item we just added to our tableView array
         
-        let indexPath: IndexPath = IndexPath(row: itemIndex, section: categoryIndex!) // Set the indexPath
-        self.tableView.insertRows(at: [indexPath], with: .bottom) // Finally add it to our visible tableview
+        let indexPath: IndexPath = IndexPath(row: itemIndex, section: categoryIndex!)       // Set the indexPath
+        self.tableView.insertRows(at: [indexPath], with: .bottom)                           // Finally add it to our visible tableview
         
         // Toggle off tableview updating
         self.tableView.endUpdates()
@@ -430,18 +421,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     ///   - category: The Category entity
     ///   - cellType: Used to distinguish between dummy placeholder cells and real ones
     func add(itemName name:String, toCategory category: Category, type cellType: String) {
-        let index = categories.firstIndex(of: category)! // Get the index of the Category we are adding to
+        let index = categories.firstIndex(of: category)!        // Get the index of the Category we are adding to
         let newItem = coreDataManager.addItem(toCategory: category, withItemName: name, cellType: cellType)
         
-        items[index].append(newItem) // Add to items tableview array
+        items[index].append(newItem)                            // Add to items tableview array
     }
     
     
     /// Deletes an Item from the Data Model and the Table View
     ///
     /// - Parameter itemName: The title of the Item entity
-    func deleteItem(itemName: String) {
-        coreDataManager.deleteItem(itemName: itemName)
+    func deleteItem(itemName: String, categoryName: String) {
+        coreDataManager.deleteItem(itemName: itemName, categoryName: categoryName)
         tableView.reloadData()
     }
     

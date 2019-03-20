@@ -36,6 +36,7 @@ extension UITextField {
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
             UIBarButtonItem(title: "Done", style: .done, target: onDone.target, action: onDone.action)
         ]
+        
         toolbar.sizeToFit()
         
         self.inputAccessoryView = toolbar
@@ -59,6 +60,7 @@ extension UITextField {
         ]
         toolbar.sizeToFit()
         
+        // Finally add the toolbar above the keyboard
         self.inputAccessoryView = toolbar
     }
     
@@ -110,6 +112,8 @@ extension UITextView {
         // Finally add the toolbar above the keyboard
         self.inputAccessoryView = toolbar
     }
+    
+    
     
     // Default actions: Hides the keyboard
     @objc func doneButtonTapped() { self.resignFirstResponder() }

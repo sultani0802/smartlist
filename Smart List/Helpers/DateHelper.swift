@@ -13,23 +13,22 @@ import Foundation
 class DateHelper {
     
     static let shared = DateHelper()
-    private init() {} // Prevents creation of multiple instances
+    private init() {}                                   // Prevents creation of multiple instances
     
     
     /// Creates a Date object with todays date and
     /// time and then...
     /// - Returns: the string version
     func getCurrentDate() -> String {
-        // Get current date and time
-        let currentDate = Date()
+        let currentDate = Date()                        // Get current date and time
         
         // Format the date
         let formatter = DateFormatter()
-        formatter.dateStyle = .medium // Feb 19, 2019
-        formatter.timeStyle = .none // No time displayed
+        formatter.dateStyle = .medium                   // Feb 19, 2019
+        formatter.timeStyle = .none                     // No time displayed
         
-        // Get the date in String format
-        return formatter.string(from: currentDate)
+        
+        return formatter.string(from: currentDate)      // Return the date in String format
     }
     
     
