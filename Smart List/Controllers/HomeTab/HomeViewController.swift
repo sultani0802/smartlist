@@ -102,6 +102,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.hideKeyboardWhenTappedAround()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        updateItemIDs()             // Update the Item ID's based on their index path
+    }
     
     deinit {
         // Unregister for the keyboard notifications. Therefore, stop listening for the events
@@ -280,7 +285,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-    
+    func updateItemIDs() {
+        for section in 0..<items.count {
+            for item in 0..<items[section].count {
+                items[section][item].id = Double(section) + (Double(item)/Double(10))
+            }
+        }
+        
+        saveContext()
+    }
     
     /****************************************/
     /****************************************/
@@ -371,7 +384,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             requestItems.predicate = itemPredicate
             
             // Instantiate the items tableView array with the loaded Item entities
-            //items[index] = coreDataManager.fetchItems(request: requestItems)
             items.append(coreDataManager.fetchItems(request: requestItems))
             
             guard let _ = items[index].first(where: {$0.cellType == Constants.CellType.DummyCell}) else {
@@ -383,8 +395,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
     }
-    
-    
     
 
     
@@ -431,8 +441,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     /// Deletes an Item from the Data Model and the Table View
     ///
     /// - Parameter itemName: The title of the Item entity
-    func deleteItem(itemName: String, categoryName: String) {
-        coreDataManager.deleteItem(itemName: itemName, categoryName: categoryName)
+    func deleteItem(itemId: Double, categoryName: String) {
+        coreDataManager.deleteItem(itemId: itemId, categoryName: categoryName)
         tableView.reloadData()
     }
     
