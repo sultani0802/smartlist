@@ -17,12 +17,13 @@ extension DetailViewController {
         if sender == expiryDateView.saveButton {
             
             self.item!.expiryDate = expiryDateView.datePicker.date          // Set the expiration date of the Item
+            
             CoreDataManager.shared.saveContext()                            // Save to core data
             
-            // Update the expiry UIButton's title with the new date
+                                                                            // Update the expiry UIButton's title with the new date
             self.midContainer.expiryDate.setTitle(DateHelper.shared.getDateString(of: (self.item?.expiryDate)!), for: .normal)
             
-            // Hide the pop up view
+                                                                            // Hide the pop up view
             self.expiryDateView.fadeOut()
             
             

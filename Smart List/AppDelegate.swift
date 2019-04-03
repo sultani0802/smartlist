@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.rootViewController = TabBarController()
-//        window?.rootViewController = DetailViewController()
         window?.makeKeyAndVisible()
         
         UINavigationBar.appearance().barTintColor = Constants.ColorPalette.DarkGray
@@ -31,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         self.saveContext()
     }
-
+    
     
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {

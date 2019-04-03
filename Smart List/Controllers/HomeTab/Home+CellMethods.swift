@@ -100,7 +100,7 @@ extension HomeViewController {
                 
                 self.items[indexPath.section].remove(at: indexPath.row)                             // Delete the Item from the tableView array
                 self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)     // Delete the cell from the tableView
-                self.deleteItem(itemName: item.name!, categoryName: category.name!)                 // Delete from Core Data
+                self.deleteItem(itemId: item.id!, categoryName: category.name!)                 // Delete from Core Data
 
                 print("Can not add new cell since current cell is empty")
             }
@@ -178,12 +178,12 @@ extension HomeViewController {
             let deleteAction = SwipeAction(style: .default, title: "Delete") {
                 (action, indexPath) in
                 
-                if let itemName = item.name {
-                    print("\nDELETING ITEM: \(itemName)\n")
+                if let itemId : String = item.id {
+                    print("\nDELETING ITEM: \(item.name!), id: \(itemId)\n")
                     self.items[indexPath.section].remove(at: indexPath.row)                 // Delete the Item from the tableView array
                     action.fulfill(with: .delete)                                           // Fulfill the delete action BEFORE deleting from Core Data
                     let categoryName = self.categories[indexPath.section].name              // Grab Category name
-                    self.deleteItem(itemName: itemName, categoryName: categoryName!)        // Delete from Core Data
+                    self.deleteItem(itemId: itemId, categoryName: categoryName!)        // Delete from Core Data
                     
                 }
             }
@@ -253,14 +253,5 @@ extension HomeViewController {
         
         // Hide the keyboard
         self.view.endEditing(true)
-    }
-    
-    
-    func prepare(for segue: UIStoryboardSegue, sender: Item) {
-        // If we are going to the Detail View...
-        // instantiate the Item entity corresponding to that view
-        if let detailVC = segue.destination as? DetailViewController {
-            detailVC.item = sender
-        }
     }
 }

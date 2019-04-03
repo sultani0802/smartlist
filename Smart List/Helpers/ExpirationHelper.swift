@@ -7,3 +7,14 @@
 //
 
 import Foundation
+
+class ExpiratinHelper {
+    
+    static let shared = ExpiratinHelper()
+    private init() {}                                   // Prevents creation of multiple instances
+    
+    
+    func isExpired(item: Item) {
+        
+    }
+}

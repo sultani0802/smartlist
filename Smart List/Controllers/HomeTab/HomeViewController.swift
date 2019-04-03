@@ -104,8 +104,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        updateItemIDs()             // Update the Item ID's based on their index path
     }
     
     deinit {
@@ -195,6 +193,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func setupModels() {
         loadCategoriesFromContext()     // Load the categories
         loadItemsFromContext()          // Load the items
+        
+        items.forEach {$0.forEach { print($0.id)}}
     }
     
     
@@ -285,15 +285,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-    func updateItemIDs() {
-        for section in 0..<items.count {
-            for item in 0..<items[section].count {
-                items[section][item].id = Double(section) + (Double(item)/Double(10))
-            }
-        }
-        
-        saveContext()
-    }
+//    func updateItemIDs() {
+//        for section in 0..<items.count {
+//            for item in 0..<items[section].count {
+//                items[section][item].id = Double(section) + (Double(item)/Double(10))
+//            }
+//        }
+//
+//        saveContext()
+//    }
     
     /****************************************/
     /****************************************/
@@ -410,7 +410,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let categoryIndex = categories.firstIndex(of: category)                             // Grab the index of the Category entity we are working in
         
-        let newDummyItem: Item = coreDataManager.addItem(toCategory: category, withItemName: "", cellType: Constants.CellType.DummyCell) // Create a new dummmy Item entity
+        let newDummyItem: Item = coreDataManager.addItem(toCategory: category, withItemName: "",
+                                                         cellType: Constants.CellType.DummyCell) // Create a new dummmy Item entity
         items[categoryIndex!].append(newDummyItem)                                          // Add the dummy entity to our tableView array
         
         let itemIndex = self.items[categoryIndex!].count-1                                  // Get the index of the dummy Item we just added to our tableView array
@@ -441,7 +442,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     /// Deletes an Item from the Data Model and the Table View
     ///
     /// - Parameter itemName: The title of the Item entity
-    func deleteItem(itemId: Double, categoryName: String) {
+    func deleteItem(itemId: String, categoryName: String) {
         coreDataManager.deleteItem(itemId: itemId, categoryName: categoryName)
         tableView.reloadData()
     }

@@ -83,7 +83,6 @@ extension DetailViewController: UITextFieldDelegate, UITextViewDelegate {
         if textView == midContainer.noteTextView {
             print("save notes to DB")
             
-            print(midContainer.noteTextView.text)
             
             // Update the notes in the Item entity
             self.item?.notes = midContainer.noteTextView.text

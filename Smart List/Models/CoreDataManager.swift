@@ -137,7 +137,7 @@ class CoreDataManager {
     ///
     /// - Parameter request: The fetch request for Item entity
     /// - Returns: An array of Item entities
-    func fetchItems(request: NSFetchRequest<Item>)-> [Item] {
+    func fetchItems(request: NSFetchRequest<Item>) -> [Item] {
         var result: [Item] = []
         
         do {
@@ -147,6 +147,18 @@ class CoreDataManager {
         }
         
         return result
+    }
+    
+    
+    /// Queries the Core Data database for Items that have been completed
+    ///
+    /// - Returns: an array of Items that have been completed
+    func fetchCompletedItems() -> [Item] {
+        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "completed == %@", NSNumber(booleanLiteral: true))  // predicate looks for completed attribute to be true
+        let results : [Item] = try! context.fetch(fetchRequest)
+        
+        return results
     }
     
     
@@ -161,7 +173,10 @@ class CoreDataManager {
         newItem.name = name                                                     // Set the name
         newItem.cellType = cellType                                             // Set the type to a real or dummy cell
         category.addToItems(newItem)                                            // Create relationship with appropriate Category
-        saveContext()
+        saveContext()                                                           // Save context
+        
+        newItem.id = newItem.objectID.uriRepresentation().absoluteString        // Set the ID *AFTER* saving (because new core data objects have a temp objectID until context is saved)
+        saveContext()                                                           // Save the Item with the new objectID
         
         return newItem
     }
@@ -170,9 +185,9 @@ class CoreDataManager {
     /// Delete an Item entity from the Data Model and save the context
     ///
     /// - Parameter itemName: The title of the Item entity
-    func deleteItem(itemName: String, categoryName: String) {
+    func deleteItem(itemId: String, categoryName: String) {
         let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "name = %@ && category.name = %@", itemName, categoryName)
+        fetchRequest.predicate = NSPredicate(format: "id = %@ && category.name = %@", String(itemId), categoryName)
         let results: [Item] = try! context.fetch(fetchRequest)
         
         for obj in results {

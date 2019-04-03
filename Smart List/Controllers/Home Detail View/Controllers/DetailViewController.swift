@@ -125,6 +125,7 @@ class DetailViewController: UIViewController {
         topContainer.itemImageView.image = UIImage(named: (self.item?.imageName ?? "groceries"))
         loadQuantityPopUpModel()
         loadExpiryPopUpModel()
+        
         self.midContainer.quantityButton.setTitle(UnitHelper.shared.abbreviateUnit(u: ((self.item?.quantity)!)), for: .normal)
         updateUnitDataSource()
         loadItemNotes()
@@ -294,7 +295,7 @@ class DetailViewController: UIViewController {
     /// Scrolls the datepicker to the Data we just loaded
     func loadExpiryPopUpModel() {
         guard let expiryDate : Date = self.item?.expiryDate else {return}
-        
+
         expiryDateView.datePicker.setDate(expiryDate, animated: true)
     }
     

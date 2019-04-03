@@ -29,7 +29,7 @@ class ExpiryPopUpView: PopUpCardView {
     var saveButton: UIButton = {
         var button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Done", for: .normal)
+        button.setTitle("Save", for: .normal)
         button.setTitleColor(Constants.ColorPalette.Charcoal, for: .normal)
         button.titleLabel!.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         button.layer.cornerRadius = 10

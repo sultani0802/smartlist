@@ -16,8 +16,17 @@ extension HomeViewController {
     func setupNavItems() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addButtonTapped))
         navigationItem.rightBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
+        
+        let doneShoppingBarButtonItem = UIBarButtonItem(title: "Done Shopping", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneShoppingButtonTapped))
+        navigationItem.leftBarButtonItem = doneShoppingBarButtonItem
+        navigationItem.leftBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
     }
     
+    
+    
+    @objc func doneShoppingButtonTapped() {
+        print("done shopping!")
+    }
     
     
     /// Purpose: This method is called when the user taps on the + sign at the top right

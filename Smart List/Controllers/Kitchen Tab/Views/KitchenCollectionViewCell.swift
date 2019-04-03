@@ -16,7 +16,7 @@ class KitchenCollectionViewCell: UICollectionViewCell {
     var itemImageView: UIImageView = {
         var view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.image = UIImage(named: "tomatoes")
+        view.image = UIImage(named: "groceries")
         view.contentMode = .scaleAspectFit
         
         return view
@@ -25,7 +25,7 @@ class KitchenCollectionViewCell: UICollectionViewCell {
     var nameLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Tomatoes"
+        label.text = "Groceries"
         
         return label
     }()
@@ -33,7 +33,8 @@ class KitchenCollectionViewCell: UICollectionViewCell {
     var expiryLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Expires in 4 days"
+        label.adjustsFontSizeToFitWidth = true
+        label.text = "Set an expiration date"
         
         return label
     }()
