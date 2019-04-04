@@ -209,9 +209,10 @@ extension HomeViewController {
                     cell.completed = false
                     self.tableView.cellForRow(at: indexPath)?.accessoryType = .none
                 }
-                
+                self.toggleDoneShoppingButton()
                 self.coreDataManager.saveContext()
             }
+            
             completedAction.backgroundColor = .green
             completedAction.hidesWhenSelected = true
             

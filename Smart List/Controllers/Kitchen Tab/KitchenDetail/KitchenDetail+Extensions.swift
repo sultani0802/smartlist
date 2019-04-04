@@ -1,29 +1,29 @@
 //
-//  DetailViewActions.swift
+//  KitchenDetail+Extensions.swift
 //  Smart List
 //
-//  Created by Haamed Sultani on Feb/1/19.
+//  Created by Haamed Sultani on Apr/1/19.
 //  Copyright © 2019 Haamed Sultani. All rights reserved.
 //
 
 import UIKit
 
-extension DetailViewController {
+extension KitchenDetailViewController {
     
     /// Hide the quantity pop up view with animation
     ///
     /// - Parameter sender: the button clicked to trigger this action
-    @objc func doneButtonTapped(_ sender: UIButton) {
+    @objc override func doneButtonTapped(_ sender: UIButton) {
         if sender == expiryDateView.saveButton {
             
             self.item!.expiryDate = expiryDateView.datePicker.date          // Set the expiration date of the Item
             
             CoreDataManager.shared.saveContext()                            // Save to core data
             
-                                                                            // Update the expiry UIButton's title with the new date
+            // Update the expiry UIButton's title with the new date
             self.midContainer.expiryDate.setTitle(DateHelper.shared.getDateString(of: (self.item?.expiryDate)!), for: .normal)
             
-                                                                            // Hide the pop up view
+            // Hide the pop up view
             self.expiryDateView.fadeOut()
             
             
@@ -47,24 +47,35 @@ extension DetailViewController {
             self.midContainer.quantityButton.setTitle(UnitHelper.shared.abbreviateUnit(u: ((self.item?.quantity)!)), for: .normal)
             
         }
-        
     }
     
     
-    /// Display the quantity pop up view with animation
-    ///
-    /// - Parameter sender: The button clicked to trigger this action
-    @objc func quantityButtonTapped(_ sender: UIButton) {
+    
+    override func textViewDidEndEditing(_ textView: UITextView) {
+        self.activeText = nil
         
-        self.quantityView.quantityTextField.resignFirstResponder()      // Hide the keyboard
-        self.quantityView.fadeIn()
+        if textView == midContainer.noteTextView {
+            print("save notes to DB")
+            
+            
+            // Update the notes in the Item entity
+            self.item?.notes = midContainer.noteTextView.text
+            // Save to Core Data
+            CoreDataManager.shared.saveContext()
+        }
     }
     
-    
-    /// Display the expiry pop up view with a fading in animation
-    ///
-    /// - Parameter sender: The button the user tapped to trigger this action
-    @objc func expiryButtonTapped(_ sender: UIButton) {
-        self.expiryDateView.fadeIn()            // Fade in the pop up view
+    override func textFieldDidEndEditing(_ textField: UITextField) {
+        self.activeText = nil
+        
+        // If the user dismisses the keyboard or taps the Done key
+        if textField == midContainer.storeTextField && textField.text?.trimmingCharacters(in: .whitespaces) != "" {
+            if let store = midContainer.storeTextField.text {
+                self.item?.store = store
+                CoreDataManager.shared.saveContext()
+            }
+        } else {
+            textField.text = ""
+        }
     }
 }

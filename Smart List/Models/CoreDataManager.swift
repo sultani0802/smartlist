@@ -162,6 +162,45 @@ class CoreDataManager {
     }
     
     
+    
+    /// Accesses Core Data and gets all the Kitchen Item entities
+    ///
+    /// - Returns: A [KitchenItem] of Items that have been completed (aka purchased)
+    func fetchKitchenItems() -> [KitchenItem] {
+        var result: [KitchenItem] = []
+        
+        let request: NSFetchRequest<KitchenItem> = KitchenItem.fetchRequest()
+        
+        do {
+            result = try context.fetch(request)
+        } catch {
+            print("Error loading Kitchen Items from context: \(error)")
+        }
+        
+        return result
+    }
+    
+    
+    /// Takes an Item from the list when the user swipes 'Done' and adds it to the KitchenItem entity table
+    ///
+    /// - Parameter item: The Item that the user just completed (aka just purchased)
+    func addKitchenItem(item: Item) {
+        let newItem = KitchenItem(context: context)                             // Create new Kitchen Item
+        newItem.completed = item.completed
+        newItem.expiryDate = item.expiryDate
+        newItem.id = item.id
+        newItem.imageName = item.imageName
+        newItem.isExpired = item.isExpired
+        newItem.name = item.name                                                // Set the properties...
+        newItem.notes = item.notes
+        newItem.purchaseDate = item.purchaseDate
+        newItem.quantity = item.quantity
+        newItem.store = item.store
+        
+        saveContext()                                                           // Save context
+    }
+    
+    
     /// Add an Item entity to the Data Model and save the context
     ///
     /// - Parameters:

@@ -36,7 +36,7 @@ class DetailMidContainer: UIView {
         button.setTitle("tap here change quantity", for: .normal)
         button.sizeToFit()
         button.contentEdgeInsets = UIEdgeInsets(top: 1, left: 4, bottom: 1, right: 4)
-        button.addTarget(self, action: #selector(DetailViewController.quantityButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(DetailVC.quantityButtonTapped(_:)), for: .touchUpInside)
         
         if DeviceType.IS_IPHONE_5 {
             button.titleLabel?.font = UIFont(name: Constants.Visuals.fontName, size: 15)
@@ -146,7 +146,7 @@ class DetailMidContainer: UIView {
         button.setTitle("Tap to set expiry", for: .normal)
         button.titleLabel?.textAlignment = .left
         button.titleLabel?.font = UIFont(name: Constants.Visuals.fontName, size: 20)
-        button.addTarget(self, action: #selector(DetailViewController.expiryButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(DetailVC.expiryButtonTapped(_:)), for: .touchUpInside)
 
         return button
     }()

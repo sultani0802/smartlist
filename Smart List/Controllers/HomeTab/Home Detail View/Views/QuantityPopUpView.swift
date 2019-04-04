@@ -33,7 +33,7 @@ class QuantityPopUpView: PopUpCardView {
         button.setTitleColor(Constants.ColorPalette.Charcoal, for: .normal)
         button.titleLabel!.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(DetailViewController.doneButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(DetailVC.doneButtonTapped(_:)), for: .touchUpInside)
         
         return button
     }()

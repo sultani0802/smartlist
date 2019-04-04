@@ -17,15 +17,33 @@ extension HomeViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addButtonTapped))
         navigationItem.rightBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
         
-        let doneShoppingBarButtonItem = UIBarButtonItem(title: "Done Shopping", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneShoppingButtonTapped))
+        doneShoppingBarButtonItem = UIBarButtonItem(title: "Done Shopping", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneShoppingButtonTapped))
         navigationItem.leftBarButtonItem = doneShoppingBarButtonItem
         navigationItem.leftBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
     }
     
     
     
+    /// Goes throught all the Items in the list and adds the completed Items to our KitchenItem entity table
+    /// Deletes the Items from the list if they are completed
     @objc func doneShoppingButtonTapped() {
-        print("done shopping!")
+        
+        self.items.forEach {                                                                            // Go through each category
+            $0.forEach {                                                                                // Go through each item in that category
+                if $0.completed                                                                         // If it is completed
+                {
+                    self.coreDataManager.addKitchenItem(item: $0)                                       // Add the completed Item to our Core Data KitchenItem entity table
+
+                    let categoryIndex : Int = self.categories.firstIndex(of: $0.category!)!             // Get the category index of the item
+                    let itemIndex : Int = self.items[categoryIndex].firstIndex(of: $0)!                 // Get the item index of the item
+                    let indexPath: IndexPath = IndexPath(row: itemIndex, section: categoryIndex)        // Set the indexPath
+                    
+                    self.items[categoryIndex].remove(at: itemIndex)                                     // Remove the item from the datasource array
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)                             // Remove from the cell from the tableview
+                    self.deleteItem(itemId: $0.id!, categoryName: $0.category!.name!)                   // Delete the Item entity from Core Data
+                }
+            }
+        }
     }
     
     

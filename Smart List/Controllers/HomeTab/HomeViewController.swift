@@ -19,6 +19,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     //MARK: - Class Properties
     /****************************************/
     /****************************************/
+    
     // Core Data Manager (Singleton)
     let coreDataManager = CoreDataManager.shared
     
@@ -49,6 +50,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //MARK: - Views
     var tableView: UITableView!
+    var doneShoppingBarButtonItem : UIBarButtonItem?
+
     
     // The view that tells the user how to add categories/sections to the table
     // It is only visible when the tableview is empty
@@ -104,6 +107,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        self.toggleDoneShoppingButton()
     }
     
     deinit {
@@ -112,7 +117,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
-    
     
     
     
@@ -193,8 +197,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func setupModels() {
         loadCategoriesFromContext()     // Load the categories
         loadItemsFromContext()          // Load the items
-        
-        items.forEach {$0.forEach { print($0.id)}}
     }
     
     
@@ -285,15 +287,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-//    func updateItemIDs() {
-//        for section in 0..<items.count {
-//            for item in 0..<items[section].count {
-//                items[section][item].id = Double(section) + (Double(item)/Double(10))
-//            }
-//        }
-//
-//        saveContext()
-//    }
+    func toggleDoneShoppingButton() {
+        for x in 0 ..< self.categories.count {
+            for y in 0 ..< self.items[x].count {
+                if self.items[x][y].completed {
+                    self.doneShoppingBarButtonItem?.isEnabled = true
+                    return
+                }
+            }
+        }
+        
+        self.doneShoppingBarButtonItem?.isEnabled = false
+    }
     
     /****************************************/
     /****************************************/

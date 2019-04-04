@@ -9,7 +9,7 @@
 import UIKit
 
 protocol KitchenCollectionViewCellDelegate : class {
-    func userSelectedItem(item: Item)
+    func userSelectedItem(item: KitchenItem)
 }
 
 
@@ -41,7 +41,7 @@ class KitchenViewController: UIViewController {
     //MARK: - TableView Data Source
     /****************************************/
     /****************************************/
-    var model : [Item] = [Item]()
+    var model : [KitchenItem] = [KitchenItem]()
     
     
     
@@ -121,6 +121,7 @@ class KitchenViewController: UIViewController {
     //
     
     /// Calls the appropriate method to load Items into the collectionView
+    
     func loadItems() {
         if pageIndex == 0 {                 // 1st Page: Expired Items
             loadExpiredItems()
@@ -136,9 +137,9 @@ class KitchenViewController: UIViewController {
     
     /// Loads all the expired Items
     func loadExpiredItems() {
-        var expiredItems = [Item]()
+        var expiredItems = [KitchenItem]()
         
-        for item in coreDataManager.fetchCompletedItems() {
+        for item in coreDataManager.fetchKitchenItems() {
             if item.expiryDate != nil, item.expiryDate! < DateHelper.shared.getCurrentDateObject() {
                 expiredItems.append(item)
             }
@@ -150,9 +151,9 @@ class KitchenViewController: UIViewController {
     
     /// Loads all the fresh Items
     func loadFreshItems() {
-        var freshItems = [Item]()
+        var freshItems = [KitchenItem]()
         
-        for item in coreDataManager.fetchCompletedItems() {
+        for item in coreDataManager.fetchKitchenItems() {
             if item.expiryDate != nil, item.expiryDate! > DateHelper.shared.getCurrentDateObject() {
                 freshItems.append(item)
             }
@@ -164,6 +165,6 @@ class KitchenViewController: UIViewController {
     
     /// Loads all Items that the user has purchased
     func loadCompletedItems() {
-        self.model = coreDataManager.fetchCompletedItems()
+        self.model = coreDataManager.fetchKitchenItems()
     }
 }

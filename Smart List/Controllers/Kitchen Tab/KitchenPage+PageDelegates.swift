@@ -63,8 +63,8 @@ extension KitchenPageViewController: KitchenCollectionViewCellDelegate {
     /// Segue's to the detail view of the Item the user selected
     ///
     /// - Parameter item: Item the user wants to edit
-    func userSelectedItem(item: Item) {
-        let detailVC = DetailViewController()                                               // Create the detail view
+    func userSelectedItem(item: KitchenItem) {
+        let detailVC = KitchenDetailViewController()                                               // Create the detail view
         detailVC.item = item                                                                // Set the Item the user wants to edit
         self.navigationController?.pushViewController(detailVC, animated: true)             // Show the detail view
     }

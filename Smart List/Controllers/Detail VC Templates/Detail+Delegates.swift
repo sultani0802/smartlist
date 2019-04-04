@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension DetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension DetailVC: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -36,7 +36,7 @@ extension DetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
 
 
-extension DetailViewController: UITextFieldDelegate, UITextViewDelegate {
+extension DetailVC: UITextFieldDelegate, UITextViewDelegate {
     
     @objc func keyboardWillChange(notification: Notification) {
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size else {
@@ -78,17 +78,7 @@ extension DetailViewController: UITextFieldDelegate, UITextViewDelegate {
     
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        self.activeText = nil
-        
-        if textView == midContainer.noteTextView {
-            print("save notes to DB")
-            
-            
-            // Update the notes in the Item entity
-            self.item?.notes = midContainer.noteTextView.text
-            // Save to Core Data
-            CoreDataManager.shared.saveContext()
-        }
+        // To be implemented by subclasses
     }
     
     
@@ -109,17 +99,7 @@ extension DetailViewController: UITextFieldDelegate, UITextViewDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.activeText = nil
-        
-        // If the user dismisses the keyboard or taps the Done key
-        if textField == midContainer.storeTextField && textField.text?.trimmingCharacters(in: .whitespaces) != "" {
-            if let store = midContainer.storeTextField.text {
-                self.item?.store = store
-                CoreDataManager.shared.saveContext()
-            }
-        } else {
-            textField.text = ""
-        }
+        // To be implemented by subclasses
     }
     
     /// Everytime the user types in the numpad, this will check if it is a decimal

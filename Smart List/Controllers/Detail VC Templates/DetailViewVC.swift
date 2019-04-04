@@ -1,17 +1,14 @@
 //
-//  DetailView.swift
+//  DetailViewProtocol.swift
 //  Smart List
 //
-//  Created by Haamed Sultani on Feb/1/19.
+//  Created by Haamed Sultani on Apr/1/19.
 //  Copyright © 2019 Haamed Sultani. All rights reserved.
 //
 
 import UIKit
 
-class DetailViewController: UIViewController {
-    
-    //MARK: - Data Source
-    var item : Item?
+class DetailVC: UIViewController {
     
     //MARK: - Variables
     var originalUnits = [String]()
@@ -21,7 +18,7 @@ class DetailViewController: UIViewController {
     // so that when the user is finished editing, the insets for this view
     // are maintained properly
     public var tabBarHeight: CGFloat?
-
+    
     var activeText: UIView?
     
     
@@ -34,8 +31,8 @@ class DetailViewController: UIViewController {
         return view
     }()
     
-
-
+    
+    
     var topContainer: DetailTopContainer = {
         var view = DetailTopContainer()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -64,25 +61,17 @@ class DetailViewController: UIViewController {
     
     // Pop Up View that is activated by the expiryDateButton
     var expiryDateView: ExpiryPopUpView = {
-       var view = ExpiryPopUpView()
+        var view = ExpiryPopUpView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
         
         return view
     }()
     
-
-    
-
-    
-    
-    
-    //MARK: - View Delegates
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Customize nav bar elements
-        self.navigationItem.title = item?.name
         self.navigationController?.navigationBar.prefersLargeTitles = false
         
         // Save the height of the tab bar
@@ -110,7 +99,6 @@ class DetailViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
     }
     
-    
     deinit {
         // Unregister for the keyboard notifications. Therefore, stop listening for the events
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -119,42 +107,18 @@ class DetailViewController: UIViewController {
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        topContainer.itemImageView.image = UIImage(named: (self.item?.imageName ?? "groceries"))
-        loadQuantityPopUpModel()
-        loadExpiryPopUpModel()
-        
-        self.midContainer.quantityButton.setTitle(UnitHelper.shared.abbreviateUnit(u: ((self.item?.quantity)!)), for: .normal)
-        updateUnitDataSource()
-        loadItemNotes()
-        loadPurchaseStore()
-    }
+    // viewwillappear
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
+        
         self.view.endEditing(true)
     }
     
-    
-    //MARK: - Initializers
     func setupModels() {
-        // Populate the Units of measurement array
-        originalUnits.append(contentsOf: Constants.Units.keys)
-        workingUnits.append(contentsOf: originalUnits)
         
-        // Set the name of the Item
-        midContainer.nameLabel.text = item?.name
-        // Set the quantity of the Item
-        midContainer.quantityButton.setTitle(item?.quantity, for: .normal)
-        
-        // Set the dates for the Item
-        setItemDates()
     }
-    
-    
     
     func setupViews() {
         setupConstraints()
@@ -167,7 +131,7 @@ class DetailViewController: UIViewController {
     func setupConstraints() {
         // Scroll View
         view.addSubview(scrollView) // Add the scrollView to the view
-
+        
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -197,7 +161,7 @@ class DetailViewController: UIViewController {
             ])
         
         
-  
+        
         scrollView.addSubview(quantityView)
         scrollView.addSubview(expiryDateView)
         
@@ -208,8 +172,8 @@ class DetailViewController: UIViewController {
             quantityView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.3),
             quantityView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8)
             ])
-
-
+        
+        
         // Expiration Date Pop Up View
         NSLayoutConstraint.activate([
             expiryDateView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
@@ -217,11 +181,7 @@ class DetailViewController: UIViewController {
             expiryDateView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.3),
             expiryDateView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8)
             ])
-        
-        
-        
     }
-    
     
     
     
@@ -229,28 +189,16 @@ class DetailViewController: UIViewController {
     
     //MARK: - My Methods
     
-    /// Sets up the date elements of the Detail View
-    func setItemDates() {
-        //
-        // Item's Purchase Date property
-        //
-        if let purchaseDate = item?.purchaseDate {  // Get the Item's purchaseDate
-            midContainer.purchaseDate.text = DateHelper.shared.getDateString(of: purchaseDate)
-        } else { // If it hasn't been set, display a message
-            midContainer.purchaseDate.text = "Not purchased yet"
-        }
+    @objc func doneButtonTapped() {
+        self.resignFirstResponder()
         
-        //
-        // The Item's Expiration Date property
-        //
-        if let expiryDate = item?.expiryDate {      // Get the Item's expiration date
-            midContainer.expiryDate.setTitle(DateHelper.shared.getDateString(of: expiryDate), for: .normal)     // Get a readable, string version of the date if it was set
-        } else {
-            midContainer.expiryDate.setTitle("Tap to set expiry", for: .normal)         // If it wasn't set, display a message
-        }
     }
     
     
+    /// Sets up the date elements of the Detail View
+    func setItemDates() {
+        // To be implemented by the subclasses
+    }
     
     
     /// This method goes through the unit of measurements array,
@@ -278,44 +226,26 @@ class DetailViewController: UIViewController {
     /// Gets the data saved to the Item entity and populates the textfield
     /// and pickerview with the corresponding info
     func loadQuantityPopUpModel() {
-        // Scroll the pickerview to the corresponding unit of measurement in the pop up view
-        guard let components = item?.quantity?.components(separatedBy: " ") else {return}   // Safely separate the quantity string from the Item entity into an array
-        if components.count == 2 {                                                          // If there are 2 words in the array
-            let unit = components[1]                                                        // grab the second index of the array (which should be the unit of measurement)
-            guard let unitIndex = workingUnits.firstIndex(of: unit) else {return}           // Grab the index of the unit in the working model
-            
-            // Scroll pickerview to the corresponding unit
-            quantityView.quantityTextField.text = components[0]                             // Change the text in the quantity textfield to what is saved in the Item entity
-            quantityView.pickerView.selectRow(unitIndex, inComponent: 0, animated: true)    // Scroll to the appropriate index
-        }
+        // To be implemented by the subclasses
     }
     
     
     /// Gets the expiration date saved for the Item entity
     /// Scrolls the datepicker to the Data we just loaded
     func loadExpiryPopUpModel() {
-        guard let expiryDate : Date = self.item?.expiryDate else {return}
-
-        expiryDateView.datePicker.setDate(expiryDate, animated: true)
+        // To be implemented by the subclasses
     }
     
     
-    @objc func doneButtonTapped() { self.resignFirstResponder() }
+
     
     
     /// Loads the Notes and is displayed onto the notes section
     func loadItemNotes() {
-        if let notes = self.item?.notes {
-            self.midContainer.noteTextView.text = notes
-        } else {
-            self.midContainer.noteTextView.text = Constants.DetailView.notesPlaceholder
-        }
+        // To be implemented by the subclasses
     }
     
     func loadPurchaseStore() {
-        if let store = self.item?.store {
-            midContainer.storeTextField.text = store
-        }
+        // To be implemented by the subclasses
     }
-
 }
