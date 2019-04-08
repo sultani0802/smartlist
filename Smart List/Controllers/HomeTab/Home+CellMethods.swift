@@ -183,8 +183,7 @@ extension HomeViewController {
                     self.items[indexPath.section].remove(at: indexPath.row)                 // Delete the Item from the tableView array
                     action.fulfill(with: .delete)                                           // Fulfill the delete action BEFORE deleting from Core Data
                     let categoryName = self.categories[indexPath.section].name              // Grab Category name
-                    self.deleteItem(itemId: itemId, categoryName: categoryName!)        // Delete from Core Data
-                    
+                    self.deleteItem(itemId: itemId, categoryName: categoryName!)            // Delete from Core Data
                 }
             }
             // Customize visuals of the swipe buttons

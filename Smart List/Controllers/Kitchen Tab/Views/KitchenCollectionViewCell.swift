@@ -39,7 +39,22 @@ class KitchenCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    var blurView: UIVisualEffectView = {
+        var blur = UIBlurEffect(style: .dark)
+        var view = UIVisualEffectView(effect: blur)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
     
+    var deleteButton: UIButton = {
+        var button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.text = ""
+        
+        
+        return button
+    }()
     
     
     //
@@ -64,10 +79,12 @@ class KitchenCollectionViewCell: UICollectionViewCell {
         addSubview(itemImageView)
         addSubview(nameLabel)
         addSubview(expiryLabel)
+        addSubview(blurView)
         
         setImageViewConstraints()
         setNameLabelConstraints()
         setExpiryLabelConstraints()
+        setBlurConstraints()
     }
     
     //
@@ -97,6 +114,15 @@ class KitchenCollectionViewCell: UICollectionViewCell {
             expiryLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             expiryLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             expiryLabel.heightAnchor.constraint(equalToConstant: 20)
+            ])
+    }
+    
+    func setBlurConstraints() {
+        NSLayoutConstraint.activate([
+            blurView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            blurView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
+            blurView.heightAnchor.constraint(equalToConstant: 14),
+            blurView.widthAnchor.constraint(equalToConstant: 14)
             ])
     }
 }

@@ -31,7 +31,6 @@ class KitchenPageViewController: UIViewController {
     var segmentControl: Segmentio!
     
     
-    
     //
     // MARK: - View methods
     //
@@ -59,6 +58,9 @@ class KitchenPageViewController: UIViewController {
         
         self.navigationItem.title = Constants.General.AppName       // Customize navigation bar elements
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(self.editButtonTapped))
+        navigationItem.leftBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
     }
     
     /// Initializes the UISegmentedControl
@@ -146,5 +148,14 @@ class KitchenPageViewController: UIViewController {
             pageViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             pageViewController.view.bottomAnchor.constraint(equalTo: segmentControl.topAnchor, constant: -1)
             ])
+    }
+    
+    
+    //
+    // MARK: - My Methods
+    //
+    
+    @objc func editButtonTapped() {
+        print("edit button tapped")
     }
 }

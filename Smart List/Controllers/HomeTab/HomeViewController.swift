@@ -181,7 +181,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Customize navigation bar elements
         self.navigationItem.title = Constants.General.AppName
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
+                
         setupTableview()                        // Add the tableview
 
         setupGetStartedView()                   // Add instruction view

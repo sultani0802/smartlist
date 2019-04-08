@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = TabBarController()
         window?.makeKeyAndVisible()
         
-        UINavigationBar.appearance().barTintColor = Constants.ColorPalette.DarkGray
+        UINavigationBar.appearance().barTintColor = .white //Constants.ColorPalette.DarkGray
         
         return true
     }
