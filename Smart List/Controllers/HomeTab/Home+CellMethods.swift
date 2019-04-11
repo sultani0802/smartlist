@@ -13,6 +13,7 @@
 
 import UIKit
 import SwipeCellKit
+import UserNotifications
 
 extension HomeViewController {
     
@@ -195,7 +196,7 @@ extension HomeViewController {
             /// Swipe action to mark an Item entity as done
             let completedAction = SwipeAction(style: .default, title: "Done") {
                 (action, indexPath) in
-
+                
                 let cell : HomeTableViewCell = self.tableView.cellForRow(at: indexPath) as! HomeTableViewCell
                 
                 if (item.completed == false){
@@ -203,6 +204,7 @@ extension HomeViewController {
                     cell.completed = true
                     self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
                     item.purchaseDate = DateHelper.shared.getCurrentDateObject()
+                    NotificationHelper.shared.sendNotification(withItem: item)
                 } else {
                     item.completed = false
                     cell.completed = false
@@ -210,6 +212,7 @@ extension HomeViewController {
                 }
                 self.toggleDoneShoppingButton()
                 self.coreDataManager.saveContext()
+                
             }
             
             completedAction.backgroundColor = .green
@@ -250,8 +253,11 @@ extension HomeViewController {
         let detailVC = DetailViewController()
         detailVC.item = item
         self.navigationController?.pushViewController(detailVC, animated: true)
-        
+         
         // Hide the keyboard
         self.view.endEditing(true)
     }
+    
+    
+
 }

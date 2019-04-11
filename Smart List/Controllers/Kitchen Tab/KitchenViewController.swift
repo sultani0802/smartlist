@@ -12,15 +12,21 @@ protocol KitchenCollectionViewCellDelegate : class {
     func userSelectedItem(item: KitchenItem)
 }
 
+protocol KitchenTabTitleDelegate: class {
+    func changeNavBarTitle(title: String)
+}
 
 
-class KitchenViewController: UIViewController {
+class KitchenViewController: UIViewController, KitchenCellDeleteDelegate {
 
+    
 
+    
     //MARK: - Class Properties
     /****************************************/
     /****************************************/
     var pageIndex: Int = 0                              // The page of the controller
+    var editMode: Bool = false
     
     // Core Data Manager (Singleton)
     let coreDataManager = CoreDataManager.shared        // Core Data reference
@@ -30,7 +36,9 @@ class KitchenViewController: UIViewController {
     // The delegate that handles performing a segue to a the Detail View
     // when the user selects an Item in one of the pages
     weak var kitchenCellDelegate: KitchenCollectionViewCellDelegate?
-
+    
+    weak var kitchenTitleDelegate: KitchenTabTitleDelegate?
+    
     //MARK: - UI Properties
     /****************************************/
     /****************************************/
@@ -59,8 +67,25 @@ class KitchenViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        switch self.pageIndex {
+        case 0:
+            kitchenTitleDelegate?.changeNavBarTitle(title: "Expired Items")
+        case 1:
+            kitchenTitleDelegate?.changeNavBarTitle(title: "Fresh Items")
+        case 2:
+            kitchenTitleDelegate?.changeNavBarTitle(title: "All Items")
+        default:
+            kitchenTitleDelegate?.changeNavBarTitle(title: "Smart Kitchen")
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+
         
         loadItems()
     }
@@ -76,6 +101,13 @@ class KitchenViewController: UIViewController {
     }
     
     
+    func deleteKitchenItem(button: UIButton) {
+        
+        print("\nDELETING ITEM INDEX: \(button.tag)")
+        self.coreDataManager.deleteKitchenItem(item: self.model[button.tag])
+        self.model.remove(at: button.tag)
+        self.collectionView.reloadData()
+    }
     
     
     func initCollectionView() {
@@ -166,5 +198,19 @@ class KitchenViewController: UIViewController {
     /// Loads all Items that the user has purchased
     func loadCompletedItems() {
         self.model = coreDataManager.fetchKitchenItems()
+    }
+    
+    
+    func toggleDeleteButton() {
+        for x in 0 ..< self.model.count {
+            let indexPath: IndexPath = IndexPath(row: x, section: 0)
+            let cell = self.collectionView.cellForItem(at: indexPath) as! KitchenCollectionViewCell
+//            cell.deleteButton.isHidden = !self.editMode
+            if self.editMode {
+                cell.deleteButton.fadeIn()
+            } else {
+                cell.deleteButton.fadeOut()
+            }
+        }
     }
 }

@@ -9,9 +9,14 @@
 import UIKit
 
 extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.model.count
     }
+    
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellID.KitchenCollectionViewCellID, for: indexPath) as! KitchenCollectionViewCell
@@ -19,6 +24,10 @@ extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDel
         
         cell.itemImageView.image = UIImage(named: item.imageName ?? "groceries")
         cell.nameLabel.text = item.name
+        cell.deleteDelegate = self
+        cell.deleteButton.tag = indexPath.row
+        cell.deleteButton.isHidden = !editMode
+        
         if let expiryDate = item.expiryDate {
             let date = DateHelper.shared.getDateString(of: expiryDate)
             
@@ -38,11 +47,18 @@ extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
     
+    
+    
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = ScreenSize.SCREEN_WIDTH/2 - 5
         
         return CGSize(width: size, height: size)
     }
+    
+    
+    
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

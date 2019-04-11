@@ -15,6 +15,7 @@
 		0C11B9BA22138BC80003A87D /* DetailTopContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11B9B922138BC80003A87D /* DetailTopContainer.swift */; };
 		0C11B9BC22138E420003A87D /* DetailMidContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11B9BB22138E420003A87D /* DetailMidContainer.swift */; };
 		0C13BC4C2223581E0027BABD /* UITextfieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13BC4B2223581E0027BABD /* UITextfieldExtensions.swift */; };
+		0C1FF5A8225E2CA2002D747D /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1FF5A7225E2CA2002D747D /* NotificationHelper.swift */; };
 		0C232ED522319BF500F05BC5 /* DeviceTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C232ED422319BF500F05BC5 /* DeviceTypes.swift */; };
 		0C2541B722419D13003901CA /* KitchenPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2541B622419D13003901CA /* KitchenPageViewController.swift */; };
 		0C2541B92241A06C003901CA /* KitchenPage+PageDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2541B82241A06C003901CA /* KitchenPage+PageDelegates.swift */; };
@@ -77,6 +78,7 @@
 		0C11B9B922138BC80003A87D /* DetailTopContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTopContainer.swift; sourceTree = "<group>"; };
 		0C11B9BB22138E420003A87D /* DetailMidContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMidContainer.swift; sourceTree = "<group>"; };
 		0C13BC4B2223581E0027BABD /* UITextfieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextfieldExtensions.swift; sourceTree = "<group>"; };
+		0C1FF5A7225E2CA2002D747D /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		0C232ED422319BF500F05BC5 /* DeviceTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypes.swift; sourceTree = "<group>"; };
 		0C2541B622419D13003901CA /* KitchenPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenPageViewController.swift; sourceTree = "<group>"; };
 		0C2541B82241A06C003901CA /* KitchenPage+PageDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KitchenPage+PageDelegates.swift"; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			children = (
 				0CBE4B8C2200C39000A23330 /* Constants.swift */,
 				0C232ED422319BF500F05BC5 /* DeviceTypes.swift */,
+				0C1FF5A7225E2CA2002D747D /* NotificationHelper.swift */,
 				0CAE5C6D221B761B00F764CB /* DateHelper.swift */,
 				0C367DD62244334500323F05 /* ExpirationHelper.swift */,
 				0C97799E22024068009C3161 /* HexColorExtension.swift */,
@@ -514,6 +517,7 @@
 				0CF47D9621F3E8240084C1BA /* DataModel.xcdatamodeld in Sources */,
 				0C08646F221C623A0017AA6D /* PopUpCardView.swift in Sources */,
 				0CC7678621F0262300752517 /* AppDelegate.swift in Sources */,
+				0C1FF5A8225E2CA2002D747D /* NotificationHelper.swift in Sources */,
 				0CA3518422557E740044D166 /* KitchenDetail+Extensions.swift in Sources */,
 				0C2541B92241A06C003901CA /* KitchenPage+PageDelegates.swift in Sources */,
 				0C97799D22020C73009C3161 /* HomeTableviewHeader.swift in Sources */,

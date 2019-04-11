@@ -8,20 +8,22 @@
 
 import UIKit
 import Segmentio
+import UserNotifications
 
-class KitchenPageViewController: UIViewController {
+class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
+    
     
     //
     // MARK: - Class Properties
     //
     let coreDataManager = CoreDataManager.shared
     
-    
     //
     // MARK: - Data Model
     //
     let kitchenPages : [KitchenViewController] = [KitchenViewController(), KitchenViewController(), KitchenViewController()]
     var pageIndex: Int = 0
+    var editMode: Bool = false
 
     
     //  
@@ -40,13 +42,32 @@ class KitchenPageViewController: UIViewController {
         setupView()                     // Set up this view
         initSegmentControl()            // Init segmented control and add constraints
         initPageViewController()        // Init page controller and add constraints
+        
+                                        // Request permission to send notifications
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert]) {
+            (granted, error) in
+            
+            if granted {
+                print("yes")
+            } else {
+                print("no")
+            }
+        }
     }
-    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        self.segmentControl.fadeIn(0.5)
     }
     
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.segmentControl.fadeOut(0.5)
+    }
     
     //
     // MARK: - UIView Initialization Methods
@@ -56,20 +77,25 @@ class KitchenPageViewController: UIViewController {
     func setupView() {
         self.view.backgroundColor = .white                          // Set background color
         
-        self.navigationItem.title = Constants.General.AppName       // Customize navigation bar elements
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(self.editButtonTapped))
+                                                                    // Set up left navigation bar button
+        let editBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.editButtonTapped))
+        navigationItem.leftBarButtonItem = editBarButtonItem//UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(self.editButtonTapped))
+
         navigationItem.leftBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
     }
     
+    
+    
     /// Initializes the UISegmentedControl
     func initSegmentControl() {
-        segmentControl = Segmentio()
+        let segmentioViewRect = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: view.frame.height*0.07)
+        segmentControl = Segmentio(frame: segmentioViewRect)
         segmentControl.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(segmentControl)             // Add segmented control to view
+        view.addSubview(segmentControl)                             // Add segmented control to view
         
-
+        
         
         let segmentItems = [SegmentioItem(title: "Expired", image: nil),
                             SegmentioItem(title: "Fresh", image: nil),
@@ -78,7 +104,7 @@ class KitchenPageViewController: UIViewController {
         segmentControl.setup(content: segmentItems, style: SegmentioStyle.onlyLabel, options: nil)
         segmentControl.selectedSegmentioIndex = 0
         
-        NSLayoutConstraint.activate([               // Apply constraints
+        NSLayoutConstraint.activate([                               // Apply constraints
             segmentControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(self.tabBarController?.tabBar.frame.height)!),
             segmentControl.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             segmentControl.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -128,6 +154,7 @@ class KitchenPageViewController: UIViewController {
         kitchenPages.forEach {
             $0.pageIndex = kitchenPages.firstIndex(of: $0)!                                 // Record index of each page
             $0.kitchenCellDelegate = self                                                   // Set our custom delegate to this controller
+            $0.kitchenTitleDelegate = self
         }
         pageViewController.setViewControllers([kitchenPages.first!],                        // Add pages to the page controller
                                               direction: .forward,
@@ -146,7 +173,7 @@ class KitchenPageViewController: UIViewController {
             pageViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             pageViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             pageViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pageViewController.view.bottomAnchor.constraint(equalTo: segmentControl.topAnchor, constant: -1)
+            pageViewController.view.bottomAnchor.constraint(equalTo: segmentControl.topAnchor, constant: -8)
             ])
     }
     
@@ -156,6 +183,23 @@ class KitchenPageViewController: UIViewController {
     //
     
     @objc func editButtonTapped() {
-        print("edit button tapped")
+        self.editMode = !editMode                                    // Toggle edit mode
+        
+        if editMode {                                               // If the user is editing
+            self.navigationItem.leftBarButtonItem?.title = "Done editing"       // Change leftBarButtonItem text
+        } else if editMode == false {                               // If the user is done editing
+            self.navigationItem.leftBarButtonItem?.title = "Edit"               // Change leftBarButtonItem text
+        }
+                                                // Go through each page and toggle the editMode boolean flag
+        self.kitchenPages.forEach {
+            $0.editMode = self.editMode
+            if let cv = $0.collectionView {
+                $0.toggleDeleteButton()
+            }
+        }
+    }
+    
+    func changeNavBarTitle(title: String) {
+        self.navigationItem.title = title
     }
 }

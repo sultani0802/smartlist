@@ -237,6 +237,20 @@ class CoreDataManager {
     }
     
     
+    func deleteKitchenItem(item: KitchenItem) {
+        let fetchRequest: NSFetchRequest<KitchenItem> = KitchenItem.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id = %@", item.id!)
+        let results : [KitchenItem] = try! context.fetch(fetchRequest)
+        
+        for obj in results {
+            print(obj)
+            context.delete(obj)
+        }
+        
+        saveContext()
+    }
+    
+    
     /// Deletes all the Item entities saved to the device's Core Data DB
     func deleteAllItems() {
         let deleteFetch: NSFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Item")          // Get the "Item" entity column

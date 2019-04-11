@@ -8,7 +8,20 @@
 
 import UIKit
 
+
+protocol KitchenCellDeleteDelegate : class {
+    func deleteKitchenItem(button: UIButton)
+}
+
+
 class KitchenCollectionViewCell: UICollectionViewCell {
+    
+    //
+    // MARK: - PROPERTIES
+    //
+    var deleteDelegate : KitchenCellDeleteDelegate?
+    
+    
     
     //
     // MARK: - UIViews
@@ -38,20 +51,16 @@ class KitchenCollectionViewCell: UICollectionViewCell {
         
         return label
     }()
-    
-    var blurView: UIVisualEffectView = {
-        var blur = UIBlurEffect(style: .dark)
-        var view = UIVisualEffectView(effect: blur)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
+
     
     var deleteButton: UIButton = {
         var button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.text = ""
-        
+        button.imageView?.isHidden = false
+        button.setImage(UIImage(named: "cancel"), for: .normal)
+        button.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
+        button.tintColor = Constants.ColorPalette.Orange
         
         return button
     }()
@@ -62,7 +71,8 @@ class KitchenCollectionViewCell: UICollectionViewCell {
     //
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+
         setupViews()
     }
     
@@ -79,12 +89,12 @@ class KitchenCollectionViewCell: UICollectionViewCell {
         addSubview(itemImageView)
         addSubview(nameLabel)
         addSubview(expiryLabel)
-        addSubview(blurView)
+        addSubview(deleteButton)
         
         setImageViewConstraints()
         setNameLabelConstraints()
         setExpiryLabelConstraints()
-        setBlurConstraints()
+        setDeleteButtonConstraints()
     }
     
     //
@@ -117,12 +127,16 @@ class KitchenCollectionViewCell: UICollectionViewCell {
             ])
     }
     
-    func setBlurConstraints() {
+    func setDeleteButtonConstraints() {
         NSLayoutConstraint.activate([
-            blurView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-            blurView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
-            blurView.heightAnchor.constraint(equalToConstant: 14),
-            blurView.widthAnchor.constraint(equalToConstant: 14)
+            deleteButton.topAnchor.constraint(equalTo: topAnchor, constant: 2),
+            deleteButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
+            deleteButton.heightAnchor.constraint(equalToConstant: 20),
+            deleteButton.widthAnchor.constraint(equalToConstant: 20)
             ])
+    }
+    
+    @objc func deleteButtonTapped() {
+        self.deleteDelegate?.deleteKitchenItem(button: self.deleteButton)
     }
 }
