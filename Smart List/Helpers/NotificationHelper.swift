@@ -13,6 +13,7 @@ class NotificationHelper {
     static let shared = NotificationHelper()
     private init() {}
     
+    var notificationsAllowed : Bool = false
     
     
     /// Creates an URL using an image from xcassets
@@ -42,21 +43,35 @@ class NotificationHelper {
     
     /// Creates and schedules a notification after a specified time
     ///
-    /// - Parameter name: The name of the image we want to send with the notification
-    func sendNotification(withItem item: Item) {
-        let content = UNMutableNotificationContent()
-        content.title = "Your \(item.name!) is about to expire!"
-        content.body = "Expiring \(DateHelper.shared.getDateString(of: item.expiryDate!))"
+    /// - Parameters:
+    ///   - expiryDate: The Item's Expiration Date
+    ///   - itemName: The Item's Name
+    ///   - imageName: The Item's Image Name
+    func sendNotification(withExpiryDate expiryDate: Date, itemName: String, imageName: String) {
         
-        let imageURL = createLocalUrl(forImageNamed: item.imageName!)
-        let attachment = try! UNNotificationAttachment(identifier: "image", url: imageURL!, options: .none)
-        
-        content.attachments = [attachment]
-        
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
-        let request = UNNotificationRequest(identifier: "notification.id.01", content: content, trigger: trigger)
-        
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        // If the user has granted us access to send notifications
+        if self.notificationsAllowed {
+            let content = UNMutableNotificationContent()                                                                    // Init the notification
+            content.title = "Your \(itemName) is about to expire!"                                                          // Set the notitication title
+            content.body = "Expiring \(DateHelper.shared.getDateString(of: expiryDate))"                                    // Set the notification's body
+            
+            let imageURL = createLocalUrl(forImageNamed: imageName)                                                         // Create an URL from the Item's image
+            let attachment = try! UNNotificationAttachment(identifier: "image", url: imageURL!, options: .none)             // Add the image as an attachment to the notification
+            content.attachments = [attachment]
+            
+            let today = DateHelper.shared.getCurrentDateObject()                                                            // Get today's date
+            let timeDifference = Calendar.current.dateComponents([.hour], from: today, to: expiryDate).hour                 // Get the number of hours from now until the expiration date
+            let seconds = timeDifference!*3600                                                                              // Get the number of seconds from now until the expiration date at 1PM
+
+            if seconds > 0 {                                                                                                // If the expiration date is in the future
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(seconds), repeats: false)        // Set the notification trigger to the expiration date at 1PM
+                let request = UNNotificationRequest(identifier: "notification.id.01", content: content, trigger: trigger)   // Create the notification request
+                
+                UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)                                 // Add the notification to the UserNotificationCenter
+            }
+        } else {
+            print("Notifications denied")
+        }
     }
     
 }

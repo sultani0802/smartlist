@@ -14,19 +14,29 @@ extension KitchenDetailViewController {
     ///
     /// - Parameter sender: the button clicked to trigger this action
     @objc override func doneButtonTapped(_ sender: UIButton) {
+        
+        // If the user was using the expiry pop up view
         if sender == expiryDateView.saveButton {
             
-            self.item!.expiryDate = expiryDateView.datePicker.date          // Set the expiration date of the Item
+            // Set the expiration date's time to 9AM
+            let roundedDate = Calendar.current.date(bySettingHour: 13, minute: 0, second: 0, of: expiryDateView.datePicker.date)
+            
+            self.item!.expiryDate = roundedDate           // Set the expiration date of the Item
             
             CoreDataManager.shared.saveContext()                            // Save to core data
             
             // Update the expiry UIButton's title with the new date
             self.midContainer.expiryDate.setTitle(DateHelper.shared.getDateString(of: (self.item?.expiryDate)!), for: .normal)
             
+            // Send a notification that will trigger when the item is expired
+            NotificationHelper.shared.sendNotification(withExpiryDate: (self.item?.expiryDate!)!, itemName: (self.item?.name!)!, imageName: self.item!.imageName!)
+            
             // Hide the pop up view
             self.expiryDateView.fadeOut()
             
             
+            
+        // If the user was using the quantity pop up view
         } else if sender == quantityView.saveButton {
             // Grab the quantity string
             let enteredQuantity : String = self.quantityView.quantityTextField.text! + " " + self.originalUnits[self.quantityView.pickerView.selectedRow(inComponent: 0)]

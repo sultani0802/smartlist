@@ -204,7 +204,6 @@ extension HomeViewController {
                     cell.completed = true
                     self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
                     item.purchaseDate = DateHelper.shared.getCurrentDateObject()
-                    NotificationHelper.shared.sendNotification(withItem: item)
                 } else {
                     item.completed = false
                     cell.completed = false

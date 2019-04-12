@@ -43,15 +43,19 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
         initSegmentControl()            // Init segmented control and add constraints
         initPageViewController()        // Init page controller and add constraints
         
+                                        // Set User Notification delegate
+        UNUserNotificationCenter.current().delegate = self
                                         // Request permission to send notifications
         UNUserNotificationCenter.current()
             .requestAuthorization(options: [.alert]) {
             (granted, error) in
             
+            NotificationHelper.shared.notificationsAllowed = granted
+                
             if granted {
-                print("yes")
+                print("Notification authorization granted")
             } else {
-                print("no")
+                print("Notification authorization denied")
             }
         }
     }

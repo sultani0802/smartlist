@@ -71,8 +71,7 @@ class DetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Customize nav bar elements
-        self.navigationController?.navigationBar.prefersLargeTitles = false
+        
         
         // Save the height of the tab bar
         self.tabBarHeight = self.tabBarController!.tabBar.frame.height
@@ -107,13 +106,19 @@ class DetailVC: UIViewController {
     }
     
     
-    // viewwillappear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.prefersLargeTitles = false             // Make navigation bar title small
+    }
     
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         self.view.endEditing(true)
+        
+        self.navigationController?.navigationBar.prefersLargeTitles = true              // Make navigation bar title big
     }
     
     func setupModels() {
