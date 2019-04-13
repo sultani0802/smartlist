@@ -187,17 +187,17 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
     //
     
     @objc func editButtonTapped() {
-        self.editMode = !editMode                                    // Toggle edit mode
+        self.editMode = !editMode                                               // Toggle edit mode
         
-        if editMode {                                               // If the user is editing
+        if editMode {                                                           // If the user is editing
             self.navigationItem.leftBarButtonItem?.title = "Done editing"       // Change leftBarButtonItem text
-        } else if editMode == false {                               // If the user is done editing
+        } else if editMode == false {                                           // If the user is done editing
             self.navigationItem.leftBarButtonItem?.title = "Edit"               // Change leftBarButtonItem text
         }
-                                                // Go through each page and toggle the editMode boolean flag
+                                                                                // Go through each page and toggle the editMode boolean flag
         self.kitchenPages.forEach {
             $0.editMode = self.editMode
-            if let cv = $0.collectionView {
+            if let _ = $0.collectionView {
                 $0.toggleDeleteButton()
             }
         }

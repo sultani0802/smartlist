@@ -84,8 +84,6 @@ extension KitchenDetailViewController {
                 self.item?.store = store
                 CoreDataManager.shared.saveContext()
             }
-        } else {
-            textField.text = ""
-        }
+        } 
     }
 }

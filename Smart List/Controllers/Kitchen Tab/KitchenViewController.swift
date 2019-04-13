@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ViewAnimator
 
 protocol KitchenCollectionViewCellDelegate : class {
     func userSelectedItem(item: KitchenItem)
@@ -17,9 +18,7 @@ protocol KitchenTabTitleDelegate: class {
 }
 
 
-class KitchenViewController: UIViewController, KitchenCellDeleteDelegate {
-
-    
+class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, CollectionViewAnimationDelegate {
 
     
     //MARK: - Class Properties
@@ -80,14 +79,13 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate {
         default:
             kitchenTitleDelegate?.changeNavBarTitle(title: "Smart Kitchen")
         }
+        
+//        loadItems()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-
-        
-        loadItems()
     }
     
 
@@ -146,6 +144,17 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate {
     }
     
     
+    func animateCollectionView() {
+        let cells = collectionView.visibleCells(in: 0) as! [KitchenCollectionViewCell]
+        
+        let myAnimation = AnimationType.from(direction: .left, offset: 40)
+        
+        UIView.animate(views: cells,
+                       animations: [myAnimation],
+                       animationInterval: 0.07,
+                       duration: 0.4)
+    }
+    
     
     
     //
@@ -201,15 +210,16 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate {
     }
     
     
+    /// Display/hide delete buttons on Items
     func toggleDeleteButton() {
-        for x in 0 ..< self.model.count {
-            let indexPath: IndexPath = IndexPath(row: x, section: 0)
-            let cell = self.collectionView.cellForItem(at: indexPath) as! KitchenCollectionViewCell
-//            cell.deleteButton.isHidden = !self.editMode
-            if self.editMode {
-                cell.deleteButton.fadeIn()
+        let cells = collectionView.visibleCells(in: 0) as!
+            [KitchenCollectionViewCell]                         // Get all the cells in the collectionView
+        
+        for cell in cells {                                     // Go through the cells
+            if self.editMode {                                  // If the user wants to delete Items
+                cell.deleteButton.fadeIn()                      // Fade in the delete buttons
             } else {
-                cell.deleteButton.fadeOut()
+                cell.deleteButton.fadeOut()                     // The user is done editing -> fade out the delete buttons
             }
         }
     }

@@ -68,8 +68,6 @@ extension DetailViewController {
         self.activeText = nil
         
         if textView == midContainer.noteTextView {
-            print("save notes to DB")
-            
             
             // Update the notes in the Item entity
             self.item?.notes = midContainer.noteTextView.text
@@ -87,8 +85,6 @@ extension DetailViewController {
                 self.item?.store = store
                 CoreDataManager.shared.saveContext()
             }
-        } else {
-            textField.text = ""
         }
     }
 }

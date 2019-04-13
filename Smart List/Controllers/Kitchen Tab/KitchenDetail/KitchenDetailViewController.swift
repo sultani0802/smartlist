@@ -20,7 +20,7 @@ class KitchenDetailViewController: DetailVC {
     
     
     
-    //TO-DO: move over
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

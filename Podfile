@@ -8,5 +8,6 @@ target 'Smart List' do
   # Pods for To Do List
     pod 'SwipeCellKit'
     pod 'Segmentio'
+    pod 'ViewAnimator'
     
 end

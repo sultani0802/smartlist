@@ -10,9 +10,10 @@
 import UIKit
 import CoreData
 import SwipeCellKit
+import ViewAnimator
 
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwipeTableViewCellDelegate {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwipeTableViewCellDelegate, TableViewAnimationDelegate {
     
     /****************************************/
     /****************************************/
@@ -299,6 +300,34 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.doneShoppingBarButtonItem?.isEnabled = false
     }
+    
+    
+    
+    /// Brings the collection view cells & headers with a nice animation
+    func animateTableView() {
+        let myAnimation = AnimationType.from(direction: .left, offset: 40)      // Animation
+
+        for section in 0 ..< self.categories.count {                                        // For each section
+            if let header = tableView.headerView(forSection: section) {                     // Get the header
+                UIView.animate(views: [header],                                             // Perform the animation on the header
+                    animations: [myAnimation],
+                    animationInterval: 0.1,
+                    duration: 0.4)
+            }
+            
+            
+            let cells = tableView.visibleCells(in: section)                                 // Get the cells under that header
+            
+            UIView.animate(views: cells,                                                    // Perform the animation on the cells
+                           animations: [myAnimation],
+                           delay: 0.1,
+                           animationInterval: 0.07,
+                           duration: 0.4)
+        }
+    }
+    
+    
+    
     
     /****************************************/
     /****************************************/
