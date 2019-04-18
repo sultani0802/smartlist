@@ -54,6 +54,8 @@ extension KitchenPageViewController: UIPageViewControllerDelegate, UIPageViewCon
                 segmentControl.selectedSegmentioIndex = pageIndex                                   // Update the Segment Control UI
             }
         }
+        
+        sortDelegate = self.kitchenPages[pageIndex]                                                 // Update the delegate to the new page
     }
 }
 

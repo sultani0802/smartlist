@@ -19,12 +19,16 @@ extension DetailVC: UIPickerViewDelegate, UIPickerViewDataSource {
         return workingUnits.count
     }
     
-    /// Populate the pickerview with the different units of measurement
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let title = self.workingUnits[row]
         
-        return title
+        return NSAttributedString(string: title, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
     }
+    
+    /// Populate the pickerview with the different units of measurement
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//
+//    }
     
     /// Set the height of the pickerview rows
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {

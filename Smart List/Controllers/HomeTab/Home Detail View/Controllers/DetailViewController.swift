@@ -20,7 +20,10 @@ class DetailViewController: DetailVC {
         self.navigationItem.title = item?.name
     }
     
-    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+    }
     
     //TO-DO: move over
     override func viewWillAppear(_ animated: Bool) {
@@ -35,8 +38,7 @@ class DetailViewController: DetailVC {
         loadItemNotes()
         loadPurchaseStore()
     }
-    
-    
+
     
     
     //MARK: - Initializers

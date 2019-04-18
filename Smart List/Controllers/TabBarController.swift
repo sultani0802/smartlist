@@ -38,7 +38,7 @@ class TabBarController: UITabBarController {
         // Set the color of the unselected tab bar button
         tabBar.unselectedItemTintColor = Constants.ColorPalette.DarkGray
         
-
+        
         homeViewController.tabBarItem = UITabBarItem(title: "List", image: UIImage(named: "list"), tag: 0)
 
         kitchenViewController.tabBarItem = UITabBarItem(title: "Kitchen", image: UIImage(named: "kitchen"), tag: 1)

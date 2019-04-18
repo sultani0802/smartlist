@@ -17,7 +17,7 @@ class QuantityPopUpView: PopUpCardView {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Quantity"
-        label.textColor = Constants.ColorPalette.Orange
+        label.textColor = Constants.ColorPalette.BabyBlue
         label.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         label.textAlignment = .center
         label.layer.masksToBounds = true
@@ -30,7 +30,7 @@ class QuantityPopUpView: PopUpCardView {
         var button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Done", for: .normal)
-        button.setTitleColor(Constants.ColorPalette.Charcoal, for: .normal)
+        button.setTitleColor(Constants.ColorPalette.SeaGreen, for: .normal)
         button.titleLabel!.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(DetailVC.doneButtonTapped(_:)), for: .touchUpInside)
@@ -59,7 +59,7 @@ class QuantityPopUpView: PopUpCardView {
         textfield.keyboardType = .decimalPad
         textfield.text = "0"
         textfield.font = UIFont(name: Constants.Visuals.fontName, size: 40)
-        textfield.textColor = Constants.ColorPalette.Orange
+        textfield.textColor = .white
         textfield.textAlignment = .center
         textfield.adjustsFontSizeToFitWidth = true
         textfield.borders(for: [.top, .right], width: 1, color: Constants.ColorPalette.Charcoal.withAlphaComponent(0.3))

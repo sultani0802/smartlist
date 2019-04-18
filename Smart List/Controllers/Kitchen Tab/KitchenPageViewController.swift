@@ -10,6 +10,12 @@ import UIKit
 import Segmentio
 import UserNotifications
 
+
+protocol KitchenSortDelegate : class{
+    func sortKitchenItems(by: String)
+}
+
+
 class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
     
     
@@ -17,6 +23,7 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
     // MARK: - Class Properties
     //
     let coreDataManager = CoreDataManager.shared
+    weak var sortDelegate : KitchenSortDelegate?
     
     //
     // MARK: - Data Model
@@ -39,6 +46,8 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(loadSettings().kitchenTableViewSort)
+        
         setupView()                     // Set up this view
         initSegmentControl()            // Init segmented control and add constraints
         initPageViewController()        // Init page controller and add constraints
@@ -58,19 +67,22 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
                 print("Notification authorization denied")
             }
         }
+        
+        
+        sortDelegate = kitchenPages[pageIndex]              // Set the sort delegate to the current visible view
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.segmentControl.fadeIn(0.5)
+        self.segmentControl.fadeIn(0.5)         // Animation: Fade in the segment control
     }
     
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        self.segmentControl.fadeOut(0.5)
+        self.segmentControl.fadeOut(0.5)        // Animation: Fade out the segment control (although the user won't see it)
     }
     
     //
@@ -84,10 +96,20 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
                                                                     // Set up left navigation bar button
-        let editBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.editButtonTapped))
-        navigationItem.leftBarButtonItem = editBarButtonItem//UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(self.editButtonTapped))
-
+        let editBarButtonItem = UIBarButtonItem(title: "Edit",
+                                                style: UIBarButtonItem.Style.done,
+                                                target: self,
+                                                action: #selector(self.editButtonTapped))
+        navigationItem.leftBarButtonItem = editBarButtonItem
         navigationItem.leftBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
+        
+        
+        let rightBarButtonItem = UIBarButtonItem(title: "Sort",
+                                                 style: UIBarButtonItem.Style.plain,
+                                                 target: self,
+                                                 action: #selector(sortButtonTapped))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        navigationItem.rightBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
     }
     
     
@@ -97,6 +119,8 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
         let segmentioViewRect = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: view.frame.height*0.07)
         segmentControl = Segmentio(frame: segmentioViewRect)
         segmentControl.translatesAutoresizingMaskIntoConstraints = false
+//        segmentControl.layer.borderColor = UIColor.clear.cgColor
+        segmentControl.layer.borderWidth = 0
         view.addSubview(segmentControl)                             // Add segmented control to view
         
         
@@ -140,6 +164,8 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
                     animated: true,
                     completion: nil)
             }
+            
+            self.sortDelegate = self.kitchenPages[self.pageIndex]                                   // Update the delegate to the visible page
         }
     }
     
@@ -186,6 +212,11 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
     // MARK: - My Methods
     //
     
+    func loadSettings() -> Settings {
+        return coreDataManager.loadSettings()
+    }
+    
+    
     @objc func editButtonTapped() {
         self.editMode = !editMode                                               // Toggle edit mode
         
@@ -201,6 +232,46 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
                 $0.toggleDeleteButton()
             }
         }
+    }
+    
+    
+    
+    /// Presents an AlertAction to allow the user to sort the Kitchen items. This is triggered by the
+    /// RightBarButtonItem in KitchenPageViewController
+    @objc func sortButtonTapped() {
+        let alertController = UIAlertController(title: "Sort Kitchen items",                                // Create the alert controller
+                                                message: "Select whether you'd like to sort the Kitchen items by name or expiration date.",
+                                                preferredStyle: .alert)
+        
+        let dateAction = UIAlertAction(title: "Sort By Date", style: UIAlertAction.Style.default) {         // Date action
+            UIAlertAction in
+            print("sorted by date")
+            
+            self.sortDelegate?.sortKitchenItems(by: "date")
+            self.coreDataManager.loadSettings().kitchenTableViewSort = "date"
+            self.coreDataManager.saveContext()
+        }
+        
+        let nameAction = UIAlertAction(title: "Sort By Name", style: .default) {                            // Name action
+            UIAlertAction in
+            print("sorted by name")
+            
+            self.sortDelegate?.sortKitchenItems(by: "name")
+            self.coreDataManager.loadSettings().kitchenTableViewSort = "name"
+            self.coreDataManager.saveContext()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {                                 // Cancel action
+            UIAlertAction in
+            print("sort canceled")
+        }
+        
+        
+        alertController.addAction(dateAction)                                                               // Add the actions to the alert controller
+        alertController.addAction(nameAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)                                      // Present the alerts
     }
     
     func changeNavBarTitle(title: String) {

@@ -161,7 +161,7 @@ extension HomeViewController {
             }
             // Customize the visuals of the swipe button
             deleteCategorySwipe.image = UIImage(named: "delete")
-            deleteCategorySwipe.backgroundColor = .red
+            deleteCategorySwipe.backgroundColor = Constants.ColorPalette.Crimson
             
             // Set the button(s) to the swipe options
             swipeActions = [deleteCategorySwipe]
@@ -190,11 +190,11 @@ extension HomeViewController {
             // Customize visuals of the swipe buttons
             deleteAction.image = UIImage(named: "delete")                                   // Set the image of the delete icon
             
-            deleteAction.backgroundColor = .red
+            deleteAction.backgroundColor = Constants.ColorPalette.Crimson
             
             
             /// Swipe action to mark an Item entity as done
-            let completedAction = SwipeAction(style: .default, title: "Done") {
+            let completedAction = SwipeAction(style: .default, title: "Load") {
                 (action, indexPath) in
                 
                 let cell : HomeTableViewCell = self.tableView.cellForRow(at: indexPath) as! HomeTableViewCell
@@ -214,7 +214,7 @@ extension HomeViewController {
                 
             }
             
-            completedAction.backgroundColor = .green
+            completedAction.backgroundColor = Constants.ColorPalette.SeaGreen
             completedAction.hidesWhenSelected = true
             
             // Set the button(s) to the swipe options

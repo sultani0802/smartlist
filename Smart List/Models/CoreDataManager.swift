@@ -35,6 +35,37 @@ class CoreDataManager {
     
     /****************************************/
     /****************************************/
+    //MARK: - Settings
+    /****************************************/
+    /****************************************/
+    
+    func loadSettings() -> Settings{
+        var result : [Settings]?
+        
+        let request : NSFetchRequest<Settings> = Settings.fetchRequest()
+        
+        do {
+            result = try context.fetch(request)
+        } catch {
+            print("Error loading Settings from core date: \(error)")
+        }
+        
+        if result == nil || result!.count == 0 {
+            let newSettings = Settings(context: self.context)
+            newSettings.kitchenTableViewSort = "date"
+            saveContext()
+            
+            return newSettings
+        }
+        
+        return result![0]
+    }
+
+    
+    
+    
+    /****************************************/
+    /****************************************/
     //MARK: - Categories in Core Data
     /****************************************/
     /****************************************/
@@ -178,6 +209,35 @@ class CoreDataManager {
         }
         
         return result
+    }
+    
+    
+    /// Fetches Kitchen Items with a sort descriptor
+    ///
+    /// - Parameter by: flag used to determine what KitchenItem attribute to sort by 'name' or 'date'
+    /// - Returns: The KitchenItems sorted by KitchenItem.name or KitchenItem.expiryDate
+    func fetchKitchenItemsSorted(by: String) -> [KitchenItem] {
+        var results : [KitchenItem] = []
+        var sort : NSSortDescriptor?
+        let request: NSFetchRequest<KitchenItem> = NSFetchRequest<KitchenItem>(entityName: "KitchenItem")
+        
+        if by == "date" {
+            sort = NSSortDescriptor(key: "expiryDate", ascending: true)         // Sort by date
+        } else if by == "name" {
+            sort = NSSortDescriptor(key: "name", ascending: true)               // Sort by name
+        } else {
+            return []
+        }
+        
+        request.sortDescriptors = [sort!]                       // Add the sort to the fetch request
+        
+        do {
+            results = try context.fetch(request)                // Fetch
+        } catch {
+            print("Error fetching sorted Kitchen Items from context: \(error)")
+        }
+        
+        return results
     }
     
     

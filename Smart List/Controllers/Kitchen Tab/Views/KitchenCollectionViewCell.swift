@@ -47,6 +47,7 @@ class KitchenCollectionViewCell: UICollectionViewCell {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
+        label.textColor = .red
         label.text = "Set an expiration date"
         
         return label
@@ -112,8 +113,8 @@ class KitchenCollectionViewCell: UICollectionViewCell {
     func setNameLabelConstraints() {
         NSLayoutConstraint.activate([
             nameLabel.bottomAnchor.constraint(equalTo: expiryLabel.topAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             nameLabel.heightAnchor.constraint(equalToConstant: 20)
             ])
     }
@@ -121,8 +122,8 @@ class KitchenCollectionViewCell: UICollectionViewCell {
     func setExpiryLabelConstraints() {
         NSLayoutConstraint.activate([
             expiryLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-            expiryLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            expiryLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            expiryLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            expiryLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             expiryLabel.heightAnchor.constraint(equalToConstant: 20)
             ])
     }

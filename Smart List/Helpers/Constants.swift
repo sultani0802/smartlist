@@ -55,6 +55,8 @@ struct Constants {
         static let BabyBlue = UIColor(hexString: "#86BBD8")
         static let Yellow = UIColor(hexString: "#F6AE2D")
         static let Orange = UIColor(hexString: "#F26419")
+        static let SeaGreen = UIColor(hexString: "#3CB371")
+        static let Crimson = UIColor(hexString: "#DC143C")
     }
     
     static let Units = ["milligrams":"mgs",

@@ -9,5 +9,6 @@ target 'Smart List' do
     pod 'SwipeCellKit'
     pod 'Segmentio'
     pod 'ViewAnimator'
+    pod 'Alamofire', '~> 5.0.0-beta.5'
     
 end

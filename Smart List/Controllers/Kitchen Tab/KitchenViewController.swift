@@ -18,7 +18,7 @@ protocol KitchenTabTitleDelegate: class {
 }
 
 
-class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, CollectionViewAnimationDelegate {
+class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, CollectionViewAnimationDelegate, KitchenSortDelegate {
 
     
     //MARK: - Class Properties
@@ -26,6 +26,9 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     /****************************************/
     var pageIndex: Int = 0                              // The page of the controller
     var editMode: Bool = false
+    var instructionText : [String] = ["Your expired Kitchen Items will appear here when they expire.",
+                                        "Your fresh Kitchen Items will appear here when you set an expiration date.",
+                                        "All Kitchen Items will appear here when you unload from the List."]
     
     // Core Data Manager (Singleton)
     let coreDataManager = CoreDataManager.shared        // Core Data reference
@@ -42,6 +45,15 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     /****************************************/
     /****************************************/
     var collectionView: UICollectionView!
+    
+    var getStartedView: HomeGetStartedView = {
+        var view = HomeGetStartedView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = Constants.ColorPalette.Yellow.withAlphaComponent(0.7)
+        view.isHidden = true                           // Instruction view is hidden unless the collection view is empty
+        
+        return view
+    }()
 
     
     
@@ -62,8 +74,6 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
         view.backgroundColor = .white           // Set the background color
         
         setupUIViews()                          // Create and set constraints for UIViews
-        loadItems()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,7 +90,8 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
             kitchenTitleDelegate?.changeNavBarTitle(title: "Smart Kitchen")
         }
         
-//        loadItems()
+        loadItems()                             // Load the KitchenItems from Core Data
+        toggleInstructions()                    // Show/hide instructions
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -96,16 +107,22 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     /****************************************/
     func setupUIViews() {
         initCollectionView()
+        setupGetStartedView()
     }
     
     
-    func deleteKitchenItem(button: UIButton) {
+    func setupGetStartedView() {
+        self.getStartedView.instructionText.text = self.instructionText[self.pageIndex]
+        self.view.addSubview(getStartedView)
         
-        print("\nDELETING ITEM INDEX: \(button.tag)")
-        self.coreDataManager.deleteKitchenItem(item: self.model[button.tag])
-        self.model.remove(at: button.tag)
-        self.collectionView.reloadData()
+        NSLayoutConstraint.activate([
+            getStartedView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            getStartedView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            getStartedView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.8),
+            getStartedView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.45)
+            ])
     }
+
     
     
     func initCollectionView() {
@@ -144,12 +161,14 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     }
     
     
+    /// Fade and slide in the cells using an animation.
+    /// Triggered by switch from a DIFFERENT tab in the tabBar to the Kitchen tab
     func animateCollectionView() {
-        let cells = collectionView.visibleCells(in: 0) as! [KitchenCollectionViewCell]
+        let cells = collectionView.visibleCells(in: 0) as! [KitchenCollectionViewCell]  // Get all the cells in the collection view
         
-        let myAnimation = AnimationType.from(direction: .left, offset: 40)
+        let myAnimation = AnimationType.from(direction: .right, offset: 40)              // My animation
         
-        UIView.animate(views: cells,
+        UIView.animate(views: cells,                                                    // Animate the cells
                        animations: [myAnimation],
                        animationInterval: 0.07,
                        duration: 0.4)
@@ -162,7 +181,6 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     //
     
     /// Calls the appropriate method to load Items into the collectionView
-    
     func loadItems() {
         if pageIndex == 0 {                 // 1st Page: Expired Items
             loadExpiredItems()
@@ -180,7 +198,9 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     func loadExpiredItems() {
         var expiredItems = [KitchenItem]()
         
-        for item in coreDataManager.fetchKitchenItems() {
+        let sort = coreDataManager.loadSettings().kitchenTableViewSort
+        
+        for item in coreDataManager.fetchKitchenItemsSorted(by: sort!) {
             if item.expiryDate != nil, item.expiryDate! < DateHelper.shared.getCurrentDateObject() {
                 expiredItems.append(item)
             }
@@ -194,7 +214,9 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     func loadFreshItems() {
         var freshItems = [KitchenItem]()
         
-        for item in coreDataManager.fetchKitchenItems() {
+        let sort = coreDataManager.loadSettings().kitchenTableViewSort
+        
+        for item in coreDataManager.fetchKitchenItemsSorted(by: sort!) {
             if item.expiryDate != nil, item.expiryDate! > DateHelper.shared.getCurrentDateObject() {
                 freshItems.append(item)
             }
@@ -206,7 +228,9 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     
     /// Loads all Items that the user has purchased
     func loadCompletedItems() {
-        self.model = coreDataManager.fetchKitchenItems()
+        let sort = coreDataManager.loadSettings().kitchenTableViewSort
+
+        self.model = coreDataManager.fetchKitchenItemsSorted(by: sort!)
     }
     
     
@@ -221,6 +245,37 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
             } else {
                 cell.deleteButton.fadeOut()                     // The user is done editing -> fade out the delete buttons
             }
+        }
+    }
+    
+    func deleteKitchenItem(button: UIButton) {
+        
+        print("\nDELETING ITEM INDEX: \(button.tag)")
+        self.coreDataManager.deleteKitchenItem(item: self.model[button.tag])
+        self.model.remove(at: button.tag)
+        self.collectionView.reloadData()
+    }
+    
+    /// Sorts the collectionView cells and model by name or expiry date
+    ///
+    /// - Parameter by: sort by 'date' or 'name'
+    func sortKitchenItems(by: String) {
+        if by == "name" {
+            self.model = coreDataManager.fetchKitchenItemsSorted(by: "name")
+            self.collectionView.reloadData()
+        } else if by == "date" {
+            self.model = coreDataManager.fetchKitchenItemsSorted(by: "date")
+            self.collectionView.reloadData()
+        }
+    }
+    
+    /// Toggles the instruction view when if there are Items in the 'expired', 'fresh', or 'all' tab
+    /// This method is called in viewDidLoad and whenever the user adds/removes a category
+    func toggleInstructions() {
+        if collectionView.visibleCells.isEmpty && model.count <= 0 {
+            getStartedView.isHidden = false
+        } else {
+            getStartedView.isHidden = true
         }
     }
 }

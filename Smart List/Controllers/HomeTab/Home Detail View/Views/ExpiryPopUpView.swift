@@ -17,7 +17,7 @@ class ExpiryPopUpView: PopUpCardView {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Expiration Date"
-        label.textColor = Constants.ColorPalette.Orange
+        label.textColor = Constants.ColorPalette.BabyBlue
         label.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         label.textAlignment = .center
         label.layer.masksToBounds = true
@@ -30,7 +30,7 @@ class ExpiryPopUpView: PopUpCardView {
         var button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Save", for: .normal)
-        button.setTitleColor(Constants.ColorPalette.Charcoal, for: .normal)
+        button.setTitleColor(Constants.ColorPalette.SeaGreen, for: .normal)
         button.titleLabel!.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(DetailViewController.doneButtonTapped(_:)), for: .touchUpInside)
@@ -56,7 +56,21 @@ class ExpiryPopUpView: PopUpCardView {
     var datePicker: UIDatePicker = {
         var picker = UIDatePicker()
         picker.translatesAutoresizingMaskIntoConstraints = false
-        picker.datePickerMode = .date
+        picker.setValue(UIColor.white, forKey: "textColor")                     // Set the text color to white
+        picker.datePickerMode = .date                                           // Set picker to Date mode
+        picker.minimumDate = DateHelper.shared.getCurrentDateObject()           // Set the minimum date to today
+        
+        var maxDate : Date = {                                                  // Get the date 2 years from now
+            var date = DateHelper.shared.getCurrentDateObject()
+            var dateComponent = DateComponents()
+            dateComponent.year = 3
+            
+            let futureDate = Calendar.current.date(byAdding: dateComponent, to: date)
+            
+            return futureDate!
+        }()
+        
+        picker.maximumDate = maxDate                                            // Set the max date to 2 years from now
         
         return picker
     }()

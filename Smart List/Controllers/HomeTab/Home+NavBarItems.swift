@@ -15,11 +15,11 @@ extension HomeViewController {
     /// Sets up the navigation bar buttons
     func setupNavItems() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addButtonTapped))
-        navigationItem.rightBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
+        navigationItem.rightBarButtonItem?.tintColor = Constants.ColorPalette.BabyBlue
         
-        doneShoppingBarButtonItem = UIBarButtonItem(title: "Done Shopping", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneShoppingButtonTapped))
+        doneShoppingBarButtonItem = UIBarButtonItem(title: "Unload", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneShoppingButtonTapped))
         navigationItem.leftBarButtonItem = doneShoppingBarButtonItem
-        navigationItem.leftBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
+        navigationItem.leftBarButtonItem?.tintColor = Constants.ColorPalette.SeaGreen
     }
     
     

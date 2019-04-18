@@ -31,9 +31,13 @@
         <attribute name="quantity" attributeType="String" syncable="YES"/>
         <attribute name="store" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Settings" representedClassName="Settings" syncable="YES" codeGenerationType="class">
+        <attribute name="kitchenTableViewSort" attributeType="String" defaultValueString="name" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Category" positionX="-54" positionY="-9" width="128" height="90"/>
         <element name="Item" positionX="-218.62109375" positionY="-11.0625" width="128" height="225"/>
         <element name="KitchenItem" positionX="-108" positionY="117" width="128" height="30"/>
+        <element name="Settings" positionX="-135" positionY="90" width="128" height="60"/>
     </elements>
 </model>

@@ -174,13 +174,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.separatorStyle = .none        // Remove cell seperators
     }
     
-
+    
     
     /// Sets all visual settings of this view
     /// Called in viewDidLoad
     private func setupView() {
         // Customize navigation bar elements
-        self.navigationItem.title = Constants.General.AppName
+        self.navigationItem.title = "Shopping List"
         self.navigationController?.navigationBar.prefersLargeTitles = true
                 
         setupTableview()                        // Add the tableview
@@ -288,22 +288,23 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
+    /// Checks if an item has been completed by the user and enables the Done Shopping button in the navigation bar
     func toggleDoneShoppingButton() {
-        for x in 0 ..< self.categories.count {
-            for y in 0 ..< self.items[x].count {
-                if self.items[x][y].completed {
-                    self.doneShoppingBarButtonItem?.isEnabled = true
-                    return
+        for x in 0 ..< self.categories.count {                              // Go through each Category
+            for y in 0 ..< self.items[x].count {                            // Go through each Item in the Cateogry
+                if self.items[x][y].completed {                             // If Item is completed
+                    self.doneShoppingBarButtonItem?.isEnabled = true        // Enable the 'Done Shopping' bar button item
+                    return                                                  // Return since we already met our condition
                 }
             }
         }
         
-        self.doneShoppingBarButtonItem?.isEnabled = false
+        self.doneShoppingBarButtonItem?.isEnabled = false                   // If no Item is completed then disable the 'Done Shopping' bar button item
     }
     
     
     
-    /// Brings the collection view cells & headers with a nice animation
+    /// Brings the collection view cells & headers into view with a nice animation
     func animateTableView() {
         let myAnimation = AnimationType.from(direction: .left, offset: 40)      // Animation
 

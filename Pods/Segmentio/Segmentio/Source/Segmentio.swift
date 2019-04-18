@@ -26,7 +26,7 @@ open class Segmentio: UIView {
         var endX: CGFloat
     }
     
-    open var valueDidChange: SegmentioSelectionCallback?
+    open var valueDidChange:  SegmentioSelectionCallback?
     open var selectedSegmentioIndex = -1 {
         didSet {
             if selectedSegmentioIndex != oldValue {

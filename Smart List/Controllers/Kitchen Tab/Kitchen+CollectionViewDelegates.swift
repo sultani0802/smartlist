@@ -32,16 +32,16 @@ extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDel
             let date = DateHelper.shared.getDateString(of: expiryDate)
             
             if item.expiryDate != nil, item.expiryDate! > DateHelper.shared.getCurrentDateObject() {
-                cell.expiryLabel.textColor = .black
+                cell.expiryLabel.textColor = Constants.ColorPalette.SeaGreen
                 cell.expiryLabel.text = "Expires \(date)"
             } else {
-                cell.expiryLabel.textColor = .red
+                cell.expiryLabel.textColor = Constants.ColorPalette.Crimson
                 cell.expiryLabel.text = "Expired \(date)"
             }
             
         } else {
             cell.expiryLabel.text = "Set an expiration date"
-            cell.expiryLabel.textColor = .blue
+            cell.expiryLabel.textColor = Constants.ColorPalette.BabyBlue
         }
         
         return cell
