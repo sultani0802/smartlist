@@ -249,7 +249,8 @@ class CoreDataManager {
         newItem.completed = item.completed
         newItem.expiryDate = item.expiryDate
         newItem.id = item.id
-        newItem.imageName = item.imageName
+        newItem.imageThumbURL = item.imageThumbURL
+        newItem.imageFullURL = item.imageFullURL
         newItem.isExpired = item.isExpired
         newItem.name = item.name                                                // Set the properties...
         newItem.notes = item.notes

@@ -22,7 +22,37 @@ extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDel
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellID.KitchenCollectionViewCellID, for: indexPath) as! KitchenCollectionViewCell
         let item = self.model[indexPath.row]
         
-        cell.itemImageView.image = UIImage(named: item.imageName ?? "groceries")
+//        cell.itemImageView.image = UIImage(named: item.imageName ?? "groceries")
+        
+//        func setItemImage() {
+//            if self.item?.imageFullURL == nil || (self.item?.imageFullURL!.isEmpty)! {
+//                Server.shared.getItemFullURL(item: self.item!.name!) { imageURL in                  // Set the image of the Item based of Nutritionix pic
+//
+//                    if imageURL != "" || !imageURL.isEmpty{
+//                        self.topContainer.itemImageView.kf.setImage(with: URL(string: imageURL))    // Set detail view's image to downloaded image
+//                    } else {
+//                        self.topContainer.itemImageView.image = UIImage(named: "groceries")         // Else, set it to default 'groceries' image from assets
+//                    }
+//                }
+//            } else {
+//                self.topContainer.itemImageView.kf.setImage(with: URL(string: self.item!.imageFullURL!))
+//            }
+//        }
+        
+        if item.imageFullURL == nil || item.imageFullURL!.isEmpty {
+            Server.shared.getItemFullURL(item: item.name!) { imageURL in                  // Set the image of the Item based of Nutritionix pic
+                
+                if imageURL != "" || !imageURL.isEmpty{
+                    cell.itemImageView.kf.setImage(with: URL(string: imageURL))    // Set detail view's image to downloaded image
+                } else {
+                    cell.itemImageView.image = UIImage(named: "groceries")         // Else, set it to default 'groceries' image from assets
+                }
+            }
+        } else {
+            cell.itemImageView.kf.setImage(with: URL(string: item.imageFullURL!))
+        }
+        
+        
         cell.nameLabel.text = item.name
         cell.deleteDelegate = self
         cell.deleteButton.tag = indexPath.row

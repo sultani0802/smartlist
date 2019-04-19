@@ -11,16 +11,19 @@ import UIKit
 class HomeGetStartedView: UIView {
     
     //MARK: - Views
-    var instructionText: UITextView = {
-        var textView = UITextView()
+    var instructionText: UILabel = {
+        var textView = UILabel()
         textView.translatesAutoresizingMaskIntoConstraints = false          // Conform to auto-layout
         textView.text = "Tap the + button up above to get started!"         // The instructions being displayed to the user
         textView.font = .systemFont(ofSize: 32)                             // Set the font size
         textView.textColor = Constants.ColorPalette.TealBlue                // Set the font color
+        
         textView.backgroundColor = UIColor(white: 1, alpha: 0)
         textView.textAlignment = .center
         textView.sizeToFit()
-        textView.isScrollEnabled = false
+        textView.adjustsFontSizeToFitWidth = true
+        textView.numberOfLines = 0
+//        textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = false
         
         return textView

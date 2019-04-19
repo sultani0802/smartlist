@@ -24,7 +24,6 @@ class KitchenDetailViewController: DetailVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        topContainer.itemImageView.image = UIImage(named: (self.item?.imageName ?? "groceries"))
         loadQuantityPopUpModel()
         loadExpiryPopUpModel()
         
@@ -32,6 +31,7 @@ class KitchenDetailViewController: DetailVC {
         updateUnitDataSource()
         loadItemNotes()
         loadPurchaseStore()
+        setItemImage()
     }
     
     
@@ -52,6 +52,22 @@ class KitchenDetailViewController: DetailVC {
         setItemDates()
     }
     
+    
+    /// Sets the image in the top container of kitchen detail view
+    func setItemImage() {
+        if self.item?.imageFullURL == nil || (self.item?.imageFullURL!.isEmpty)! {                      // If Item doesn't have an image url
+            Server.shared.getItemFullURL(item: self.item!.name!) { imageURL in                          // Set the image of the Item based of Nutritionix pic
+                
+                if imageURL != "" || !imageURL.isEmpty{
+                    self.topContainer.itemImageView.kf.setImage(with: URL(string: imageURL))            // Set detail view's image to downloaded image
+                } else {
+                    self.topContainer.itemImageView.image = UIImage(named: "groceries")                 // Else, set it to default 'groceries' image from assets
+                }
+            }
+        } else {
+            self.topContainer.itemImageView.kf.setImage(with: URL(string: self.item!.imageFullURL!))    // Set the image that is already in Item's entity
+        }
+    }
     
     
     //

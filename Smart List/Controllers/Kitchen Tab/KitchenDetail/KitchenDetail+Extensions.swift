@@ -29,7 +29,7 @@ extension KitchenDetailViewController {
             self.midContainer.expiryDate.setTitle(DateHelper.shared.getDateString(of: (self.item?.expiryDate)!), for: .normal)
             
             // Send a notification that will trigger when the item is expired
-            NotificationHelper.shared.sendNotification(withExpiryDate: (self.item?.expiryDate!)!, itemName: (self.item?.name!)!, imageName: self.item!.imageName!)
+            NotificationHelper.shared.sendNotification(withExpiryDate: (self.item?.expiryDate!)!, itemName: (self.item?.name!)!, imageURL: self.item!.imageThumbURL!)
             
             // Hide the pop up view
             self.expiryDateView.fadeOut()

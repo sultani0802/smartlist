@@ -45,8 +45,8 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
     //
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(loadSettings().kitchenTableViewSort)
+        coreDataManager.deleteAllItems()
+        coreDataManager.deleteAllCategories()
         
         setupView()                     // Set up this view
         initSegmentControl()            // Init segmented control and add constraints

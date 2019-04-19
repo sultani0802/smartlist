@@ -29,7 +29,15 @@ class DetailViewController: DetailVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        topContainer.itemImageView.image = UIImage(named: (self.item?.imageName ?? "groceries"))
+        Server.shared.getItemFullURL(item: self.item!.name!) { imageURL in                  // Set the image of the Item based of Nutritionix pic
+            
+            if imageURL != "" || !imageURL.isEmpty{
+                self.topContainer.itemImageView.kf.setImage(with: URL(string: imageURL))    // Set detail view's image to downloaded image
+            } else {
+                self.topContainer.itemImageView.image = UIImage(named: "groceries")         // Else, set it to default 'groceries' image from assets
+            }
+        }
+        
         loadQuantityPopUpModel()
         loadExpiryPopUpModel()
         
@@ -54,6 +62,9 @@ class DetailViewController: DetailVC {
         
         // Set the dates for the Item
         setItemDates()
+        
+        // Set the image for the Item
+        setItemImage()
     }
     
     
@@ -81,6 +92,24 @@ class DetailViewController: DetailVC {
             midContainer.expiryDate.setTitle("Tap to set expiry", for: .normal)         // If it wasn't set, display a message
         }
     }
+    
+    
+    /// Set the image in the top container of detail view controller
+    func setItemImage() {
+        if self.item?.imageFullURL == nil || (self.item?.imageFullURL!.isEmpty)! {                      // If Item entity doesn't have the image URL
+            Server.shared.getItemFullURL(item: self.item!.name!) { imageURL in                          // Set the image of the Item based of Nutritionix pic
+                
+                if imageURL != "" || !imageURL.isEmpty{
+                    self.topContainer.itemImageView.kf.setImage(with: URL(string: imageURL))            // Set detail view's image to downloaded image
+                } else {
+                    self.topContainer.itemImageView.image = UIImage(named: "groceries")                 // Else, set it to default 'groceries' image from assets
+                }
+            }
+        } else {
+            self.topContainer.itemImageView.kf.setImage(with: URL(string: self.item!.imageFullURL!))    // Set the image to the Item entity's saved image URL
+        }
+    }
+    
     
     /// Gets the data saved to the Item entity and populates the textfield
     /// and pickerview with the corresponding info

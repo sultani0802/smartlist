@@ -47,7 +47,7 @@ class NotificationHelper {
     ///   - expiryDate: The Item's Expiration Date
     ///   - itemName: The Item's Name
     ///   - imageName: The Item's Image Name
-    func sendNotification(withExpiryDate expiryDate: Date, itemName: String, imageName: String) {
+    func sendNotification(withExpiryDate expiryDate: Date, itemName: String, imageURL: String) {
         
         // If the user has granted us access to send notifications
         if self.notificationsAllowed {
@@ -55,16 +55,18 @@ class NotificationHelper {
             content.title = "Your \(itemName) is about to expire!"                                                          // Set the notitication title
             content.body = "Expiring \(DateHelper.shared.getDateString(of: expiryDate))"                                    // Set the notification's body
             
-            let imageURL = createLocalUrl(forImageNamed: imageName)                                                         // Create an URL from the Item's image
-            let attachment = try! UNNotificationAttachment(identifier: "image", url: imageURL!, options: .none)             // Add the image as an attachment to the notification
-            content.attachments = [attachment]
+//            let imageURL = createLocalUrl(forImageNamed: imageURL)                                                         // Create an URL from the Item's image
+            //let attachment = try! UNNotificationAttachment(identifier: "image", url: imageURL!, options: .none)             // Add the image as an attachment to the notification
+            let imageData = NSData(contentsOf: URL(string: imageURL)!)!
+            let attachment = UNNotificationAttachment.saveImageToDisk(fileIdentifier: "image.jpg", data: imageData, options: nil)
+            content.attachments = [attachment] as! [UNNotificationAttachment]
             
             let today = DateHelper.shared.getCurrentDateObject()                                                            // Get today's date
             let timeDifference = Calendar.current.dateComponents([.hour], from: today, to: expiryDate).hour                 // Get the number of hours from now until the expiration date
             let seconds = timeDifference!*3600                                                                              // Get the number of seconds from now until the expiration date at 1PM
 
             if seconds > 0 {                                                                                                // If the expiration date is in the future
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(seconds), repeats: false)        // Set the notification trigger to the expiration date at 1PM
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)        // Set the notification trigger to the expiration date at 1PM
                 let request = UNNotificationRequest(identifier: "notification.id.01", content: content, trigger: trigger)   // Create the notification request
                 
                 UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)                                 // Add the notification to the UserNotificationCenter
@@ -74,4 +76,27 @@ class NotificationHelper {
         }
     }
     
+}
+
+
+@available(iOSApplicationExtension 10.0, *)
+extension UNNotificationAttachment {
+    
+    static func saveImageToDisk(fileIdentifier: String, data: NSData, options: [NSObject : AnyObject]?) -> UNNotificationAttachment? {
+        let fileManager = FileManager.default
+        let folderName = ProcessInfo.processInfo.globallyUniqueString
+        let folderURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(folderName, isDirectory: true)
+        
+        do {
+            try fileManager.createDirectory(at: folderURL!, withIntermediateDirectories: true, attributes: nil)
+            let fileURL = folderURL?.appendingPathComponent(fileIdentifier)
+            try data.write(to: fileURL!, options: [])
+            let attachment = try UNNotificationAttachment(identifier: fileIdentifier, url: fileURL!, options: options)
+            return attachment
+        } catch let error {
+            print("error \(error)")
+        }
+        
+        return nil
+    }
 }

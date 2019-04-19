@@ -14,6 +14,7 @@
 import UIKit
 import SwipeCellKit
 import UserNotifications
+import Kingfisher
 
 extension HomeViewController {
     
@@ -54,7 +55,13 @@ extension HomeViewController {
             cell.nameText.text = ""
         }
         
-        cell.itemImageView.image = UIImage(named: item.imageName ?? "groceries")        // Set the image of the cell
+        
+        if let imgURL = item.imageThumbURL {                                            // If Item's thumbnail image url isn't nil
+            cell.itemImageView.kf.setImage(with: URL(string: imgURL))                   // Download and set the Item's image to the image at the URL
+        } else {
+            cell.itemImageView.image = UIImage(named: "groceries")                      // Else, set it to default 'grocies' image in assets
+        }
+        
         cell.completed = item.completed                                                 // Synchronize completion state of cell with core data
         
         
@@ -72,13 +79,18 @@ extension HomeViewController {
                 let itemToUpdate = self.items[indexPath.section][indexPath.row]         // Grab the item they typed
                 
                 // Set the new Item entity's values in Core Data and save
-                itemToUpdate.setValue(newTitle, forKey: "name")
-                itemToUpdate.setValue(Constants.CellType.ValidCell, forKey: "cellType")
-                itemToUpdate.setValue(ItemImageHelper.shared.getMatchedImage(item: itemToUpdate), forKey: "imageName")
+                itemToUpdate.setValue(newTitle, forKey: "name")                         // Set Item's name in Core Data entity
+                itemToUpdate.setValue(Constants.CellType.ValidCell, forKey: "cellType") // Set Item's cell type in Core Data entity
+                
+                Server.shared.getItemThumbnailURL(item: cell.nameText.text!) { imageURL in          // Set the image of the Item based of Nutritionix pic
+                    
+                    itemToUpdate.setValue(imageURL, forKey: "imageThumbURL")                       // Update the Item entity's thumbnail image URL
+                    cell.itemImageView.kf.setImage(with: URL(string: itemToUpdate.imageThumbURL!))  // Update the cell's image
+                    print("item to update image: \(itemToUpdate.imageThumbURL!)")
+                }
                 
                 
                 // Unhide item image
-                cell.itemImageView.image = UIImage(named: itemToUpdate.imageName!)
                 cell.itemImageView.isHidden = false
                 
                 // Save the new Item to Core Data

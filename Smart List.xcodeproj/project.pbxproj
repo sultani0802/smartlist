@@ -24,6 +24,7 @@
 		0C3F4A9721F7B47F00003A86 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CF47D9421F3E8240084C1BA /* DataModel.xcdatamodeld */; };
 		0C3F4A9921F7BAD700003A86 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3F4A9821F7BAD700003A86 /* CoreDataManager.swift */; };
 		0C49DA3D2211D7090081D811 /* HomeGetStartedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */; };
+		0C4FA4F2226812C300FEAF6A /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4FA4F1226812C300FEAF6A /* Server.swift */; };
 		0C6F5840220DC92B00C730CB /* Home+NavBarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */; };
 		0C96BF43223D904F00C9F00C /* UnitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96BF42223D904F00C9F00C /* UnitHelper.swift */; };
 		0C97799D22020C73009C3161 /* HomeTableviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C97799C22020C73009C3161 /* HomeTableviewHeader.swift */; };
@@ -87,6 +88,7 @@
 		0C367DD62244334500323F05 /* ExpirationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpirationHelper.swift; sourceTree = "<group>"; };
 		0C3F4A9821F7BAD700003A86 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGetStartedView.swift; sourceTree = "<group>"; };
+		0C4FA4F1226812C300FEAF6A /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+NavBarItems.swift"; sourceTree = "<group>"; };
 		0C96BF42223D904F00C9F00C /* UnitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitHelper.swift; sourceTree = "<group>"; };
 		0C97799C22020C73009C3161 /* HomeTableviewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableviewHeader.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			children = (
 				0CC767A521F0268C00752517 /* TabBarController.swift */,
 				0C08646E221C623A0017AA6D /* PopUpCardView.swift */,
+				0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */,
 				0CA3518022557D440044D166 /* Detail VC Templates */,
 				0CC767A921F0302800752517 /* HomeTab */,
 				0CB180CB223F4CF300927014 /* Kitchen Tab */,
@@ -180,6 +183,7 @@
 				0C296E3E2239952000188959 /* ItemImageHelper.swift */,
 				0CCD9E492232E11E0075D8AD /* Levenshtein.swift */,
 				0C1FF5A7225E2CA2002D747D /* NotificationHelper.swift */,
+				0C4FA4F1226812C300FEAF6A /* Server.swift */,
 				0CD0F50F2214FC720018982E /* UIButton+Extensions.swift */,
 				0C13BC4B2223581E0027BABD /* UITextfieldExtensions.swift */,
 				0C06D571221F677700E48F21 /* UIViewBordersExtension.swift */,
@@ -324,7 +328,6 @@
 			children = (
 				0C97799C22020C73009C3161 /* HomeTableviewHeader.swift */,
 				0CC767B121F0307D00752517 /* HomeTableViewCell.swift */,
-				0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -477,7 +480,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Smart List/Pods-Smart List-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Segmentio/Segmentio.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ViewAnimator/ViewAnimator.framework",
 			);
@@ -485,7 +491,10 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Segmentio.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewAnimator.framework",
 			);
@@ -539,6 +548,7 @@
 				0CD0F5102214FC720018982E /* UIButton+Extensions.swift in Sources */,
 				0C11B9BA22138BC80003A87D /* DetailTopContainer.swift in Sources */,
 				0C9A992F226011EA0038789E /* Kitchen+UserNotificationDelegate.swift in Sources */,
+				0C4FA4F2226812C300FEAF6A /* Server.swift in Sources */,
 				0C2541B722419D13003901CA /* KitchenPageViewController.swift in Sources */,
 				0CB180C8223EFB2E00927014 /* HomeTVCell+Delegates.swift in Sources */,
 				0CC767A821F026B600752517 /* HomeViewController.swift in Sources */,
