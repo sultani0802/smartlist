@@ -29,7 +29,7 @@ class DetailViewController: DetailVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        Server.shared.getItemFullURL(item: self.item!.name!) { imageURL in                  // Set the image of the Item based of Nutritionix pic
+        Server.shared.getItemFullURL(itemName: self.item!.name!) { imageURL in                  // Set the image of the Item based of Nutritionix pic
             
             if imageURL != "" || !imageURL.isEmpty{
                 self.topContainer.itemImageView.kf.setImage(with: URL(string: imageURL))    // Set detail view's image to downloaded image
@@ -97,7 +97,7 @@ class DetailViewController: DetailVC {
     /// Set the image in the top container of detail view controller
     func setItemImage() {
         if self.item?.imageFullURL == nil || (self.item?.imageFullURL!.isEmpty)! {                      // If Item entity doesn't have the image URL
-            Server.shared.getItemFullURL(item: self.item!.name!) { imageURL in                          // Set the image of the Item based of Nutritionix pic
+            Server.shared.getItemFullURL(itemName: self.item!.name!) { imageURL in                          // Set the image of the Item based of Nutritionix pic
                 
                 if imageURL != "" || !imageURL.isEmpty{
                     self.topContainer.itemImageView.kf.setImage(with: URL(string: imageURL))            // Set detail view's image to downloaded image

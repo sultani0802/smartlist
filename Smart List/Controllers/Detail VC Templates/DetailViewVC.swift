@@ -68,6 +68,7 @@ class DetailVC: UIViewController {
         return view
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -153,6 +154,7 @@ class DetailVC: UIViewController {
             topContainer.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
             topContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             topContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            topContainer.heightAnchor.constraint(equalTo: topContainer.widthAnchor),
             
             
             

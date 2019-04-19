@@ -52,11 +52,13 @@ class NotificationHelper {
         // If the user has granted us access to send notifications
         if self.notificationsAllowed {
             let content = UNMutableNotificationContent()                                                                    // Init the notification
-            content.title = "Your \(itemName) is about to expire!"                                                          // Set the notitication title
+            if itemName.last == "s" {
+                content.title = "Your \(itemName) are about to expire!"                                                     // (plural) Set the notitication title
+            } else {
+                content.title = "Your \(itemName) is about to expire!"                                                      // (singular) Set the notitication title
+            }
             content.body = "Expiring \(DateHelper.shared.getDateString(of: expiryDate))"                                    // Set the notification's body
             
-//            let imageURL = createLocalUrl(forImageNamed: imageURL)                                                         // Create an URL from the Item's image
-            //let attachment = try! UNNotificationAttachment(identifier: "image", url: imageURL!, options: .none)             // Add the image as an attachment to the notification
             let imageData = NSData(contentsOf: URL(string: imageURL)!)!
             let attachment = UNNotificationAttachment.saveImageToDisk(fileIdentifier: "image.jpg", data: imageData, options: nil)
             content.attachments = [attachment] as! [UNNotificationAttachment]
@@ -66,7 +68,7 @@ class NotificationHelper {
             let seconds = timeDifference!*3600                                                                              // Get the number of seconds from now until the expiration date at 1PM
 
             if seconds > 0 {                                                                                                // If the expiration date is in the future
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)        // Set the notification trigger to the expiration date at 1PM
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(seconds), repeats: false)        // Set the notification trigger to the expiration date at 1PM
                 let request = UNNotificationRequest(identifier: "notification.id.01", content: content, trigger: trigger)   // Create the notification request
                 
                 UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)                                 // Add the notification to the UserNotificationCenter

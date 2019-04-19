@@ -40,7 +40,7 @@ extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDel
 //        }
         
         if item.imageFullURL == nil || item.imageFullURL!.isEmpty {
-            Server.shared.getItemFullURL(item: item.name!) { imageURL in                  // Set the image of the Item based of Nutritionix pic
+            Server.shared.getItemFullURL(itemName: item.name!) { imageURL in                  // Set the image of the Item based of Nutritionix pic
                 
                 if imageURL != "" || !imageURL.isEmpty{
                     cell.itemImageView.kf.setImage(with: URL(string: imageURL))    // Set detail view's image to downloaded image

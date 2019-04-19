@@ -56,7 +56,7 @@ class KitchenDetailViewController: DetailVC {
     /// Sets the image in the top container of kitchen detail view
     func setItemImage() {
         if self.item?.imageFullURL == nil || (self.item?.imageFullURL!.isEmpty)! {                      // If Item doesn't have an image url
-            Server.shared.getItemFullURL(item: self.item!.name!) { imageURL in                          // Set the image of the Item based of Nutritionix pic
+            Server.shared.getItemFullURL(itemName: self.item!.name!) { imageURL in                          // Set the image of the Item based of Nutritionix pic
                 
                 if imageURL != "" || !imageURL.isEmpty{
                     self.topContainer.itemImageView.kf.setImage(with: URL(string: imageURL))            // Set detail view's image to downloaded image

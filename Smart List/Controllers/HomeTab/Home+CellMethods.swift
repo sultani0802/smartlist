@@ -82,7 +82,7 @@ extension HomeViewController {
                 itemToUpdate.setValue(newTitle, forKey: "name")                         // Set Item's name in Core Data entity
                 itemToUpdate.setValue(Constants.CellType.ValidCell, forKey: "cellType") // Set Item's cell type in Core Data entity
                 
-                Server.shared.getItemThumbnailURL(item: cell.nameText.text!) { imageURL in          // Set the image of the Item based of Nutritionix pic
+                Server.shared.getItemThumbnailURL(itemName: cell.nameText.text!) { imageURL in          // Set the image of the Item based of Nutritionix pic
                     
                     itemToUpdate.setValue(imageURL, forKey: "imageThumbURL")                       // Update the Item entity's thumbnail image URL
                     cell.itemImageView.kf.setImage(with: URL(string: itemToUpdate.imageThumbURL!))  // Update the cell's image
