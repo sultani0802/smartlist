@@ -182,6 +182,8 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     
     /// Calls the appropriate method to load Items into the collectionView
     func loadItems() {
+        let prevModel = model               // Get the current model
+        
         if pageIndex == 0 {                 // 1st Page: Expired Items
             loadExpiredItems()
         } else if pageIndex == 1 {          // 2nd Page: Fresh Items
@@ -190,47 +192,51 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
             loadCompletedItems()
         }
         
-        collectionView.reloadData()         // Reload the collectionview with the updated Items
+        if prevModel == model {             // If the previous model is the same as the newly loaded one, don't reload the collection
+                                            // Do nothing
+        } else {                            // Otherwise, the model changed so...
+            collectionView.reloadData()     // Reload the collectionview with the updated Items
+        }
     }
     
     
     /// Loads all the expired Items
     func loadExpiredItems() {
-        var expiredItems = [KitchenItem]()
+        var expiredItems = [KitchenItem]()                                      // Create an empty array of Kitchen Items
         
-        let sort = coreDataManager.loadSettings().kitchenTableViewSort
+        let sort = coreDataManager.loadSettings().kitchenTableViewSort          // Set the sort descriptor from user's saved settings in core data
         
-        for item in coreDataManager.fetchKitchenItemsSorted(by: sort!) {
+        for item in coreDataManager.fetchKitchenItemsSorted(by: sort!) {        // Go through each Kitchen Item, if it is expired then add it to the model
             if item.expiryDate != nil, item.expiryDate! < DateHelper.shared.getCurrentDateObject() {
                 expiredItems.append(item)
             }
         }
         
-        self.model = expiredItems
+        self.model = expiredItems                                               // Update the model
     }
     
     
     /// Loads all the fresh Items
     func loadFreshItems() {
-        var freshItems = [KitchenItem]()
+        var freshItems = [KitchenItem]()                                        // Create and empty array of Kitchen Items
         
-        let sort = coreDataManager.loadSettings().kitchenTableViewSort
+        let sort = coreDataManager.loadSettings().kitchenTableViewSort          // Set the sort descriptor from user's saved settings in core data
         
-        for item in coreDataManager.fetchKitchenItemsSorted(by: sort!) {
+        for item in coreDataManager.fetchKitchenItemsSorted(by: sort!) {        // Go through each Kitchen Item, if it is not expired yet then add to model
             if item.expiryDate != nil, item.expiryDate! > DateHelper.shared.getCurrentDateObject() {
                 freshItems.append(item)
             }
         }
         
-        self.model = freshItems
+        self.model = freshItems                                                 // Update the model
     }
     
     
     /// Loads all Items that the user has purchased
     func loadCompletedItems() {
-        let sort = coreDataManager.loadSettings().kitchenTableViewSort
-
-        self.model = coreDataManager.fetchKitchenItemsSorted(by: sort!)
+        let sort = coreDataManager.loadSettings().kitchenTableViewSort          // Set the sort descriptor based on user's settings
+        
+        self.model = coreDataManager.fetchKitchenItemsSorted(by: sort!)         // Update the model with the sorted Kitchen Items (all of them)
     }
     
     
@@ -248,8 +254,11 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
         }
     }
     
+    
+    /// Delete's a Kitchen Item from Core Data, then from model, then reload's collectionView
+    ///
+    /// - Parameter button: Uses the Kitchen Cell's button tag to determine which collectionview cell triggered the deletion
     func deleteKitchenItem(button: UIButton) {
-        
         print("\nDELETING ITEM INDEX: \(button.tag)")
         self.coreDataManager.deleteKitchenItem(item: self.model[button.tag])
         self.model.remove(at: button.tag)

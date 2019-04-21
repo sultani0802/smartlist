@@ -3,7 +3,7 @@
 //  Smart List
 //
 //  Created by Haamed Sultani on Jan/1/19.
-//  Copyright © 2019 Haamed Sultani. All rights reserved.
+//  Copyright © 2019 Haamed Sultani and Lara Khouri. All rights reserved.
 //
 
 import UIKit
@@ -39,7 +39,7 @@ class TabBarController: UITabBarController {
         tabBar.unselectedItemTintColor = Constants.ColorPalette.DarkGray
         
         
-        homeViewController.tabBarItem = UITabBarItem(title: "List", image: UIImage(named: "list"), tag: 0)
+        homeViewController.tabBarItem = UITabBarItem(title: "Shopping List", image: UIImage(named: "list"), tag: 0)
 
         kitchenViewController.tabBarItem = UITabBarItem(title: "Kitchen", image: UIImage(named: "kitchen"), tag: 1)
         
@@ -57,8 +57,8 @@ class TabBarController: UITabBarController {
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
-        if item.title == "List" {
-            if currentTab?.title != "List" {
+        if item.title == "Shopping List" {
+            if currentTab?.title != "Shopping List" {
                 tableViewAnimationDelegate?.animateTableView()
             }
         } else if item.title == "Kitchen" {
@@ -66,7 +66,6 @@ class TabBarController: UITabBarController {
                 kitchenViewController.kitchenPages[kitchenViewController.pageIndex].animateCollectionView()
             }
         }
-        
         
         currentTab = item
     }
