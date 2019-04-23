@@ -35,7 +35,6 @@ extension KitchenDetailViewController {
             self.expiryDateView.fadeOut()
             
             
-            
         // If the user was using the quantity pop up view
         } else if sender == quantityView.saveButton {
             // Grab the quantity string

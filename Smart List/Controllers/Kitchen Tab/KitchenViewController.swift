@@ -19,16 +19,18 @@ protocol KitchenTabTitleDelegate: class {
 
 
 class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, CollectionViewAnimationDelegate, KitchenSortDelegate {
-
+    
     
     //MARK: - Class Properties
     /****************************************/
     /****************************************/
     var pageIndex: Int = 0                              // The page of the controller
     var editMode: Bool = false
+    var lastDateOfSelectedItem : Date?                  // Keeps track of the expiry date of the Item the user selects
+    var selectedItemIndex : Int?                        // Keeps track of the index of that Item as well
     var instructionText : [String] = ["Your expired Kitchen Items will appear here when they expire.",
-                                        "Your fresh Kitchen Items will appear here when you set an expiration date.",
-                                        "All Kitchen Items will appear here when you unload from the List."]
+                                      "Your fresh Kitchen Items will appear here when you set an expiration date.",
+                                      "All Kitchen Items will appear here when you unload from the List."]
     
     // Core Data Manager (Singleton)
     let coreDataManager = CoreDataManager.shared        // Core Data reference
@@ -54,7 +56,7 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
         
         return view
     }()
-
+    
     
     
     //MARK: - TableView Data Source
@@ -70,7 +72,7 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .white           // Set the background color
         
         setupUIViews()                          // Create and set constraints for UIViews
@@ -96,10 +98,9 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
     }
     
-
+    
     /****************************************/
     /****************************************/
     //MARK: - My Methods
@@ -122,7 +123,7 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
             getStartedView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.45)
             ])
     }
-
+    
     
     
     func initCollectionView() {
@@ -153,7 +154,7 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
         collectionView.scrollIndicatorInsets = tabBarOffset
         
         collectionView.register(KitchenCollectionViewCell.self,                         // Register cell class
-                                forCellWithReuseIdentifier: Constants.CellID.KitchenCollectionViewCellID)
+            forCellWithReuseIdentifier: Constants.CellID.KitchenCollectionViewCellID)
         
         collectionView.delegate = self                                                  // Set collectionview delegate
         collectionView.dataSource = self                                                // Set collectionview datasource
@@ -169,9 +170,9 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
         let myAnimation = AnimationType.from(direction: .right, offset: 40)              // My animation
         
         UIView.animate(views: cells,                                                    // Animate the cells
-                       animations: [myAnimation],
-                       animationInterval: 0.07,
-                       duration: 0.4)
+            animations: [myAnimation],
+            animationInterval: 0.07,
+            duration: 0.4)
     }
     
     
@@ -182,7 +183,7 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     
     /// Calls the appropriate method to load Items into the collectionView
     func loadItems() {
-        let prevModel = model               // Get the current model
+        let prevModel = self.model          // Keeps track of the model before it is changed
         
         if pageIndex == 0 {                 // 1st Page: Expired Items
             loadExpiredItems()
@@ -192,10 +193,20 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
             loadCompletedItems()
         }
         
-        if prevModel == model {             // If the previous model is the same as the newly loaded one, don't reload the collection
-                                            // Do nothing
-        } else {                            // Otherwise, the model changed so...
-            collectionView.reloadData()     // Reload the collectionview with the updated Items
+        // The logic here is that if there is a change to the model based on sorting of date or name
+        // or if the count is different, then we reload the whole collection with the newly sorted model
+        // Otherwise, we check if there was a change in the date for ONLY the Item the user selected
+        // If the date is different then we only have to update that cell instead of reloading the collectionView
+        if model.count != prevModel.count {         // Compares the size of the old and new model
+            collectionView.reloadData()             // Reload the collectionView is they are different
+        } else if model != prevModel {              // Compares the old and new model
+            collectionView.reloadData()             // Reload the collectionView if they are different
+        } else if model.count > 0 {                 // Update only the Item the user selected
+            if let index = selectedItemIndex {
+                if lastDateOfSelectedItem != self.model[index].expiryDate {
+                    collectionView.reloadItems(at: [IndexPath(row: selectedItemIndex!, section: 0)])
+                }
+            }
         }
     }
     

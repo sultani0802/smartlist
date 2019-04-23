@@ -22,23 +22,6 @@ extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDel
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellID.KitchenCollectionViewCellID, for: indexPath) as! KitchenCollectionViewCell
         let item = self.model[indexPath.row]
         
-//        cell.itemImageView.image = UIImage(named: item.imageName ?? "groceries")
-        
-//        func setItemImage() {
-//            if self.item?.imageFullURL == nil || (self.item?.imageFullURL!.isEmpty)! {
-//                Server.shared.getItemFullURL(item: self.item!.name!) { imageURL in                  // Set the image of the Item based of Nutritionix pic
-//
-//                    if imageURL != "" || !imageURL.isEmpty{
-//                        self.topContainer.itemImageView.kf.setImage(with: URL(string: imageURL))    // Set detail view's image to downloaded image
-//                    } else {
-//                        self.topContainer.itemImageView.image = UIImage(named: "groceries")         // Else, set it to default 'groceries' image from assets
-//                    }
-//                }
-//            } else {
-//                self.topContainer.itemImageView.kf.setImage(with: URL(string: self.item!.imageFullURL!))
-//            }
-//        }
-        
         if item.imageFullURL == nil || item.imageFullURL!.isEmpty {
             Server.shared.getItemFullURL(itemName: item.name!) { imageURL in                  // Set the image of the Item based of Nutritionix pic
                 
@@ -95,5 +78,8 @@ extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDel
         let item = model[indexPath.row]                                 // The Item the user selected
         
         self.kitchenCellDelegate?.userSelectedItem(item: item)          // Call the delegate to segue
+        
+        self.lastDateOfSelectedItem = item.expiryDate                   // Save the date of the Item the user just selected
+        self.selectedItemIndex = indexPath.row                          // Save the index of the Item the user just selected
     }
 }

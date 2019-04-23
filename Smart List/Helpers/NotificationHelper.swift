@@ -58,17 +58,20 @@ class NotificationHelper {
                 content.title = "Your \(itemName) is about to expire!"                                                      // (singular) Set the notitication title
             }
             content.body = "Expiring \(DateHelper.shared.getDateString(of: expiryDate))"                                    // Set the notification's body
-            
-            let imageData = NSData(contentsOf: URL(string: imageURL)!)!
-            let attachment = UNNotificationAttachment.saveImageToDisk(fileIdentifier: "image.jpg", data: imageData, options: nil)
-            content.attachments = [attachment] as! [UNNotificationAttachment]
+            if !imageURL.isEmpty {
+                let imageData = NSData(contentsOf: URL(string: imageURL)!)!
+                let attachment = UNNotificationAttachment.saveImageToDisk(fileIdentifier: "image.jpg", data: imageData, options: nil)
+                content.attachments = [attachment] as! [UNNotificationAttachment]
+            }
             
             let today = DateHelper.shared.getCurrentDateObject()                                                            // Get today's date
             let timeDifference = Calendar.current.dateComponents([.hour], from: today, to: expiryDate).hour                 // Get the number of hours from now until the expiration date
             let seconds = timeDifference!*3600                                                                              // Get the number of seconds from now until the expiration date at 1PM
 
             if seconds > 0 {                                                                                                // If the expiration date is in the future
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(seconds), repeats: false)        // Set the notification trigger to the expiration date at 1PM
+//                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(seconds), repeats: false)        // Set the notification trigger to the expiration date at 1PM
+                let triggerDate = Calendar.current.dateComponents([.year, .month, .day], from: expiryDate)
+                let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
                 let request = UNNotificationRequest(identifier: "notification.id.01", content: content, trigger: trigger)   // Create the notification request
                 
                 UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)                                 // Add the notification to the UserNotificationCenter
