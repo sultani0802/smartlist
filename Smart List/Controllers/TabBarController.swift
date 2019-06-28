@@ -23,10 +23,13 @@ class TabBarController: UITabBarController {
     var tableViewAnimationDelegate : TableViewAnimationDelegate?                // The Item view controller (HomeViewController) conforms to this protocol for tableview animations
     var collectionViewAnimationDelegate : [CollectionViewAnimationDelegate]?    // The Kitchen view controllers (KitchenViewController) conforms to this protocol for collectionview animations
     var currentTab : UITabBarItem?                                              // Used to keep track of which tab is in view
-    // The second tab in the tab bar
-    let homeViewController = HomeViewController()
     // The first tab in the tab bar
     let kitchenViewController = KitchenPageViewController()
+    // The second tab in the tab bar
+    let homeViewController = HomeViewController()
+    // The third tab in the tab bar
+    let profileViewController = ProfileViewController()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,12 +46,14 @@ class TabBarController: UITabBarController {
 
         kitchenViewController.tabBarItem = UITabBarItem(title: "Kitchen", image: UIImage(named: "kitchen"), tag: 1)
         
+        profileViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "profile"), tag: 2)
+        
         tableViewAnimationDelegate = homeViewController
         collectionViewAnimationDelegate = kitchenViewController.kitchenPages
         
         
         // Setting our view controllers for the tab bar
-        let tabBarList = [kitchenViewController, homeViewController]
+        let tabBarList = [kitchenViewController, homeViewController, profileViewController]
         viewControllers = tabBarList.map{UINavigationController(rootViewController: $0)}
         
         

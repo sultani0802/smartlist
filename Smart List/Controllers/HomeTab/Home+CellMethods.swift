@@ -223,7 +223,6 @@ extension HomeViewController {
                 }
                 self.toggleDoneShoppingButton()
                 self.coreDataManager.saveContext()
-                
             }
             
             completedAction.backgroundColor = Constants.ColorPalette.SeaGreen

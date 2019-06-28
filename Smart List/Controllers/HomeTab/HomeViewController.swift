@@ -490,6 +490,3 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.reloadData()
     }
 }
-
-
-

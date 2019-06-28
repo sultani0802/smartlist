@@ -14,6 +14,12 @@ struct Constants {
         static let AppName = "Smart Kitchen"
     }
     
+    struct Settings {
+        static let Name = 0
+        static let Email = 1
+        static let Notifications = 2
+    }
+    
     struct Visuals {
         static let fontName = "Gill Sans"
     }
@@ -57,6 +63,7 @@ struct Constants {
         static let Orange = UIColor(hexString: "#F26419")
         static let SeaGreen = UIColor(hexString: "#3CB371")
         static let Crimson = UIColor(hexString: "#DC143C")
+        static let OffWhite = UIColor(hexString: "F2F3F5")
     }
     
     static let Units = ["milligrams":"mgs",

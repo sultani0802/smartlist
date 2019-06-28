@@ -19,10 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         window = UIWindow()
-        window?.rootViewController = TabBarController()
+//        window?.rootViewController = TabBarController()
+        window?.rootViewController = SignUpViewController()
         window?.makeKeyAndVisible()
         
-        UINavigationBar.appearance().barTintColor = .white //Constants.ColorPalette.DarkGray
+        UINavigationBar.appearance().barTintColor = .white
         
         return true
     }

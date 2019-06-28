@@ -25,6 +25,16 @@
 		0C3F4A9921F7BAD700003A86 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3F4A9821F7BAD700003A86 /* CoreDataManager.swift */; };
 		0C49DA3D2211D7090081D811 /* HomeGetStartedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */; };
 		0C4FA4F2226812C300FEAF6A /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4FA4F1226812C300FEAF6A /* Server.swift */; };
+		0C5C507F22C3008100175A57 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C507E22C3008100175A57 /* ProfileViewController.swift */; };
+		0C5C508222C4331600175A57 /* Profile+TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C508122C4331600175A57 /* Profile+TableViewDelegate.swift */; };
+		0C5C508422C4338E00175A57 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C508322C4338E00175A57 /* ProfileTableViewCell.swift */; };
+		0C5C508722C590CC00175A57 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C508622C590CC00175A57 /* SignUpViewController.swift */; };
+		0C5C508A22C591DF00175A57 /* SignUpTopContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C508922C591DF00175A57 /* SignUpTopContainer.swift */; };
+		0C5C508C22C5A13200175A57 /* SwiftGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C508B22C5A13200175A57 /* SwiftGif.swift */; };
+		0C5C508F22C5A22200175A57 /* chef.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0C5C508E22C5A22200175A57 /* chef.gif */; };
+		0C5C509122C5A31E00175A57 /* cook.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0C5C509022C5A31E00175A57 /* cook.gif */; };
+		0C5C509322C5B26500175A57 /* SignUpBottomContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C509222C5B26500175A57 /* SignUpBottomContainer.swift */; };
+		0C66EEF622C2F5E700AAB96C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC767A721F026B600752517 /* HomeViewController.swift */; };
 		0C6F5840220DC92B00C730CB /* Home+NavBarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */; };
 		0C96BF43223D904F00C9F00C /* UnitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96BF42223D904F00C9F00C /* UnitHelper.swift */; };
 		0C97799D22020C73009C3161 /* HomeTableviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C97799C22020C73009C3161 /* HomeTableviewHeader.swift */; };
@@ -48,7 +58,6 @@
 		0CC7678D21F0262400752517 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CC7678C21F0262400752517 /* Assets.xcassets */; };
 		0CC7679B21F0262400752517 /* Smart_ListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC7679A21F0262400752517 /* Smart_ListTests.swift */; };
 		0CC767A621F0268C00752517 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC767A521F0268C00752517 /* TabBarController.swift */; };
-		0CC767A821F026B600752517 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC767A721F026B600752517 /* HomeViewController.swift */; };
 		0CC767AD21F0304900752517 /* CategoryEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC767AC21F0304900752517 /* CategoryEnum.swift */; };
 		0CC767B021F0306F00752517 /* Home+CellMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC767AF21F0306F00752517 /* Home+CellMethods.swift */; };
 		0CC767B221F0307D00752517 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC767B121F0307D00752517 /* HomeTableViewCell.swift */; };
@@ -58,6 +67,7 @@
 		0CE00E0122288FCE00BA0C43 /* UIViewController+keyboardHiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE00E0022288FCE00BA0C43 /* UIViewController+keyboardHiding.swift */; };
 		0CF47D9621F3E8240084C1BA /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CF47D9421F3E8240084C1BA /* DataModel.xcdatamodeld */; };
 		0CF6B5802210ECA30049CF63 /* Home+SectionMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF6B57F2210ECA30049CF63 /* Home+SectionMethods.swift */; };
+		0CF86C6C22C6684000AD6712 /* SignUp+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF86C6B22C6684000AD6712 /* SignUp+Keyboard.swift */; };
 		6AD46FD32B7849D34129B106 /* Pods_Smart_List.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0672B81491D7590A183BA6 /* Pods_Smart_List.framework */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +99,15 @@
 		0C3F4A9821F7BAD700003A86 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGetStartedView.swift; sourceTree = "<group>"; };
 		0C4FA4F1226812C300FEAF6A /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		0C5C507E22C3008100175A57 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		0C5C508122C4331600175A57 /* Profile+TableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profile+TableViewDelegate.swift"; sourceTree = "<group>"; };
+		0C5C508322C4338E00175A57 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		0C5C508622C590CC00175A57 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		0C5C508922C591DF00175A57 /* SignUpTopContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTopContainer.swift; sourceTree = "<group>"; };
+		0C5C508B22C5A13200175A57 /* SwiftGif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftGif.swift; sourceTree = "<group>"; };
+		0C5C508E22C5A22200175A57 /* chef.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = chef.gif; sourceTree = "<group>"; };
+		0C5C509022C5A31E00175A57 /* cook.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cook.gif; sourceTree = "<group>"; };
+		0C5C509222C5B26500175A57 /* SignUpBottomContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBottomContainer.swift; sourceTree = "<group>"; };
 		0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+NavBarItems.swift"; sourceTree = "<group>"; };
 		0C96BF42223D904F00C9F00C /* UnitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitHelper.swift; sourceTree = "<group>"; };
 		0C97799C22020C73009C3161 /* HomeTableviewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableviewHeader.swift; sourceTree = "<group>"; };
@@ -126,6 +145,7 @@
 		0CE00E0022288FCE00BA0C43 /* UIViewController+keyboardHiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+keyboardHiding.swift"; sourceTree = "<group>"; };
 		0CF47D9521F3E8240084C1BA /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		0CF6B57F2210ECA30049CF63 /* Home+SectionMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+SectionMethods.swift"; sourceTree = "<group>"; };
+		0CF86C6B22C6684000AD6712 /* SignUp+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignUp+Keyboard.swift"; sourceTree = "<group>"; };
 		4056A61150399B24007E5368 /* Pods-Smart List.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smart List.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Smart List/Pods-Smart List.debug.xcconfig"; sourceTree = "<group>"; };
 		57987DCAE25D18D1C486881E /* Pods-Smart List.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smart List.release.xcconfig"; path = "Pods/Target Support Files/Pods-Smart List/Pods-Smart List.release.xcconfig"; sourceTree = "<group>"; };
 		EB0672B81491D7590A183BA6 /* Pods_Smart_List.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Smart_List.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,9 +176,11 @@
 				0CC767A521F0268C00752517 /* TabBarController.swift */,
 				0C08646E221C623A0017AA6D /* PopUpCardView.swift */,
 				0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */,
+				0C5C508522C590AB00175A57 /* Sign Up Page */,
 				0CA3518022557D440044D166 /* Detail VC Templates */,
 				0CC767A921F0302800752517 /* HomeTab */,
 				0CB180CB223F4CF300927014 /* Kitchen Tab */,
+				0C5C507D22C3004600175A57 /* Profile Tab */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -170,6 +192,52 @@
 				0CBDC88122206EAF00A4B7FF /* Views */,
 			);
 			path = "Home Detail View";
+			sourceTree = "<group>";
+		};
+		0C5C507D22C3004600175A57 /* Profile Tab */ = {
+			isa = PBXGroup;
+			children = (
+				0C5C507E22C3008100175A57 /* ProfileViewController.swift */,
+				0C5C508122C4331600175A57 /* Profile+TableViewDelegate.swift */,
+				0C5C508022C3009300175A57 /* Views */,
+			);
+			path = "Profile Tab";
+			sourceTree = "<group>";
+		};
+		0C5C508022C3009300175A57 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0C5C508322C4338E00175A57 /* ProfileTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0C5C508522C590AB00175A57 /* Sign Up Page */ = {
+			isa = PBXGroup;
+			children = (
+				0C5C508622C590CC00175A57 /* SignUpViewController.swift */,
+				0CF86C6B22C6684000AD6712 /* SignUp+Keyboard.swift */,
+				0C5C508822C5910100175A57 /* Views */,
+			);
+			path = "Sign Up Page";
+			sourceTree = "<group>";
+		};
+		0C5C508822C5910100175A57 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0C5C508922C591DF00175A57 /* SignUpTopContainer.swift */,
+				0C5C509222C5B26500175A57 /* SignUpBottomContainer.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0C5C508D22C5A21200175A57 /* Gifs */ = {
+			isa = PBXGroup;
+			children = (
+				0C5C509022C5A31E00175A57 /* cook.gif */,
+				0C5C508E22C5A22200175A57 /* chef.gif */,
+			);
+			path = Gifs;
 			sourceTree = "<group>";
 		};
 		0C9779A022024173009C3161 /* Helpers */ = {
@@ -190,6 +258,7 @@
 				0CE00E0022288FCE00BA0C43 /* UIViewController+keyboardHiding.swift */,
 				0CBDC87F2220684100A4B7FF /* UIView+Animations.swift */,
 				0C96BF42223D904F00C9F00C /* UnitHelper.swift */,
+				0C5C508B22C5A13200175A57 /* SwiftGif.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -285,6 +354,7 @@
 				0C11B9B5221375CF0003A87D /* Controllers */,
 				0CC7679121F0262400752517 /* Info.plist */,
 				0CC7678C21F0262400752517 /* Assets.xcassets */,
+				0C5C508D22C5A21200175A57 /* Gifs */,
 			);
 			path = "Smart List";
 			sourceTree = "<group>";
@@ -434,7 +504,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C5C509122C5A31E00175A57 /* cook.gif in Resources */,
 				0CC7678D21F0262400752517 /* Assets.xcassets in Resources */,
+				0C5C508F22C5A22200175A57 /* chef.gif in Resources */,
 				0CD0F50E2214C3EC0018982E /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -510,12 +582,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C66EEF622C2F5E700AAB96C /* HomeViewController.swift in Sources */,
 				0CBDC8802220684100A4B7FF /* UIView+Animations.swift in Sources */,
+				0CF86C6C22C6684000AD6712 /* SignUp+Keyboard.swift in Sources */,
 				0CA2CCF32226D5970093DA1A /* ExpiryPopUpView.swift in Sources */,
 				0C11B9BC22138E420003A87D /* DetailMidContainer.swift in Sources */,
 				0CF6B5802210ECA30049CF63 /* Home+SectionMethods.swift in Sources */,
 				0C367DD72244334500323F05 /* ExpirationHelper.swift in Sources */,
+				0C5C507F22C3008100175A57 /* ProfileViewController.swift in Sources */,
 				0CC767AD21F0304900752517 /* CategoryEnum.swift in Sources */,
+				0C5C508A22C591DF00175A57 /* SignUpTopContainer.swift in Sources */,
 				0C6F5840220DC92B00C730CB /* Home+NavBarItems.swift in Sources */,
 				0CE00E0122288FCE00BA0C43 /* UIViewController+keyboardHiding.swift in Sources */,
 				0CC767B221F0307D00752517 /* HomeTableViewCell.swift in Sources */,
@@ -531,6 +607,7 @@
 				0CF47D9621F3E8240084C1BA /* DataModel.xcdatamodeld in Sources */,
 				0C08646F221C623A0017AA6D /* PopUpCardView.swift in Sources */,
 				0CC7678621F0262300752517 /* AppDelegate.swift in Sources */,
+				0C5C508422C4338E00175A57 /* ProfileTableViewCell.swift in Sources */,
 				0C1FF5A8225E2CA2002D747D /* NotificationHelper.swift in Sources */,
 				0CA3518422557E740044D166 /* KitchenDetail+Extensions.swift in Sources */,
 				0C2541B92241A06C003901CA /* KitchenPage+PageDelegates.swift in Sources */,
@@ -538,20 +615,23 @@
 				0CAE5C6E221B761B00F764CB /* DateHelper.swift in Sources */,
 				0C49DA3D2211D7090081D811 /* HomeGetStartedView.swift in Sources */,
 				0CCD9E4A2232E11E0075D8AD /* Levenshtein.swift in Sources */,
+				0C5C509322C5B26500175A57 /* SignUpBottomContainer.swift in Sources */,
 				0C97DCC02240723300D49241 /* Kitchen+CollectionViewDelegates.swift in Sources */,
+				0C5C508222C4331600175A57 /* Profile+TableViewDelegate.swift in Sources */,
 				0CC767A621F0268C00752517 /* TabBarController.swift in Sources */,
 				0C97799F22024068009C3161 /* HexColorExtension.swift in Sources */,
 				0C3F4A9921F7BAD700003A86 /* CoreDataManager.swift in Sources */,
+				0C5C508C22C5A13200175A57 /* SwiftGif.swift in Sources */,
 				0C97DCC22240776E00D49241 /* KitchenCollectionViewCell.swift in Sources */,
 				0CBDC87E2220653000A4B7FF /* Detail+ViewActions.swift in Sources */,
 				0CA3517F22557B6F0044D166 /* KitchenDetailViewController.swift in Sources */,
+				0C5C508722C590CC00175A57 /* SignUpViewController.swift in Sources */,
 				0CD0F5102214FC720018982E /* UIButton+Extensions.swift in Sources */,
 				0C11B9BA22138BC80003A87D /* DetailTopContainer.swift in Sources */,
 				0C9A992F226011EA0038789E /* Kitchen+UserNotificationDelegate.swift in Sources */,
 				0C4FA4F2226812C300FEAF6A /* Server.swift in Sources */,
 				0C2541B722419D13003901CA /* KitchenPageViewController.swift in Sources */,
 				0CB180C8223EFB2E00927014 /* HomeTVCell+Delegates.swift in Sources */,
-				0CC767A821F026B600752517 /* HomeViewController.swift in Sources */,
 				0CA3518222557D870044D166 /* DetailViewController+Extensions.swift in Sources */,
 				0CA3517D225577700044D166 /* DetailViewVC.swift in Sources */,
 				0C11B9B722137F770003A87D /* DetailViewController.swift in Sources */,

@@ -73,7 +73,6 @@ class DetailVC: UIViewController {
         super.viewDidLoad()
         
         
-        
         // Save the height of the tab bar
         self.tabBarHeight = self.tabBarController!.tabBar.frame.height
         

@@ -17,6 +17,7 @@ Once it's in your Kitchen, you can tap on an Item to edit it's details such as h
 
 ### Credits
 'list' icon made by Smashicons from www.flaticon.com
+'profile' icon made by Eucalyp from www.flaticon.com
 
 Item images courtesy of https://www.nutritionix.com API
 <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-buddha" title="Pixel Buddha">Pixel Buddha</a> from <a href="https://www.flaticon.com/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"                 title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>

@@ -83,11 +83,11 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
         
         switch self.pageIndex {
         case 0:
-            kitchenTitleDelegate?.changeNavBarTitle(title: "Expired Items")
+            kitchenTitleDelegate?.changeNavBarTitle(title: "Expired")
         case 1:
-            kitchenTitleDelegate?.changeNavBarTitle(title: "Fresh Items")
+            kitchenTitleDelegate?.changeNavBarTitle(title: "Fresh")
         case 2:
-            kitchenTitleDelegate?.changeNavBarTitle(title: "All Items")
+            kitchenTitleDelegate?.changeNavBarTitle(title: "All")
         default:
             kitchenTitleDelegate?.changeNavBarTitle(title: "Smart Kitchen")
         }
