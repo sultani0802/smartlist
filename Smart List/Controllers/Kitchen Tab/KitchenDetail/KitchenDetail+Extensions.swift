@@ -61,7 +61,7 @@ extension KitchenDetailViewController {
     
     
     override func textViewDidEndEditing(_ textView: UITextView) {
-        self.activeText = nil
+        
         
         if textView == midContainer.noteTextView {
             print("save notes to DB")
@@ -75,7 +75,7 @@ extension KitchenDetailViewController {
     }
     
     override func textFieldDidEndEditing(_ textField: UITextField) {
-        self.activeText = nil
+        
         
         // If the user dismisses the keyboard or taps the Done key
         if textField == midContainer.storeTextField && textField.text?.trimmingCharacters(in: .whitespaces) != "" {

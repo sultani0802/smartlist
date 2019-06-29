@@ -35,7 +35,7 @@ class SignUpViewController: UIViewController {
     
     
     //MARK: - Properties
-    var activeText: UIView?
+    var activeText : UITextField?
     
     
     
@@ -56,7 +56,6 @@ class SignUpViewController: UIViewController {
     }
     
     
-    
 
     //MARK: - Initialization Methods
     private func setupView() {
@@ -64,14 +63,14 @@ class SignUpViewController: UIViewController {
         
         // Adding top container and configuring
         view.addSubview(scrollView)
-
+        
         
         // Constraints for scrollView
         NSLayoutConstraint.activate([
-            scrollView.safeAreaLayoutGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             scrollView.widthAnchor.constraint(equalTo: view.widthAnchor)
             ])
         
@@ -82,18 +81,19 @@ class SignUpViewController: UIViewController {
         NSLayoutConstraint.activate([
             topContainer.topAnchor.constraint(equalTo: scrollView.topAnchor),
             topContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            topContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             topContainer.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.40),
             topContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
             ])
+        
         
         // Constraint for bottomContainer
         NSLayoutConstraint.activate([
             NSLayoutConstraint(item: bottomContainer, attribute: .top, relatedBy: .equal, toItem: topContainer, attribute: .bottom, multiplier: 1, constant: 50),
             bottomContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            bottomContainer.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.20),
-            bottomContainer.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            bottomContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+            bottomContainer.heightAnchor.constraint(lessThanOrEqualTo: scrollView.heightAnchor, multiplier: 0.60),
+            bottomContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            bottomContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            bottomContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
             ])
     }
     
@@ -103,11 +103,37 @@ class SignUpViewController: UIViewController {
         bottomContainer.passwordField.delegate = self
         
         // Listen for keyboard events that will adjust the view
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         // Hide the keyboard if the user taps outside the keyboard
         self.hideKeyboardWhenTappedAround()
+    }
+    
+    
+    func toggleSignUp() {
+        if (bottomContainer.nameField.text != nil || bottomContainer.emailField.text != nil || bottomContainer.passwordField.text != nil) {
+            bottomContainer.signUpButton.isEnabled = true
+        } else {
+            bottomContainer.signUpButton.isEnabled = false
+        }
+    }
+    
+    //MARK: - UI Event Handling
+    /// do stuff
+    ///
+    /// - Parameter sender: The button the user tapped to trigger this action
+    @objc func signUpButtonTapped(_ sender: UIButton) {
+        print("sign me up!")
+    }
+    
+    
+    //MARK: - UI Event Handling
+    /// do stuff
+    ///
+    /// - Parameter sender: The button the user tapped to trigger this action
+    @objc func skipButtonTapped(_ sender: UIButton) {
+        print("skip sign up!")
     }
 }

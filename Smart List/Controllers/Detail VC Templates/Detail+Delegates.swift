@@ -46,14 +46,14 @@ extension DetailVC: UITextFieldDelegate, UITextViewDelegate {
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size else {
             return
         }
-        
+
         if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification
         {
             let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
-            
+
             self.scrollView.contentInset = contentInsets
             self.scrollView.scrollIndicatorInsets = contentInsets
-            
+
             var aRect : CGRect = self.view.frame
             aRect.size.height -= keyboardSize.height
             if let activeText = self.activeText {
@@ -71,15 +71,15 @@ extension DetailVC: UITextFieldDelegate, UITextViewDelegate {
             self.view.endEditing(true)
         }
     }
-    
-    
+
+
     //
     //Mark: - TextView Delegates
     //
     func textViewDidBeginEditing(_ textView: UITextView) {
         self.activeText = textView
     }
-    
+
     
     func textViewDidEndEditing(_ textView: UITextView) {
         // To be implemented by subclasses

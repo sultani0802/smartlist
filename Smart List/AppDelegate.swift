@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UINavigationBar.appearance().barTintColor = .white
         
+//        IQKeyboardManager.shared.enable = true
+        
         return true
     }
     

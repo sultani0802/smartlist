@@ -25,7 +25,7 @@ class SignUpTopContainer: UIView {
         lbl.textAlignment = .center
         lbl.text = "Smart Kitchen"
         lbl.font = UIFont(name: Constants.Visuals.fontName, size: 28)
-        lbl.textColor = Constants.ColorPalette.Orange
+        lbl.textColor = Constants.ColorPalette.TealBlue
         lbl.adjustsFontSizeToFitWidth = true
 
         return lbl
@@ -37,7 +37,7 @@ class SignUpTopContainer: UIView {
         lbl.textAlignment = .center
         lbl.text = "Your kitchen under control"
         lbl.font = UIFont(name: Constants.Visuals.fontName, size: 16)
-        lbl.textColor = Constants.ColorPalette.Charcoal
+        lbl.textColor = .gray
         lbl.adjustsFontSizeToFitWidth = true
         
         return lbl

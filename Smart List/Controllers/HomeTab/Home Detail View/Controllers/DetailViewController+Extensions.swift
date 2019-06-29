@@ -31,8 +31,6 @@ extension DetailViewController {
             self.midContainer.expiryDate.setTitle(DateHelper.shared.getDateString(of: (self.item?.expiryDate)!), for: .normal)
             
             // Send a notification that will trigger when the item is expired
-                
-            
             NotificationHelper.shared.sendNotification(withExpiryDate: (self.item?.expiryDate!)!, itemName: (self.item?.name!)!, imageURL: self.item!.imageThumbURL!)
 
             // Hide the pop up view
@@ -67,8 +65,6 @@ extension DetailViewController {
     
     
     override func textViewDidEndEditing(_ textView: UITextView) {
-        self.activeText = nil
-        
         if textView == midContainer.noteTextView {
             
             // Update the notes in the Item entity
@@ -79,8 +75,6 @@ extension DetailViewController {
     }
     
     override func textFieldDidEndEditing(_ textField: UITextField) {
-        self.activeText = nil
-        
         // If the user dismisses the keyboard or taps the Done key
         if textField == midContainer.storeTextField && textField.text?.trimmingCharacters(in: .whitespaces) != "" {
             if let store = midContainer.storeTextField.text {

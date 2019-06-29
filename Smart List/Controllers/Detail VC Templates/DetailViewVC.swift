@@ -19,8 +19,7 @@ class DetailVC: UIViewController {
     // are maintained properly
     public var tabBarHeight: CGFloat?
     
-    var activeText: UIView?
-    
+    var activeText : UIView?
     
     //MARK: - Views
     var scrollView: UIScrollView = {
@@ -90,13 +89,13 @@ class DetailVC: UIViewController {
         
         
         // Listen for keyboard events that will adjust the view
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         // Hide the keyboard if the user taps outside the keyboard
         self.hideKeyboardWhenTappedAround()
     }
+    
     
     deinit {
         // Unregister for the keyboard notifications. Therefore, stop listening for the events
@@ -148,15 +147,16 @@ class DetailVC: UIViewController {
         scrollView.addSubview(topContainer) // Add the top container (image view) to the Scroll View
         scrollView.addSubview(midContainer) // Add the mid container (stackview) to the Scroll View
         
+        
         NSLayoutConstraint.activate([
-            
+            // Top Container
             topContainer.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
             topContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             topContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             topContainer.heightAnchor.constraint(equalTo: topContainer.widthAnchor),
             
             
-            
+            // Mid Container
             NSLayoutConstraint(item: midContainer, attribute: .top, relatedBy: .equal, toItem: topContainer, attribute: .bottom, multiplier: 1, constant: 30),
             midContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             midContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
