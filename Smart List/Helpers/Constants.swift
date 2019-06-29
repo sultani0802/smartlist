@@ -12,6 +12,7 @@ struct Constants {
     
     struct General {
         static let AppName = "Smart Kitchen"
+        static let Server = "https://sultani-smartlist-api.herokuapp.com"
     }
     
     struct Settings {

@@ -75,7 +75,7 @@ extension HomeViewController {
             
             // If the user hits RETURN on a cell that isn't empty
             if cell.nameText.text != "" {
-                let newTitle: String = cell.nameText.text!                              // Grab the name øf the item the user just entered
+                let newTitle: String = cell.nameText.text!                              // Grab the name of the item the user just entered
                 let itemToUpdate = self.items[indexPath.section][indexPath.row]         // Grab the item they typed
                 
                 // Set the new Item entity's values in Core Data and save

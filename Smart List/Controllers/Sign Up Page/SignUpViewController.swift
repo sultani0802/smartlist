@@ -113,7 +113,7 @@ class SignUpViewController: UIViewController {
     
     
     func toggleSignUp() {
-        if (bottomContainer.nameField.text != nil || bottomContainer.emailField.text != nil || bottomContainer.passwordField.text != nil) {
+        if (bottomContainer.nameField.text != nil && bottomContainer.emailField.text != nil && bottomContainer.passwordField.text != nil) {
             bottomContainer.signUpButton.isEnabled = true
         } else {
             bottomContainer.signUpButton.isEnabled = false
@@ -121,16 +121,24 @@ class SignUpViewController: UIViewController {
     }
     
     //MARK: - UI Event Handling
-    /// do stuff
+    /// Send server request to create a new user
     ///
     /// - Parameter sender: The button the user tapped to trigger this action
     @objc func signUpButtonTapped(_ sender: UIButton) {
-        print("sign me up!")
+        if (bottomContainer.nameField.text != nil &&
+            bottomContainer.emailField.text != nil &&
+            bottomContainer.passwordField.text != nil) {
+            
+            Server.shared.signUpNewUser(name: bottomContainer.nameField.text!, email: bottomContainer.emailField.text!, password: bottomContainer.passwordField.text!) {
+                newUser in
+                
+            }
+        }
     }
     
     
     //MARK: - UI Event Handling
-    /// do stuff
+    /// Skip sign up and show the Kitchen Tab
     ///
     /// - Parameter sender: The button the user tapped to trigger this action
     @objc func skipButtonTapped(_ sender: UIButton) {

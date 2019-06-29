@@ -18,10 +18,10 @@ extension SignUpViewController: UITextFieldDelegate {
         if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification
         {
             let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
-            print("scrollview contentinsets before: \(self.scrollView.contentInset)")
+
             self.scrollView.contentInset = contentInsets
             self.scrollView.scrollIndicatorInsets = contentInsets
-            print("scrollview contentinsets after: \(self.scrollView.contentInset)")
+
             var aRect : CGRect = self.view.frame
             aRect.size.height -= keyboardSize.height
             if let activeText = self.activeText {
