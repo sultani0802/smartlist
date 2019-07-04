@@ -21,6 +21,8 @@ class ProfileViewController: UIViewController {
         "Notifications"
     ]
     
+    var values : [String:String?]?
+    
     var tableView: UITableView!                     // The tableview that will contain the different settings options
     
     
@@ -32,11 +34,13 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         setupVisualSettings()
-        setupTableView()
     }
     
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        loadSettings()
+        setupTableView()
+    }
     
     //
     //MARK - Initialization Methods
@@ -82,13 +86,26 @@ class ProfileViewController: UIViewController {
     func editSetting(setting: Int) {
         switch setting {
         case Constants.Settings.Name:
-            showAlert(message: "Enter your name.")
+            showAlert(message: "Enter your name.", setting: setting)
         case Constants.Settings.Email:
-            showAlert(message: "Enter your email.")
+            showAlert(message: "Enter your email.", setting: setting)
         case Constants.Settings.Notifications:
-            showAlert(message: "Change your notification settings in the settings app.")
+            showAlert(message: "Change your notification settings in the settings app.", setting: setting)
         default:
             print("Cancel setting modification")
+        }
+    }
+    
+    
+    /// Loads the Settings Model from Core Data
+    func loadSettings() {
+        let settings = CoreDataManager.shared.loadSettings()
+        
+        if (settings.name != "" && settings.email != ""){       // Set email and name values
+            let name = settings.name
+            let email = settings.email
+            
+            values = ["name":name, "email":email]
         }
     }
     
@@ -96,23 +113,33 @@ class ProfileViewController: UIViewController {
     /// Shows an alert that allows the user to edit the setting
     ///
     /// - Parameter message: The message to be displayed appropriate to the setting being changed
-    func showAlert(message: String) {
-        let alertController = UIAlertController(title: "Change Setting",
+    func showAlert(message: String, setting: Int) {
+        let alertController = UIAlertController(title: "Change Setting",                // Alert controller
                                                 message: message,
                                                 preferredStyle: .alert)
         
-        alertController.addTextField{(textField) in
+        alertController.addTextField{(textField) in                                     // Adding textfield to alert controller
             textField.placeholder = "Type here"
         }
         
-        let saveAction = UIAlertAction(title: "Save", style: .default) {
+        let saveAction = UIAlertAction(title: "Save", style: .default) {                // Save action
             UIAlertAction in
             
-            let textField = alertController.textFields![0]
+            let textField = alertController.textFields![0]                                  // Get the alert's textfield object
             print("saved changes: \(textField.text!)")
+            
+            if self.settings[setting].lowercased() == "name" {                              // If user is editing the name
+                CoreDataManager.shared.addUser(name: textField.text!, email: "")                // Save the name to Core Data
+                
+                self.values!["name"] = textField.text!                                          // Update that on the view
+                self.tableView.reloadData()
+            } else if self.settings[setting].lowercased() == "email" {
+                CoreDataManager.shared.addUser(name: "", email: textField.text!)
+            }
+            
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {             // Cancel action
             UIAlertAction in
             print("cancelled changes")
         }
@@ -120,6 +147,6 @@ class ProfileViewController: UIViewController {
         alertController.addAction(saveAction)
         alertController.addAction(cancelAction)
         
-        self.present(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)                  // Show alert
     }
 }

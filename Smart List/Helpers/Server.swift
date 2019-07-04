@@ -111,7 +111,9 @@ class Server {
     ///   - callBack: callback returning the JSON data
     func signUpNewUser(name: String, email: String, password: String, callBack: @escaping (_ newUser: [String:String]) -> Void) {
         
-        let params = ["name" : name, "email" : email, "password" : password]    // The body
+        let params = ["name" : name.trimmingCharacters(in: .whitespacesAndNewlines),
+                      "email" : email.trimmingCharacters(in: .whitespacesAndNewlines),
+                      "password" : password.trimmingCharacters(in: .whitespacesAndNewlines)]    // The body
         
         AF.request("\(SMARTLIST_DB_API)/users",
             method: .post,

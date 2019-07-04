@@ -166,7 +166,9 @@ class SignUpViewController: UIViewController {
             bottomContainer.passwordField.text != nil) {
             
             // Make a request to Smartlist API to create a new User in the DB
-            Server.shared.signUpNewUser(name: bottomContainer.nameField.text!, email: bottomContainer.emailField.text!, password: bottomContainer.passwordField.text!) {
+            Server.shared.signUpNewUser(name: bottomContainer.nameField.text!.trimmingCharacters(in: .whitespacesAndNewlines),
+                                        email: bottomContainer.emailField.text!.trimmingCharacters(in: .whitespacesAndNewlines),
+                                        password: bottomContainer.passwordField.text!.trimmingCharacters(in: .whitespacesAndNewlines)) {
                 newUser in
                 
                 if (newUser["name"] != "" && newUser["email"] != "") {                                  // If the server response contains valid User information
@@ -202,6 +204,9 @@ class SignUpViewController: UIViewController {
     ///
     /// - Parameter sender: The button the user tapped to trigger this action
     @objc func skipButtonTapped(_ sender: UIButton) {
-        print("skip sign up!")
+        print("skip sign up")
+        
+        let tabbar = TabBarController()
+        self.present(tabbar, animated: true)
     }
 }

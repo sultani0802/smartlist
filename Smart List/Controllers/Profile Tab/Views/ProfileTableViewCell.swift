@@ -29,7 +29,7 @@ class ProfileTableViewCell: UITableViewCell {
         lbl.adjustsFontSizeToFitWidth = true                                // Adjust font size to fit cell
         lbl.font = UIFont(name: Constants.Visuals.fontName, size: 18)       // Set font
         lbl.textColor = Constants.ColorPalette.BabyBlue                      // Set color
-        lbl.text = "Gordon Ramsey"
+        
         return lbl
     }()
     

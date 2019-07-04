@@ -18,7 +18,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.profileViewCellId, for: indexPath) as! ProfileTableViewCell
         
-        cell.titleLabel.text = settings[indexPath.row]
+        cell.titleLabel.text = settings[indexPath.row]                      // Set the setting's title
+        
+        if let content = values![settings[indexPath.row].lowercased()] {    // Check if there is a setting for that title
+            print(content)
+            cell.contentLabel.text = content                                    // Set the correct value for the correlating title
+        }
         
         return cell
     }

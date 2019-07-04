@@ -38,7 +38,7 @@ class CoreDataManager {
     //MARK: - Settings
     /****************************************/
     /****************************************/
-    
+
     func loadSettings() -> Settings{
         var result : [Settings]?
         
@@ -72,8 +72,12 @@ class CoreDataManager {
         let settings = loadSettings()   // Load settings object
         
         // Set properties
-        settings.name = name
-        settings.email = email
+        if name != "" {
+            settings.name = name
+        }
+        if email != "" {
+            settings.email = email
+        }
         
         saveContext()                   // Save settings object
     }
