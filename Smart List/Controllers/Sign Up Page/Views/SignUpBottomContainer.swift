@@ -20,11 +20,13 @@ class SignUpBottomContainer : UIView {
         view.font = UIFont(name: Constants.Visuals.fontName, size: 14)
         view.textColor = Constants.ColorPalette.DarkGray
         view.placeholder = "Your name"
+        view.autocorrectionType = .no
+        view.autocapitalizationType = .words
         view.borders(for: [.all], width: 0.22, color: .black)
         view.layer.cornerRadius = 4
         // Add some space between the text and the border
         view.setLeftPaddingPoints(5)
-        view.setRightPaddingPoints(2)
+        view.setRightPaddingPoints(20)
         
         view.addTarget(self, action: #selector(SignUpViewController.textFieldDidChange), for: .editingChanged)
         
@@ -38,16 +40,29 @@ class SignUpBottomContainer : UIView {
         view.font = UIFont(name: Constants.Visuals.fontName, size: 14)
         view.textColor = Constants.ColorPalette.DarkGray
         view.placeholder = "Your email"
+        view.autocorrectionType = .no
+        view.autocapitalizationType = .none
         view.borders(for: [.all], width: 0.2, color: .black)
         view.layer.cornerRadius = 4
         // Add some space between the text and the border
         view.setLeftPaddingPoints(5)
-        view.setRightPaddingPoints(2)
+        view.setRightPaddingPoints(20)
         
         view.addTarget(self, action: #selector(SignUpViewController.textFieldDidChange), for: .editingChanged)
         
         return view
     }()
+    
+    
+    /// Image being used to display whether the email format is valid or not
+    var emailImage : UIImageView = {
+        var imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+
+        return imageView
+    }()
+    
     
     var passwordField : UITextField = {
         var view = UITextField()
@@ -56,16 +71,36 @@ class SignUpBottomContainer : UIView {
         view.adjustsFontSizeToFitWidth = true
         view.font = UIFont(name: Constants.Visuals.fontName, size: 14)
         view.textColor = Constants.ColorPalette.DarkGray
+        view.autocorrectionType = .no
+        view.autocapitalizationType = .none
         view.placeholder = "Your password"
         view.borders(for: [.all], width: 0.2, color: .black)
         view.layer.cornerRadius = 4
+        
         // Add some space between the text and the border
         view.setLeftPaddingPoints(5)
-        view.setRightPaddingPoints(2)
+        view.setRightPaddingPoints(20)
+        
+        // Adding password rules
+        if #available(iOS 12.0, *) {
+            view.passwordRules = UITextInputPasswordRules(descriptor: "minlength: 6;")
+        } else {
+            // Fallback on earlier versions
+        }
         
         view.addTarget(self, action: #selector(SignUpViewController.textFieldDidChange), for: .editingChanged)
         
         return view
+    }()
+    
+    
+    /// Image being used to display whether the password meets the minimum requirements or not
+    var passwordImage : UIImageView = {
+        var imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+
+        return imageView
     }()
     
     var fieldStack : UIStackView = {
@@ -78,6 +113,10 @@ class SignUpBottomContainer : UIView {
         
         return stack
     }()
+    
+    
+    
+    
     
     //BUTTONS
     var signUpButton : UIButton = {
@@ -110,6 +149,7 @@ class SignUpBottomContainer : UIView {
         
         return button
     }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -157,6 +197,23 @@ class SignUpBottomContainer : UIView {
             skipButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.10),
             skipButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             skipButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
+            ])
+        
+        
+        // Adding checkmark/invalid images
+        emailField.addSubview(emailImage)
+        passwordField.addSubview(passwordImage)
+        
+        NSLayoutConstraint.activate([
+            emailImage.rightAnchor.constraint(equalTo: emailField.rightAnchor, constant: -8),
+            emailImage.centerYAnchor.constraint(equalTo: emailField.centerYAnchor),
+            emailImage.widthAnchor.constraint(equalToConstant: 18),
+            emailImage.heightAnchor.constraint(equalToConstant: 18),
+            
+            passwordImage.rightAnchor.constraint(equalTo: passwordField.rightAnchor, constant: -8),
+            passwordImage.centerYAnchor.constraint(equalTo: passwordField.centerYAnchor),
+            passwordImage.widthAnchor.constraint(equalToConstant: 18),
+            passwordImage.heightAnchor.constraint(equalToConstant: 18)
             ])
     }
 }

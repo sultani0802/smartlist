@@ -110,7 +110,8 @@ class Server {
     ///   - password: The user'spassword; must be 8+ characters
     ///   - callBack: callback returning the JSON data
     func signUpNewUser(name: String, email: String, password: String, callBack: @escaping (_ newUser: [String:String]) -> Void) {
-        let params = ["name" : name, "email" : email, "password" : password]
+        
+        let params = ["name" : name, "email" : email, "password" : password]    // The body
         
         AF.request("\(SMARTLIST_DB_API)/users",
             method: .post,
@@ -120,9 +121,18 @@ class Server {
                 
                 switch response.result {
                 case .success(let data):
-                    print(JSON(data))
+                    let obj = JSON(data)                                            // Get JSON
+                    print(obj)
+                    
+                    let name = obj["user"]["name"].stringValue                      // Get name
+                    let email = obj["user"]["email"].stringValue                    // Get email
+                    
+                    callBack(["name": name, "email": email])                        // callback
+                    
                 case .failure(let error):
                     print("Error when trying to create a new User: \n\(error)")
+                    
+                    callBack(["error": error.localizedDescription])
                 }
         }
     }

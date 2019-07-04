@@ -59,7 +59,20 @@ extension SignUpViewController: UITextFieldDelegate {
         return true
     }
     
-    @objc func textFieldDidChange() {
+    
+    /// Called everytime the user types inside one of textField on the Sign Up View
+    ///
+    /// - Parameter textField: Reference to the textField that is being edited
+    @objc func textFieldDidChange(_ textField: UITextField) {
         toggleSignUp()
+        
+        if (textField == bottomContainer.emailField) {                                      // If the user is typing in the email textField
+            
+            if let email = bottomContainer.emailField.text {
+//                toggleEmailImage(toggle: Regex.shared.validateEmail(candidate: email))          // User regex to validate their email
+            }
+        } else if (textField == bottomContainer.passwordField) {                            // If the user is typing in the password textField
+            togglePasswordImage(toggle: true)
+        }
     }
 }

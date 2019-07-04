@@ -61,6 +61,38 @@ class CoreDataManager {
         return result![0]
     }
 
+
+    
+    /// Sets the user's name and email for their profile
+    ///
+    /// - Parameters:
+    ///   - name: User's name they set when they sign up/sign in
+    ///   - email: User's email they set when they sign up/sign in
+    func addUser(name: String, email: String) {
+        let settings = loadSettings()   // Load settings object
+        
+        // Set properties
+        settings.name = name
+        settings.email = email
+        
+        saveContext()                   // Save settings object
+    }
+    
+    func loadUser() -> [String: String] {
+        var user : [String:String] = [:]
+        
+        let request : NSFetchRequest<Settings> = Settings.fetchRequest()
+        
+        do {
+            let result = try context.fetch(request)                 // Fetch the Settings object from Core Data
+            user["name"] = result[0].name                           // Grab name
+            user["email"] = result[0].email                         // Grab email
+        } catch {
+            print("Error loading Settings from context: \(error)")
+        }
+        
+        return user                                                 // Return the user info
+    }
     
     
     

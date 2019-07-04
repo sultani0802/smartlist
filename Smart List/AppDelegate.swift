@@ -20,12 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
 //        window?.rootViewController = TabBarController()
-        window?.rootViewController = SignUpViewController()
+        
+        let signUpVC = SignUpViewController()
+        let signUpInNavController = UINavigationController(rootViewController: signUpVC)
+        window?.rootViewController = signUpInNavController
         window?.makeKeyAndVisible()
         
         UINavigationBar.appearance().barTintColor = .white
-        
-//        IQKeyboardManager.shared.enable = true
         
         return true
     }

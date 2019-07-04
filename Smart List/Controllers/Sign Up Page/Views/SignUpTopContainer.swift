@@ -15,6 +15,7 @@ class SignUpTopContainer: UIView {
         imgView.translatesAutoresizingMaskIntoConstraints = false
         imgView.contentMode = UIImageView.ContentMode.scaleAspectFill
         imgView.loadGif(name: "cook")
+        
         return imgView
     }()
     

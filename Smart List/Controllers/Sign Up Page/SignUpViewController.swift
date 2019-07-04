@@ -33,7 +33,6 @@ class SignUpViewController: UIViewController {
     }()
     
     
-    
     //MARK: - Properties
     var activeText : UITextField?
     
@@ -48,6 +47,19 @@ class SignUpViewController: UIViewController {
         registerForKeyboardEvents()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    
     deinit {
         // Unregister for the keyboard notifications. Therefore, stop listening for the events
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -56,14 +68,14 @@ class SignUpViewController: UIViewController {
     }
     
     
-
+    
     //MARK: - Initialization Methods
     private func setupView() {
         view.backgroundColor = Constants.ColorPalette.OffWhite
+//        view.backgroundColor = .white
         
         // Adding top container and configuring
         view.addSubview(scrollView)
-        
         
         // Constraints for scrollView
         NSLayoutConstraint.activate([
@@ -112,16 +124,40 @@ class SignUpViewController: UIViewController {
     }
     
     
+    /// This method enables the Sign Up button iff all textFields are filled
     func toggleSignUp() {
-        if (bottomContainer.nameField.text != nil && bottomContainer.emailField.text != nil && bottomContainer.passwordField.text != nil) {
+        if (bottomContainer.nameField.text != "" && bottomContainer.emailField.text != "" && bottomContainer.passwordField.text != "") {
             bottomContainer.signUpButton.isEnabled = true
         } else {
             bottomContainer.signUpButton.isEnabled = false
         }
     }
     
+    
+    func toggleEmailImage(toggle : Bool) {
+        if (toggle) {
+            bottomContainer.emailImage.isHidden = false
+            bottomContainer.emailImage.image = UIImage(named: "check")
+        } else {
+            bottomContainer.emailImage.isHidden = false
+            bottomContainer.emailImage.image = UIImage(named: "warning")
+            
+        }
+    }
+    
+    func togglePasswordImage(toggle : Bool) {
+        if (toggle) {
+            bottomContainer.passwordImage.isHidden = false
+            bottomContainer.passwordImage.image = UIImage(named: "check")
+        } else {
+            bottomContainer.passwordImage.isHidden = false
+            bottomContainer.passwordImage.image = UIImage(named: "warning")
+            
+        }
+    }
+    
     //MARK: - UI Event Handling
-    /// Send server request to create a new user
+    /// Send server request to create a new user, upon success, save the user name and email in Core Data
     ///
     /// - Parameter sender: The button the user tapped to trigger this action
     @objc func signUpButtonTapped(_ sender: UIButton) {
@@ -129,9 +165,33 @@ class SignUpViewController: UIViewController {
             bottomContainer.emailField.text != nil &&
             bottomContainer.passwordField.text != nil) {
             
+            // Make a request to Smartlist API to create a new User in the DB
             Server.shared.signUpNewUser(name: bottomContainer.nameField.text!, email: bottomContainer.emailField.text!, password: bottomContainer.passwordField.text!) {
                 newUser in
                 
+                if (newUser["name"] != "" && newUser["email"] != "") {                                  // If the server response contains valid User information
+                    CoreDataManager.shared.addUser(name: newUser["name"]!, email: newUser["email"]!)        // Save the user's information in Core Data
+                    
+                    DispatchQueue.main.async {
+                        let tabbar = TabBarController()
+                        self.present(tabbar, animated: true)                                                // Switch view to the tabbar
+                    }
+                    
+                } else if (newUser["error"] != nil ){
+                    print("Server responded with invalid User data during sign up")                     // Otherwise, an error occurred
+                    
+                    let error = newUser["error"]                                                            // Get error message
+                    
+                    let alertController = UIAlertController(title: "Error",                                 // Alert user of an error
+                        message: "There was an error sign up. Please try again.\nError:\(error ?? "unexpected error")",
+                                                            preferredStyle: .alert)
+                    
+                    let okAction = UIAlertAction(title: "Ok", style: .default)
+                    
+                    alertController.addAction(okAction)
+                    
+                    self.present(alertController, animated: true)                                           // Show alert
+                }
             }
         }
     }
