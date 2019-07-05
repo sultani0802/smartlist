@@ -21,7 +21,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel.text = settings[indexPath.row]                      // Set the setting's title
         
         if let content = values![settings[indexPath.row].lowercased()] {    // Check if there is a setting for that title
-            print(content)
             cell.contentLabel.text = content                                    // Set the correct value for the correlating title
         }
         
@@ -30,8 +29,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// Detects which setting the user wants to modify
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        editSetting(setting: indexPath.row)        // Perform the appropriate setting change
+        if settings[indexPath.row].lowercased() == "notifications" {        // If the user wants to change the notifications setting
+            goToSettings(row: indexPath.row)                                    // Redirect them to iPhone settings
+        } else {
+            editSetting(setting: indexPath.row)                             // Perform the appropriate setting change
+        }
         
-        tableView.deselectRow(at: indexPath, animated: true)    // Deselect the tableviewcell
+        tableView.deselectRow(at: indexPath, animated: true)                // Deselect the tableviewcell
     }
 }

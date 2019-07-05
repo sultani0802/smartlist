@@ -171,8 +171,8 @@ class SignUpViewController: UIViewController {
                                         password: bottomContainer.passwordField.text!.trimmingCharacters(in: .whitespacesAndNewlines)) {
                 newUser in
                 
-                if (newUser["name"] != "" && newUser["email"] != "") {                                  // If the server response contains valid User information
-                    CoreDataManager.shared.addUser(name: newUser["name"]!, email: newUser["email"]!)        // Save the user's information in Core Data
+                if (newUser["name"] != "" && newUser["email"] != "" && newUser["token"] != "") {                                  // If the server response contains valid User information
+                    CoreDataManager.shared.addUser(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)        // Save the user's information in Core Data
                     
                     DispatchQueue.main.async {
                         let tabbar = TabBarController()

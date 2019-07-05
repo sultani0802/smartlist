@@ -68,15 +68,19 @@ class CoreDataManager {
     /// - Parameters:
     ///   - name: User's name they set when they sign up/sign in
     ///   - email: User's email they set when they sign up/sign in
-    func addUser(name: String, email: String) {
+    func addUser(name: String, email: String, token: String) {
         let settings = loadSettings()   // Load settings object
         
-        // Set properties
+        // Set properties in Core Data
         if name != "" {
-            settings.name = name
+            settings.name = name        // Update user's name
         }
-        if email != "" {
+        if email != "" {                // Update user's email
             settings.email = email
+        }
+        if token != "" {
+            settings.token = token      // Update auth token
+            settings.isLoggedIn = true  // Set logged in flag to true
         }
         
         saveContext()                   // Save settings object
@@ -97,8 +101,6 @@ class CoreDataManager {
         
         return user                                                 // Return the user info
     }
-    
-    
     
     /****************************************/
     /****************************************/

@@ -103,17 +103,19 @@ class Server {
     
     
     /// Sends a request to the server to create a new User in the DB
+    /// The server responds with the User object
     ///
     /// - Parameters:
     ///   - name: The user's name
     ///   - email: the user's email; must be unique and valid
     ///   - password: The user'spassword; must be 8+ characters
-    ///   - callBack: callback returning the JSON data
+    ///   - callBack: callback with the data that we should do something with
     func signUpNewUser(name: String, email: String, password: String, callBack: @escaping (_ newUser: [String:String]) -> Void) {
         
+        // The reqeust's body
         let params = ["name" : name.trimmingCharacters(in: .whitespacesAndNewlines),
                       "email" : email.trimmingCharacters(in: .whitespacesAndNewlines),
-                      "password" : password.trimmingCharacters(in: .whitespacesAndNewlines)]    // The body
+                      "password" : password.trimmingCharacters(in: .whitespacesAndNewlines)]
         
         AF.request("\(SMARTLIST_DB_API)/users",
             method: .post,
@@ -128,13 +130,55 @@ class Server {
                     
                     let name = obj["user"]["name"].stringValue                      // Get name
                     let email = obj["user"]["email"].stringValue                    // Get email
+                    let token = obj["newToken"].stringValue                         // Get token
                     
-                    callBack(["name": name, "email": email])                        // callback
+                    callBack(["name": name, "email": email, "token":token])         // callback
                     
                 case .failure(let error):
                     print("Error when trying to create a new User: \n\(error)")
                     
                     callBack(["error": error.localizedDescription])
+                }
+        }
+    }
+    
+    
+    
+    /// Sends a request to the server to log in.
+    /// The server responds with the User object and the new token
+    ///
+    /// - Parameters:
+    ///   - email: The user's email
+    ///   - password: The user's password
+    ///   - callback: callback with the data that we should do something with
+    func loginUser(email: String, password: String, callback: @escaping (_ response : [String:String]) -> Void) {
+        
+        // The request's body
+        let params = ["email" : email,
+                      "password" : password]
+        
+        AF.request("\(SMARTLIST_DB_API)/users/login",
+            method: .post,
+            parameters: params,
+            encoding: JSONEncoding.default).responseJSON {
+                
+                response in
+                
+                switch response.result {
+                case .success(let data):                                        // Success
+                    let obj = JSON(data)                                            // Get JSON object
+                    print(obj)
+                    
+                    let name = obj["user"]["name"].stringValue                      // Get name
+                    let email = obj["user"]["email"].stringValue                    // Get email
+                    let token = obj["newToken"].stringValue                         // Get new token
+                    
+                    callback(["name": name, "email":email, "token":token])              // Callback
+                    
+                case .failure(let error):                                       // Failure
+                    print("Error when trying to login:\n\(error)")
+                    
+                    callback(["error" : error.localizedDescription])                // Callback
                 }
         }
     }

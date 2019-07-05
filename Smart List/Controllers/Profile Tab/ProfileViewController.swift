@@ -129,12 +129,12 @@ class ProfileViewController: UIViewController {
             print("saved changes: \(textField.text!)")
             
             if self.settings[setting].lowercased() == "name" {                              // If user is editing the name
-                CoreDataManager.shared.addUser(name: textField.text!, email: "")                // Save the name to Core Data
+                CoreDataManager.shared.addUser(name: textField.text!, email: "", token: "")                // Save the name to Core Data
                 
                 self.values!["name"] = textField.text!                                          // Update that on the view
                 self.tableView.reloadData()
             } else if self.settings[setting].lowercased() == "email" {
-                CoreDataManager.shared.addUser(name: "", email: textField.text!)
+                CoreDataManager.shared.addUser(name: "", email: textField.text!, token: "")
             }
             
         }
@@ -148,5 +148,40 @@ class ProfileViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)                  // Show alert
+    }
+    
+    
+    
+    /// Redirects the user to the app in their Settings to allow notifications
+    ///
+    /// - Parameter row: Used to determine which cell the user tapped
+    func goToSettings(row : Int) {
+        let alertController = UIAlertController (title: "Enable Notifications",
+                                                 message: "In order to receive notifications when your food expires, you'll have to allow notifications from this app.",
+                                                 preferredStyle: .alert)
+        
+        let settingsAction = UIAlertAction(title: "Go to settings", style: .default) {
+            (_) -> Void in
+            
+            // Get the settings url so we can redirect the user
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            
+                                                                                            // If redirection is successful
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: {                     // Redirect the User
+                    (success) in
+                    
+                    print("Settings opened: \(success)") // Prints true
+                })
+            }
+        }
+        
+        alertController.addAction(settingsAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)                           // Present the alert
     }
 }
