@@ -83,6 +83,8 @@ class CoreDataManager {
             settings.isLoggedIn = true  // Set logged in flag to true
         }
         
+        settings.isLoggedIn = true      // Set logged-in flag to true
+        
         saveContext()                   // Save settings object
     }
     

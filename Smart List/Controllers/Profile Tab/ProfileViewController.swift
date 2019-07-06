@@ -20,10 +20,23 @@ class ProfileViewController: UIViewController {
         "Email",
         "Notifications"
     ]
-    
+    var isLoggedIn : Bool = false
     var values : [String:String?]?
     
     var tableView: UITableView!                     // The tableview that will contain the different settings options
+    
+    
+    
+    ///
+    ///MARK: - UI Elements
+    ///
+    var signUpContainer : SettingsSignUpContainer = {
+        var view = SettingsSignUpContainer()
+        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.backgroundColor = .white
+        
+        return view
+    }()
     
     
     
@@ -58,9 +71,9 @@ class ProfileViewController: UIViewController {
     /// Initializes and configures the tableView
     private func setupTableView() {
         tableView = UITableView(frame: CGRect(x: 0,                                                     // Instantiate tableView
-                                              y: UIApplication.shared.statusBarFrame.size.height,
-                                              width: self.view.frame.width,
-                                              height: self.view.frame.height))
+            y: UIApplication.shared.statusBarFrame.size.height,
+            width: self.view.frame.width,
+            height: self.view.frame.height))
         tableView.dataSource = self                                                                     // Datasource to self
         tableView.delegate = self                                                                       // Delegate to self (extension)
         tableView.translatesAutoresizingMaskIntoConstraints = false                                     // Use auto-layout
@@ -78,6 +91,11 @@ class ProfileViewController: UIViewController {
         
         
         self.view.addSubview(tableView)                                                                 // Add tableview to view
+        
+        
+        if !isLoggedIn {
+            showSignUp()
+        }
     }
     
     
@@ -105,8 +123,26 @@ class ProfileViewController: UIViewController {
             let name = settings.name
             let email = settings.email
             
+            isLoggedIn = settings.isLoggedIn                    // Set logged in status
+            
+            print("User is logged in: \(isLoggedIn)")
+            
             values = ["name":name, "email":email]
         }
+    }
+    
+    
+    func showSignUp() {
+        self.tableView.isHidden = true
+        
+        view.addSubview(signUpContainer)
+        
+        NSLayoutConstraint.activate([
+            signUpContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            signUpContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            signUpContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            signUpContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            ])
     }
     
     

@@ -102,7 +102,7 @@ class SignUpViewController: UIViewController {
         NSLayoutConstraint.activate([
             NSLayoutConstraint(item: bottomContainer, attribute: .top, relatedBy: .equal, toItem: topContainer, attribute: .bottom, multiplier: 1, constant: 50),
             bottomContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            bottomContainer.heightAnchor.constraint(lessThanOrEqualTo: scrollView.heightAnchor, multiplier: 0.60),
+            bottomContainer.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.4),
             bottomContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             bottomContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             bottomContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
@@ -178,26 +178,33 @@ class SignUpViewController: UIViewController {
                         let tabbar = TabBarController()
                         self.present(tabbar, animated: true)                                                // Switch view to the tabbar
                     }
-                    
                 } else if (newUser["error"] != nil ){
                     print("Server responded with invalid User data during sign up")                     // Otherwise, an error occurred
                     
                     let error = newUser["error"]                                                            // Get error message
                     
                     let alertController = UIAlertController(title: "Error",                                 // Alert user of an error
-                        message: "There was an error sign up. Please try again.\nError:\(error ?? "unexpected error")",
+                        message: "There was an error trying sign up. Please try again.\nError:\(error ?? "unexpected error")",
                                                             preferredStyle: .alert)
                     
                     let okAction = UIAlertAction(title: "Ok", style: .default)
                     
                     alertController.addAction(okAction)
                     
-                    self.present(alertController, animated: true)                                           // Show alert
+                    DispatchQueue.main.async {
+                        self.present(alertController, animated: true)                                           // Show alert
+                    }
                 }
             }
         }
     }
     
+    
+    /// Displays the login page
+    ///
+    @objc func loginButtonTapped(_ sender: UIButton) {
+        self.present(LoginViewController(), animated: true)
+    }
     
     //MARK: - UI Event Handling
     /// Skip sign up and show the Kitchen Tab

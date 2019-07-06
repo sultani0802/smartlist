@@ -14,6 +14,9 @@
 		0C11B9B722137F770003A87D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11B9B622137F770003A87D /* DetailViewController.swift */; };
 		0C11B9BA22138BC80003A87D /* DetailTopContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11B9B922138BC80003A87D /* DetailTopContainer.swift */; };
 		0C11B9BC22138E420003A87D /* DetailMidContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11B9BB22138E420003A87D /* DetailMidContainer.swift */; };
+		0C11E69F22CFED6D00CDA177 /* BottomLoginContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11E69E22CFED6D00CDA177 /* BottomLoginContainer.swift */; };
+		0C11E6A122D0104C00CDA177 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C11E6A022D0104C00CDA177 /* Launch Screen.storyboard */; };
+		0C11E6A322D036DC00CDA177 /* SettingsSignUpContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11E6A222D036DC00CDA177 /* SettingsSignUpContainer.swift */; };
 		0C13BC4C2223581E0027BABD /* UITextfieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13BC4B2223581E0027BABD /* UITextfieldExtensions.swift */; };
 		0C1FF5A8225E2CA2002D747D /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1FF5A7225E2CA2002D747D /* NotificationHelper.swift */; };
 		0C232ED522319BF500F05BC5 /* DeviceTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C232ED422319BF500F05BC5 /* DeviceTypes.swift */; };
@@ -70,6 +73,9 @@
 		0CD0F50E2214C3EC0018982E /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CD0F50D2214C3EC0018982E /* Storyboard.storyboard */; };
 		0CD0F5102214FC720018982E /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD0F50F2214FC720018982E /* UIButton+Extensions.swift */; };
 		0CE00E0122288FCE00BA0C43 /* UIViewController+keyboardHiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE00E0022288FCE00BA0C43 /* UIViewController+keyboardHiding.swift */; };
+		0CF439AF22CFA48F00D73C36 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF439AE22CFA48F00D73C36 /* LoginViewController.swift */; };
+		0CF439B222CFA7B300D73C36 /* MidLoginContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF439B122CFA7B300D73C36 /* MidLoginContainer.swift */; };
+		0CF439B422CFB1D800D73C36 /* Login+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF439B322CFB1D800D73C36 /* Login+Keyboard.swift */; };
 		0CF47D9621F3E8240084C1BA /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CF47D9421F3E8240084C1BA /* DataModel.xcdatamodeld */; };
 		0CF6B5802210ECA30049CF63 /* Home+SectionMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF6B57F2210ECA30049CF63 /* Home+SectionMethods.swift */; };
 		0CF86C6C22C6684000AD6712 /* SignUp+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF86C6B22C6684000AD6712 /* SignUp+Keyboard.swift */; };
@@ -94,6 +100,9 @@
 		0C11B9B622137F770003A87D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		0C11B9B922138BC80003A87D /* DetailTopContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTopContainer.swift; sourceTree = "<group>"; };
 		0C11B9BB22138E420003A87D /* DetailMidContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMidContainer.swift; sourceTree = "<group>"; };
+		0C11E69E22CFED6D00CDA177 /* BottomLoginContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomLoginContainer.swift; sourceTree = "<group>"; };
+		0C11E6A022D0104C00CDA177 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		0C11E6A222D036DC00CDA177 /* SettingsSignUpContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSignUpContainer.swift; sourceTree = "<group>"; };
 		0C13BC4B2223581E0027BABD /* UITextfieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextfieldExtensions.swift; sourceTree = "<group>"; };
 		0C1FF5A7225E2CA2002D747D /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		0C232ED422319BF500F05BC5 /* DeviceTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypes.swift; sourceTree = "<group>"; };
@@ -153,6 +162,9 @@
 		0CD0F50D2214C3EC0018982E /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		0CD0F50F2214FC720018982E /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		0CE00E0022288FCE00BA0C43 /* UIViewController+keyboardHiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+keyboardHiding.swift"; sourceTree = "<group>"; };
+		0CF439AE22CFA48F00D73C36 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		0CF439B122CFA7B300D73C36 /* MidLoginContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidLoginContainer.swift; sourceTree = "<group>"; };
+		0CF439B322CFB1D800D73C36 /* Login+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login+Keyboard.swift"; sourceTree = "<group>"; };
 		0CF47D9521F3E8240084C1BA /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		0CF6B57F2210ECA30049CF63 /* Home+SectionMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+SectionMethods.swift"; sourceTree = "<group>"; };
 		0CF86C6B22C6684000AD6712 /* SignUp+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignUp+Keyboard.swift"; sourceTree = "<group>"; };
@@ -187,6 +199,7 @@
 				0CC767A521F0268C00752517 /* TabBarController.swift */,
 				0C08646E221C623A0017AA6D /* PopUpCardView.swift */,
 				0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */,
+				0CF439AD22CFA47400D73C36 /* Login Page */,
 				0C5C508522C590AB00175A57 /* Sign Up Page */,
 				0CA3518022557D440044D166 /* Detail VC Templates */,
 				0CC767A921F0302800752517 /* HomeTab */,
@@ -219,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				0C5C508322C4338E00175A57 /* ProfileTableViewCell.swift */,
+				0C11E6A222D036DC00CDA177 /* SettingsSignUpContainer.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -343,6 +357,7 @@
 		0CC7677921F0262300752517 = {
 			isa = PBXGroup;
 			children = (
+				0C11E6A022D0104C00CDA177 /* Launch Screen.storyboard */,
 				0CD0F50D2214C3EC0018982E /* Storyboard.storyboard */,
 				0CC7678421F0262300752517 /* Smart List */,
 				0CC7679921F0262400752517 /* Smart ListTests */,
@@ -408,6 +423,25 @@
 				0CC767AC21F0304900752517 /* CategoryEnum.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		0CF439AD22CFA47400D73C36 /* Login Page */ = {
+			isa = PBXGroup;
+			children = (
+				0CF439AE22CFA48F00D73C36 /* LoginViewController.swift */,
+				0CF439B322CFB1D800D73C36 /* Login+Keyboard.swift */,
+				0CF439B022CFA4F200D73C36 /* Views */,
+			);
+			path = "Login Page";
+			sourceTree = "<group>";
+		};
+		0CF439B022CFA4F200D73C36 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0CF439B122CFA7B300D73C36 /* MidLoginContainer.swift */,
+				0C11E69E22CFED6D00CDA177 /* BottomLoginContainer.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		0CF6B5812210ED940049CF63 /* Views */ = {
@@ -529,6 +563,7 @@
 				0C5C509122C5A31E00175A57 /* cook.gif in Resources */,
 				0CC7678D21F0262400752517 /* Assets.xcassets in Resources */,
 				0C80888E22C98CC5007485BD /* kitchen loader.gif in Resources */,
+				0C11E6A122D0104C00CDA177 /* Launch Screen.storyboard in Resources */,
 				0C5C508F22C5A22200175A57 /* chef.gif in Resources */,
 				0C833AC322C85311001BD9A9 /* upgrade.gif in Resources */,
 				0C80889022C98E72007485BD /* egg.gif in Resources */,
@@ -621,7 +656,9 @@
 				0C6F5840220DC92B00C730CB /* Home+NavBarItems.swift in Sources */,
 				0CE00E0122288FCE00BA0C43 /* UIViewController+keyboardHiding.swift in Sources */,
 				0CC767B221F0307D00752517 /* HomeTableViewCell.swift in Sources */,
+				0C11E69F22CFED6D00CDA177 /* BottomLoginContainer.swift in Sources */,
 				0C296E3F2239952000188959 /* ItemImageHelper.swift in Sources */,
+				0CF439B422CFB1D800D73C36 /* Login+Keyboard.swift in Sources */,
 				0CB180C6223EE71E00927014 /* Home+TextFieldDelegate.swift in Sources */,
 				0CB180CA223F4CEE00927014 /* KitchenViewController.swift in Sources */,
 				0C039491221E420400A7BEBF /* Detail+Delegates.swift in Sources */,
@@ -650,12 +687,14 @@
 				0C3F4A9921F7BAD700003A86 /* CoreDataManager.swift in Sources */,
 				0C5C508C22C5A13200175A57 /* SwiftGif.swift in Sources */,
 				0C97DCC22240776E00D49241 /* KitchenCollectionViewCell.swift in Sources */,
+				0CF439AF22CFA48F00D73C36 /* LoginViewController.swift in Sources */,
 				0CBDC87E2220653000A4B7FF /* Detail+ViewActions.swift in Sources */,
 				0CA3517F22557B6F0044D166 /* KitchenDetailViewController.swift in Sources */,
 				0C5C508722C590CC00175A57 /* SignUpViewController.swift in Sources */,
 				0CD0F5102214FC720018982E /* UIButton+Extensions.swift in Sources */,
 				0C11B9BA22138BC80003A87D /* DetailTopContainer.swift in Sources */,
 				0C9A992F226011EA0038789E /* Kitchen+UserNotificationDelegate.swift in Sources */,
+				0CF439B222CFA7B300D73C36 /* MidLoginContainer.swift in Sources */,
 				0C4FA4F2226812C300FEAF6A /* Server.swift in Sources */,
 				0C2541B722419D13003901CA /* KitchenPageViewController.swift in Sources */,
 				0CB180C8223EFB2E00927014 /* HomeTVCell+Delegates.swift in Sources */,
@@ -664,6 +703,7 @@
 				0C11B9B722137F770003A87D /* DetailViewController.swift in Sources */,
 				0CBE4B8D2200C39000A23330 /* Constants.swift in Sources */,
 				0C03948F221E37B700A7BEBF /* QuantityPopUpView.swift in Sources */,
+				0C11E6A322D036DC00CDA177 /* SettingsSignUpContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

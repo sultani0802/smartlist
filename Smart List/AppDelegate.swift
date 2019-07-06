@@ -20,10 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
 //        window?.rootViewController = TabBarController()
-        
-        let signUpVC = SignUpViewController()
-        let signUpInNavController = UINavigationController(rootViewController: signUpVC)
-        window?.rootViewController = signUpInNavController
+        window?.rootViewController = SignUpViewController()
+//        window?.rootViewController = LoginViewController()
         window?.makeKeyAndVisible()
         
         UINavigationBar.appearance().barTintColor = .white

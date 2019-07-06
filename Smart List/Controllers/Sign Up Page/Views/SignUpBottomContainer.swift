@@ -135,6 +135,21 @@ class SignUpBottomContainer : UIView {
         return button
     }()
     
+    var loginButton : UIButton = {
+        var button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Login", for: .normal)
+        button.sizeToFit()
+        button.titleLabel?.textAlignment = .center
+        button.contentEdgeInsets = UIEdgeInsets(top: 1, left: 4, bottom: 1, right: 4)
+        button.addTarget(self, action: #selector(SignUpViewController.loginButtonTapped(_:)), for: .touchUpInside)
+        button.isUserInteractionEnabled = true
+        button.tintColor = Constants.ColorPalette.SeaGreen
+        button.titleLabel?.font = UIFont(name: Constants.Visuals.fontName, size: 18)
+        
+        return button
+    }()
+    
     var skipButton : UIButton = {
         var button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -169,6 +184,7 @@ class SignUpBottomContainer : UIView {
         
         addSubview(fieldStack)
         addSubview(signUpButton)
+        addSubview(loginButton)
         addSubview(skipButton)
         
         // Textfields StackView
@@ -176,7 +192,7 @@ class SignUpBottomContainer : UIView {
             fieldStack.topAnchor.constraint(equalTo: topAnchor),
             fieldStack.leadingAnchor.constraint(equalTo: leadingAnchor),
             fieldStack.trailingAnchor.constraint(equalTo: trailingAnchor),
-            fieldStack.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.70)
+            fieldStack.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.60)
             ])
         
         // Textfields
@@ -188,12 +204,17 @@ class SignUpBottomContainer : UIView {
         
         // Buttons
         NSLayoutConstraint.activate([
-            NSLayoutConstraint(item: signUpButton, attribute: .top, relatedBy: .equal, toItem: passwordField, attribute: .bottom, multiplier: 1, constant: 10),
+            signUpButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 10),
             signUpButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.10),
             signUpButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             signUpButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
             
-            NSLayoutConstraint(item: skipButton, attribute: .top, relatedBy: .equal, toItem: signUpButton, attribute: .bottom, multiplier: 1, constant: 10),
+            loginButton.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 10),
+            loginButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.10),
+            loginButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            loginButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
+            
+            skipButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 10),
             skipButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.10),
             skipButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             skipButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
