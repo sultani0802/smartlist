@@ -59,6 +59,24 @@ class TabBarController: UITabBarController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let settings = CoreDataManager.shared.loadSettings()
+        
+        print(settings.isLoggedIn)
+        print(settings.offlineMode)
+        if !settings.isLoggedIn && !settings.offlineMode {
+            self.present(SignUpViewController(), animated: animated)
+        }
+    }
+    
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         

@@ -166,6 +166,8 @@ class LoginViewController: UIViewController {
     @objc func skipButtonTapped(_ sender: UIButton) {
         print("skip sign up")
         
+        CoreDataManager.shared.setOfflineMode(offlineMode: true)        // Set offline mode to true
+        
         let tabbar = TabBarController()
         self.present(tabbar, animated: true)
     }

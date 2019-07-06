@@ -33,10 +33,11 @@ class ProfileViewController: UIViewController {
     var signUpContainer : SettingsSignUpContainer = {
         var view = SettingsSignUpContainer()
         view.translatesAutoresizingMaskIntoConstraints = false
-//        view.backgroundColor = .white
         
         return view
     }()
+    
+    var logoutBarButtonItem : UIBarButtonItem?
     
     
     
@@ -65,6 +66,13 @@ class ProfileViewController: UIViewController {
         self.view.backgroundColor = .white                                      // Set background color to white
         self.navigationItem.title = "Settings"                                  // Set view's title
         self.navigationController?.navigationBar.prefersLargeTitles = true      // Make title big
+        
+        logoutBarButtonItem = UIBarButtonItem(title: "Logout",                  // Instantiate logout button
+                                              style: .done,
+                                              target: self,
+                                              action: #selector(self.logoutButtonTapped))
+        navigationItem.rightBarButtonItem = logoutBarButtonItem                 // Set it to the right
+        navigationItem.rightBarButtonItem?.tintColor = Constants.ColorPalette.Crimson
     }
     
     
@@ -74,33 +82,53 @@ class ProfileViewController: UIViewController {
             y: UIApplication.shared.statusBarFrame.size.height,
             width: self.view.frame.width,
             height: self.view.frame.height))
-        tableView.dataSource = self                                                                     // Datasource to self
-        tableView.delegate = self                                                                       // Delegate to self (extension)
-        tableView.translatesAutoresizingMaskIntoConstraints = false                                     // Use auto-layout
-        
-        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: self.profileViewCellId)
-        
-        // Constraints applied so that the tableView isn't displayed behind the tab bar
-        let adjustForTabbarInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: self.tabBarController!.tabBar.frame.height, right: 0)
-        tableView.contentInset = adjustForTabbarInsets
-        tableView.scrollIndicatorInsets = adjustForTabbarInsets
-        
-        self.tableView.rowHeight = 65                                                                   // Set height of the cell
-        tableView.keyboardDismissMode = .onDrag                                                         // Dismiss keyboard when user drags on tableview
-        tableView.separatorStyle = .none                                                                // Remove cell separators
-        
-        
-        self.view.addSubview(tableView)                                                                 // Add tableview to view
         
         
         if !isLoggedIn {
-            showSignUp()
+            showSignUpContainer()                                                                       // Show the log in/sign up container
+            toggleLogoutButton(toggle: false)                                                           // Disable the logout button
+        } else {
+            toggleLogoutButton(toggle: true)                                                                // Enable the logout button
+            
+            tableView.dataSource = self                                                                     // Datasource to self
+            tableView.delegate = self                                                                       // Delegate to self (extension)
+            tableView.translatesAutoresizingMaskIntoConstraints = false                                     // Use auto-layout
+            
+            tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: self.profileViewCellId)
+            
+            // Constraints applied so that the tableView isn't displayed behind the tab bar
+            let adjustForTabbarInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: self.tabBarController!.tabBar.frame.height, right: 0)
+            tableView.contentInset = adjustForTabbarInsets
+            tableView.scrollIndicatorInsets = adjustForTabbarInsets
+            
+            self.tableView.rowHeight = 65                                                                   // Set height of the cell
+            tableView.keyboardDismissMode = .onDrag                                                         // Dismiss keyboard when user drags on tableview
+            tableView.separatorStyle = .none                                                                // Remove cell separators
+            
+            
+            self.view.addSubview(tableView)                                                                 // Add tableview to view
         }
     }
     
     
     
     //MARK: - My Methods
+    @objc func logoutButtonTapped() {
+        coreDataManager.setOfflineMode(offlineMode: true)       // Set offline mode in Core Data
+        isLoggedIn = false                                      // Set offline mode in this class
+        showSignUpContainer()                                   // Hide tableview, show sign up/log in container
+    }
+    
+    func toggleLogoutButton(toggle: Bool) {
+        if !toggle {
+            logoutBarButtonItem?.isEnabled = false
+        } else {
+            logoutBarButtonItem?.isEnabled = true
+        }
+        
+        print(toggle)
+    }
+    
     func editSetting(setting: Int) {
         switch setting {
         case Constants.Settings.Name:
@@ -132,7 +160,9 @@ class ProfileViewController: UIViewController {
     }
     
     
-    func showSignUp() {
+    /// Show the sign up/login container instead of the tableView
+    /// This method is only called if the user is not logged in
+    func showSignUpContainer() {
         self.tableView.isHidden = true
         
         view.addSubview(signUpContainer)
@@ -146,13 +176,14 @@ class ProfileViewController: UIViewController {
     }
     
     
+    
     /// Shows an alert that allows the user to edit the setting
     ///
     /// - Parameter message: The message to be displayed appropriate to the setting being changed
     func showAlert(message: String, setting: Int) {
         let alertController = UIAlertController(title: "Change Setting",                // Alert controller
-                                                message: message,
-                                                preferredStyle: .alert)
+            message: message,
+            preferredStyle: .alert)
         
         alertController.addTextField{(textField) in                                     // Adding textfield to alert controller
             textField.placeholder = "Type here"
@@ -204,7 +235,7 @@ class ProfileViewController: UIViewController {
                 return
             }
             
-                                                                                            // If redirection is successful
+            // If redirection is successful
             if UIApplication.shared.canOpenURL(settingsUrl) {
                 UIApplication.shared.open(settingsUrl, completionHandler: {                     // Redirect the User
                     (success) in
@@ -219,5 +250,14 @@ class ProfileViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)                           // Present the alert
+    }
+    
+    
+    @objc func signUpButtonTapped(_ button: UIButton) {
+        self.present(SignUpViewController(), animated: true)
+    }
+    
+    @objc func loginButtonTapped(_ button: UIButton) {
+        self.present(LoginViewController(), animated: true)
     }
 }

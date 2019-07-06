@@ -61,7 +61,30 @@ class CoreDataManager {
         return result![0]
     }
 
+    
+    /// If the user chooses to skip sign up or log in then they will be in offline mode
+    /// Therfore, we clear any online properties such as name, email, auth token, and set their logged in status to false
+    ///
+    /// - Parameter offlineMode: The boolean flag that will determine whether the user is offline or not
+    func setOfflineMode(offlineMode: Bool) {
+        let settings = loadSettings()           // Get settings core data object
+        
+        if (offlineMode == true ) {            // Clear all online properties and set to offline
+            settings.offlineMode = true
+            settings.isLoggedIn = false
+            settings.email = ""
+            settings.name = ""
+            settings.token = ""
 
+            saveContext()
+            
+            print("User has gone offline.")
+        } else {                                // Otherwise, don't change anything but set offline to false
+            settings.offlineMode = false
+            
+            saveContext()
+        }
+    }
     
     /// Sets the user's name and email for their profile
     ///
@@ -84,6 +107,7 @@ class CoreDataManager {
         }
         
         settings.isLoggedIn = true      // Set logged-in flag to true
+        settings.offlineMode = false    // Set offline flag to false
         
         saveContext()                   // Save settings object
     }
