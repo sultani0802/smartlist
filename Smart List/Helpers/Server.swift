@@ -11,14 +11,37 @@ import Alamofire
 import SwiftyJSON
 
 
+/// This allows each Request made on a Session to be inspected and adapted before being created.
+/// In this case, it is being used to append an Authorization header to requests behind a certain type of authentication (Bearer in our case)
+struct EnvironmentInterceptor : RequestInterceptor {
+    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
+        var adaptedRequest = urlRequest
+        
+        guard let token = CoreDataManager.shared.loadSettings().token else {            // Get the token from Core Data
+            print("token is null in Core Data")
+            completion(.success(adaptedRequest))                                            // If it doesn't exist, then run the callback
+            return
+        }
+        
+        adaptedRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") // Set the auth token for the request header
+        completion(.success(adaptedRequest))                                            // Run the callback
+    }
+}
+
+
 /// A Singleton that handles all the API requests
 class Server {
     
     static let shared = Server()
-    
-    private init() {
+    private let sessionManager: Session = {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 60
+        
+        return Session(configuration: configuration, interceptor: EnvironmentInterceptor())
+    }()
+
+    
+    private init() {
     }
     
     // Nurtirionix API properties
@@ -30,9 +53,10 @@ class Server {
     // Smart List API properties
     let SMARTLIST_DB_API : String = Constants.General.Server                   // Base URL for MongoDB requests
     
+    
     /// Make a request to Nutritionix API for nutritional information of an Item
     func searchItem(itemName : String) {
-        AF.request("\(NUTRITIONIX_API)/v2/natural/nutrients",
+        sessionManager.request("\(NUTRITIONIX_API)/v2/natural/nutrients",
             method: .post,
             parameters: ["query" : itemName],
             headers: ["x-app-id" : self.nutriAppID, "x-app-key" : self.nutriAppKey, "x-remote-user-id" : self.remoteUserID]).responseJSON {
@@ -58,7 +82,7 @@ class Server {
     ///   - callBack: Used for returning the data fetched from the request
     func getItemThumbnailURL(itemName: String, callBack: @escaping (_ imageURL: String) -> Void) {
         
-        AF.request("\(NUTRITIONIX_API)/v2/natural/nutrients",                                      // Endpoint
+        sessionManager.request("\(NUTRITIONIX_API)/v2/natural/nutrients",                                      // Endpoint
             method: .post,
             parameters: ["query" : itemName],                                           // Parameters/body of the request
             headers: ["x-app-id" : self.nutriAppID, "x-app-key" : self.nutriAppKey, "x-remote-user-id" : self.remoteUserID]).responseJSON {
@@ -83,7 +107,7 @@ class Server {
     ///   - callBack: Used to return the data fetched from the request
     func getItemFullURL(itemName: String, callBack: @escaping (_ imageURL: String) -> Void) {
         
-        AF.request("\(NUTRITIONIX_API)/v2/natural/nutrients",                                      // Endpoint
+        sessionManager.request("\(NUTRITIONIX_API)/v2/natural/nutrients",                                      // Endpoint
             method: .post,
             parameters: ["query" : itemName],                                           // Parameters/body of the request
             headers: ["x-app-id" : self.nutriAppID, "x-app-key" : self.nutriAppKey, "x-remote-user-id" : self.remoteUserID]).responseJSON {
@@ -117,7 +141,7 @@ class Server {
                       "email" : email.trimmingCharacters(in: .whitespacesAndNewlines),
                       "password" : password.trimmingCharacters(in: .whitespacesAndNewlines)]
         
-        AF.request("\(SMARTLIST_DB_API)/users",
+        sessionManager.request("\(SMARTLIST_DB_API)/users",
             method: .post,
             parameters: params,
             encoding: JSONEncoding.default).responseJSON {
@@ -179,6 +203,30 @@ class Server {
                     print("Error when trying to login:\n\(error)")
                     
                     callback(["error" : error.localizedDescription])                // Callback
+                }
+        }
+    }
+    
+    
+    /// Sends a request to the server to log the user out and clear the auth token in the MongoDB DB
+    ///
+    /// - Parameter callback: callback with the success or failure message
+    func logout(callback: @escaping (_ response : [String:String]) -> Void) {
+        sessionManager.request("\(SMARTLIST_DB_API)/users/logout",
+            method: .post,
+            encoding: JSONEncoding.default).responseJSON {
+                response in
+                
+                switch response.result {
+                case .success(let data):                                        // If the request was a success
+                    let obj = JSON(data)                                            // Get the response JSON
+                    
+                    callback(["success" : obj["success"].stringValue])              // Callback with success message
+                    
+                case .failure(let error):                                       // If the request was a failure
+                    print("Error when trying to logout. (Error: \(error)")
+                    
+                    callback(["error" : error.localizedDescription])                // Callback with error message
                 }
         }
     }

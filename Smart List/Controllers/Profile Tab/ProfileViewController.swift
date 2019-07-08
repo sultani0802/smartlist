@@ -114,9 +114,27 @@ class ProfileViewController: UIViewController {
     
     //MARK: - My Methods
     @objc func logoutButtonTapped() {
-        coreDataManager.setOfflineMode(offlineMode: true)       // Set offline mode in Core Data
-        isLoggedIn = false                                      // Set offline mode in this class
-        showSignUpContainer()                                   // Hide tableview, show sign up/log in container
+        Server.shared.logout() {
+            response in
+            
+            if let success = response["success"] {
+                CoreDataManager.shared.setOfflineMode(offlineMode: true)       // Set offline mode in Core Data
+                self.isLoggedIn = false                                      // Set offline mode in this class
+                self.toggleLogoutButton(toggle: false)
+                self.showSignUpContainer()                                   // Hide tableview, show sign up/log in container
+                
+                DispatchQueue.main.async {
+                    self.showLogoutAlert(message: success)
+                }
+            } else {
+                let error = response["error"]
+                print(error)
+                
+                DispatchQueue.main.async {
+                    self.showLogoutAlert(message: error!)
+                }
+            }
+        }
     }
     
     func toggleLogoutButton(toggle: Bool) {
@@ -175,6 +193,16 @@ class ProfileViewController: UIViewController {
             ])
     }
     
+    
+    func showLogoutAlert(message: String) {
+        let alertController = UIAlertController(title: "Logging out", message: message, preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "Ok", style: .default)
+        
+        alertController.addAction(okAction)
+        
+        self.present(alertController, animated: true)
+    }
     
     
     /// Shows an alert that allows the user to edit the setting
