@@ -72,6 +72,7 @@
 		0CCD9E4A2232E11E0075D8AD /* Levenshtein.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD9E492232E11E0075D8AD /* Levenshtein.swift */; };
 		0CD0F50E2214C3EC0018982E /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CD0F50D2214C3EC0018982E /* Storyboard.storyboard */; };
 		0CD0F5102214FC720018982E /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD0F50F2214FC720018982E /* UIButton+Extensions.swift */; };
+		0CDF962922D4136E007B97A8 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDF962822D4136E007B97A8 /* Spinner.swift */; };
 		0CE00E0122288FCE00BA0C43 /* UIViewController+keyboardHiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE00E0022288FCE00BA0C43 /* UIViewController+keyboardHiding.swift */; };
 		0CF439AF22CFA48F00D73C36 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF439AE22CFA48F00D73C36 /* LoginViewController.swift */; };
 		0CF439B222CFA7B300D73C36 /* MidLoginContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF439B122CFA7B300D73C36 /* MidLoginContainer.swift */; };
@@ -161,6 +162,7 @@
 		0CCD9E492232E11E0075D8AD /* Levenshtein.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Levenshtein.swift; sourceTree = "<group>"; };
 		0CD0F50D2214C3EC0018982E /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		0CD0F50F2214FC720018982E /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
+		0CDF962822D4136E007B97A8 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		0CE00E0022288FCE00BA0C43 /* UIViewController+keyboardHiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+keyboardHiding.swift"; sourceTree = "<group>"; };
 		0CF439AE22CFA48F00D73C36 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		0CF439B122CFA7B300D73C36 /* MidLoginContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MidLoginContainer.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				0C1FF5A7225E2CA2002D747D /* NotificationHelper.swift */,
 				0C76749C22CA7C19007E791E /* Regex.swift */,
 				0C4FA4F1226812C300FEAF6A /* Server.swift */,
+				0CDF962822D4136E007B97A8 /* Spinner.swift */,
 				0C5C508B22C5A13200175A57 /* SwiftGif.swift */,
 				0CD0F50F2214FC720018982E /* UIButton+Extensions.swift */,
 				0C13BC4B2223581E0027BABD /* UITextfieldExtensions.swift */,
@@ -670,6 +673,7 @@
 				0C232ED522319BF500F05BC5 /* DeviceTypes.swift in Sources */,
 				0CF47D9621F3E8240084C1BA /* DataModel.xcdatamodeld in Sources */,
 				0C08646F221C623A0017AA6D /* PopUpCardView.swift in Sources */,
+				0CDF962922D4136E007B97A8 /* Spinner.swift in Sources */,
 				0CC7678621F0262300752517 /* AppDelegate.swift in Sources */,
 				0C5C508422C4338E00175A57 /* ProfileTableViewCell.swift in Sources */,
 				0C1FF5A8225E2CA2002D747D /* NotificationHelper.swift in Sources */,

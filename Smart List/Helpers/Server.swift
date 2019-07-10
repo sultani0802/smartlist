@@ -110,7 +110,7 @@ class Server {
         sessionManager.request("\(NUTRITIONIX_API)/v2/natural/nutrients",                                      // Endpoint
             method: .post,
             parameters: ["query" : itemName],                                           // Parameters/body of the request
-            headers: ["x-app-id" : self.nutriAppID, "x-app-key" : self.nutriAppKey, "x-remote-user-id" : self.remoteUserID]).responseJSON {
+            headers: ["x-app-id" : self.nutriAppID, "x-app-key" : self.nutriAppKey, "x-remote-user-id" : self.remoteUserID]).validate().responseJSON {
                 
                 response in
                 
@@ -134,7 +134,7 @@ class Server {
     ///   - email: the user's email; must be unique and valid
     ///   - password: The user'spassword; must be 8+ characters
     ///   - callBack: callback with the data that we should do something with
-    func signUpNewUser(name: String, email: String, password: String, callBack: @escaping (_ newUser: [String:String]) -> Void) {
+    func signUpNewUser(name: String, email: String, password: String, callback: @escaping (_ newUser: [String:String]) -> Void) {
         
         // The reqeust's body
         let params = ["name" : name.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -144,11 +144,11 @@ class Server {
         sessionManager.request("\(SMARTLIST_DB_API)/users",
             method: .post,
             parameters: params,
-            encoding: JSONEncoding.default).responseJSON {
+            encoding: JSONEncoding.default).validate().responseJSON {
                 response in
                 
                 switch response.result {
-                case .success(let data):
+                case .success(let data):                                    // If successful request
                     let obj = JSON(data)                                            // Get JSON
                     print(obj)
                     
@@ -156,12 +156,17 @@ class Server {
                     let email = obj["user"]["email"].stringValue                    // Get email
                     let token = obj["newToken"].stringValue                         // Get token
                     
-                    callBack(["name": name, "email": email, "token":token])         // callback
+                    callback(["name": name, "email": email, "token":token])         // callback
                     
-                case .failure(let error):
-                    print("Error when trying to create a new User: \n\(error)")
+                    break
+                case .failure(let error):                                   // If failed request
+                    let data = response.data                                        // Get response object from response
+                    let errorMessage = JSON(data)["error"].stringValue              // Convert to JSON then get the error message
                     
-                    callBack(["error": error.localizedDescription])
+                    print(error.localizedDescription)                               // Log request error
+                    callback(["error" : errorMessage])                              // Callback with error message
+                    
+                    break
                 }
         }
     }
@@ -181,15 +186,15 @@ class Server {
         let params = ["email" : email,
                       "password" : password]
         
-        AF.request("\(SMARTLIST_DB_API)/users/login",
+        sessionManager.request("\(SMARTLIST_DB_API)/users/login",
             method: .post,
             parameters: params,
-            encoding: JSONEncoding.default).responseJSON {
+            encoding: JSONEncoding.default).validate().responseJSON {
                 
                 response in
                 
                 switch response.result {
-                case .success(let data):                                        // Success
+                case .success(let data):                                        // Successful request
                     let obj = JSON(data)                                            // Get JSON object
                     print(obj)
                     
@@ -197,12 +202,17 @@ class Server {
                     let email = obj["user"]["email"].stringValue                    // Get email
                     let token = obj["newToken"].stringValue                         // Get new token
                     
-                    callback(["name": name, "email":email, "token":token])              // Callback
+                    callback(["name": name, "email":email, "token":token])              // Callback with user object
                     
-                case .failure(let error):                                       // Failure
-                    print("Error when trying to login:\n\(error)")
+                    break
+                case .failure(let error):                                       // Failed request
+                    let data = response.data                                        // Get response object from response
+                    let errorMessage = JSON(data)["error"].stringValue              // Convert to JSON then get the error message
                     
-                    callback(["error" : error.localizedDescription])                // Callback
+                    print(error.localizedDescription)                               // Log request error
+                    callback(["error" : errorMessage])                              // Callback with error message
+                    
+                    break
                 }
         }
     }
@@ -214,7 +224,7 @@ class Server {
     func logout(callback: @escaping (_ response : [String:String]) -> Void) {
         sessionManager.request("\(SMARTLIST_DB_API)/users/logout",
             method: .post,
-            encoding: JSONEncoding.default).responseJSON {
+            encoding: JSONEncoding.default).validate().responseJSON {
                 response in
                 
                 switch response.result {

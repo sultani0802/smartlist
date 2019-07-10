@@ -24,7 +24,8 @@ class ProfileViewController: UIViewController {
     var values : [String:String?]?
     
     var tableView: UITableView!                     // The tableview that will contain the different settings options
-    
+    var spinner = UIActivityIndicatorView()         // Create spinner for this view
+    var spinnerContainer : UIView = UIView()        // Container for the spinner
     
     
     ///
@@ -51,7 +52,9 @@ class ProfileViewController: UIViewController {
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         loadSettings()
         setupTableView()
     }
@@ -114,8 +117,13 @@ class ProfileViewController: UIViewController {
     
     //MARK: - My Methods
     @objc func logoutButtonTapped() {
+        
+        self.tableView.showLargeSpinner(spinner: self.spinner, container: spinnerContainer) // Show spinner when user clicks logout button
+        
         Server.shared.logout() {
             response in
+                                                                                    // Hide the spinner
+            self.tableView.hideSpinner(spinner: self.spinner, container: self.spinnerContainer)
             
             if let success = response["success"] {
                 CoreDataManager.shared.setOfflineMode(offlineMode: true)       // Set offline mode in Core Data
@@ -143,8 +151,6 @@ class ProfileViewController: UIViewController {
         } else {
             logoutBarButtonItem?.isEnabled = true
         }
-        
-        print(toggle)
     }
     
     func editSetting(setting: Int) {
@@ -170,8 +176,6 @@ class ProfileViewController: UIViewController {
             let email = settings.email
             
             isLoggedIn = settings.isLoggedIn                    // Set logged in status
-            
-            print("User is logged in: \(isLoggedIn)")
             
             values = ["name":name, "email":email]
         }
@@ -221,7 +225,6 @@ class ProfileViewController: UIViewController {
             UIAlertAction in
             
             let textField = alertController.textFields![0]                                  // Get the alert's textfield object
-            print("saved changes: \(textField.text!)")
             
             if self.settings[setting].lowercased() == "name" {                              // If user is editing the name
                 CoreDataManager.shared.addUser(name: textField.text!, email: "", token: "")                // Save the name to Core Data
@@ -267,8 +270,6 @@ class ProfileViewController: UIViewController {
             if UIApplication.shared.canOpenURL(settingsUrl) {
                 UIApplication.shared.open(settingsUrl, completionHandler: {                     // Redirect the User
                     (success) in
-                    
-                    print("Settings opened: \(success)") // Prints true
                 })
             }
         }

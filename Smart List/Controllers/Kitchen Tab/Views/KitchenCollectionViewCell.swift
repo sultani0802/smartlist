@@ -20,7 +20,8 @@ class KitchenCollectionViewCell: UICollectionViewCell {
     // MARK: - PROPERTIES
     //
     var deleteDelegate : KitchenCellDeleteDelegate?
-    
+    var spinnerContainer = UIView()
+    var spinner : UIActivityIndicatorView = UIActivityIndicatorView()
     
     
     //
@@ -29,7 +30,6 @@ class KitchenCollectionViewCell: UICollectionViewCell {
     var itemImageView: UIImageView = {
         var view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.image = UIImage(named: "groceries")
         view.contentMode = .scaleAspectFit
         
         return view

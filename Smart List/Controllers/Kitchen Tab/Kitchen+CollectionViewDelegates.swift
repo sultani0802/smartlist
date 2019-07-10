@@ -17,18 +17,22 @@ extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDel
     
     
     
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellID.KitchenCollectionViewCellID, for: indexPath) as! KitchenCollectionViewCell
         let item = self.model[indexPath.row]
         
         if item.imageFullURL == nil || item.imageFullURL!.isEmpty {
-            Server.shared.getItemFullURL(itemName: item.name!) { imageURL in                  // Set the image of the Item based of Nutritionix pic
+            
+            // The reason why this conditional is here is because 
+            if indexPath.row < model.count {
+                cell.showLargeSpinner(spinner: cell.spinner, container: cell.spinnerContainer)  // Show the spinner
+            }
+            Server.shared.getItemFullURL(itemName: item.name!) { imageURL in                    // Set the image of the Item based of Nutritionix pic
+                
+                cell.hideSpinner(spinner: cell.spinner, container: cell.spinnerContainer)       // Hide the spinner when the image is loaded
                 
                 if imageURL != "" || !imageURL.isEmpty{
-                    cell.itemImageView.kf.setImage(with: URL(string: imageURL))    // Set detail view's image to downloaded image
-                } else {
-                    cell.itemImageView.image = UIImage(named: "groceries")         // Else, set it to default 'groceries' image from assets
+                    cell.itemImageView.kf.setImage(with: URL(string: imageURL))                 // Set detail view's image to downloaded image
                 }
             }
         } else {
