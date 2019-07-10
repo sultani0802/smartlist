@@ -283,10 +283,18 @@ class ProfileViewController: UIViewController {
     
     
     @objc func signUpButtonTapped(_ button: UIButton) {
-        self.present(SignUpViewController(), animated: true)
+        let signUpVC = SignUpViewController()
+        signUpVC.isPoppedUp = true
+        DispatchQueue.main.async {
+            self.present(signUpVC, animated: true)
+        }
     }
     
     @objc func loginButtonTapped(_ button: UIButton) {
-        self.present(LoginViewController(), animated: true)
+        let loginVC = LoginViewController()
+        loginVC.isPoppedUp = true
+        DispatchQueue.main.async {
+            self.present(loginVC, animated: true)
+        }
     }
 }

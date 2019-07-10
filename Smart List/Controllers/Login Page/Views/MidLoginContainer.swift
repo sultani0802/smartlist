@@ -17,6 +17,7 @@ class MidLoginContainer: UIView {
         view.font = UIFont(name: Constants.Visuals.fontName, size: 14)
         view.textColor = Constants.ColorPalette.DarkGray
         view.placeholder = "Your email"
+        view.keyboardType = .emailAddress
         view.autocorrectionType = .no
         view.autocapitalizationType = .none
         view.borders(for: [.all], width: 0.2, color: .black)

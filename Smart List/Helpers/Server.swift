@@ -160,8 +160,10 @@ class Server {
                     
                     break
                 case .failure(let error):                                   // If failed request
-                    let data = response.data                                        // Get response object from response
-                    let errorMessage = JSON(data)["error"].stringValue              // Convert to JSON then get the error message
+                    let data = response.data                                        // Get response object from
+                    let errorObject = JSON(data)                                    // Create error object to JSON
+                    print(errorObject)
+                    let errorMessage = errorObject["message"].stringValue           // Get the error message
                     
                     print(error.localizedDescription)                               // Log request error
                     callback(["error" : errorMessage])                              // Callback with error message

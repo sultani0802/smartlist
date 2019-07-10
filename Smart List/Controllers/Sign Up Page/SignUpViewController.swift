@@ -9,8 +9,16 @@
 import UIKit
 
 class SignUpViewController: UIViewController {
-
+    
+    //MARK: - Properties
+    var activeText : UITextField?
+    var isPoppedUp : Bool = false
+    
     //MARK: - UI Elements
+    var spinner = UIActivityIndicatorView()
+    var spinnerContainer = UIView()
+    
+    
     var topContainer : SignUpTopContainer = {
         var view = SignUpTopContainer()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -31,13 +39,7 @@ class SignUpViewController: UIViewController {
         
         return view
     }()
-    
-    
-    //MARK: - Properties
-    var activeText : UITextField?
-    
-    
-    
+
     
     //MARK: - View Methods
     override func viewDidLoad() {
@@ -72,7 +74,6 @@ class SignUpViewController: UIViewController {
     //MARK: - Initialization Methods
     private func setupView() {
         view.backgroundColor = Constants.ColorPalette.OffWhite
-//        view.backgroundColor = .white
         
         // Adding top container and configuring
         view.addSubview(scrollView)
@@ -165,34 +166,41 @@ class SignUpViewController: UIViewController {
             bottomContainer.emailField.text != nil &&
             bottomContainer.passwordField.text != nil) {
             
+            self.view.showLargeSpinner(spinner: self.spinner, container: self.spinnerContainer)                                 // Show the spinner
+            
+            
             // Make a request to Smartlist API to create a new User in the DB
             Server.shared.signUpNewUser(name: bottomContainer.nameField.text!.trimmingCharacters(in: .whitespacesAndNewlines),
                                         email: bottomContainer.emailField.text!.trimmingCharacters(in: .whitespacesAndNewlines),
                                         password: bottomContainer.passwordField.text!.trimmingCharacters(in: .whitespacesAndNewlines)) {
                 newUser in
                 
-                if (newUser["name"] != "" && newUser["email"] != "" && newUser["token"] != "") {                                  // If the server response contains valid User information
-                    CoreDataManager.shared.addUser(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)        // Save the user's information in Core Data
+                self.view.hideSpinner(spinner: self.spinner, container: self.spinnerContainer)                                  // Hide the spinner
+                                            
+                if let error = newUser["error"] {                                                                               // Server responded with erro
                     
-                    DispatchQueue.main.async {
-                        let tabbar = TabBarController()
-                        self.present(tabbar, animated: true)                                                // Switch view to the tabbar
-                    }
-                } else if (newUser["error"] != nil ){
-                    print("Server responded with invalid User data during sign up")                     // Otherwise, an error occurred
-                    
-                    let error = newUser["error"]                                                            // Get error message
-                    
-                    let alertController = UIAlertController(title: "Error",                                 // Alert user of an error
-                        message: "There was an error trying sign up. Please try again.\nError:\(error ?? "unexpected error")",
-                                                            preferredStyle: .alert)
-                    
+                    let alertController = UIAlertController(title: "Error signing up",                                              // Alert user of an error
+                        message: error,
+                        preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "Ok", style: .default)
-                    
                     alertController.addAction(okAction)
                     
                     DispatchQueue.main.async {
-                        self.present(alertController, animated: true)                                           // Show alert
+                        self.present(alertController, animated: true)                                                               // Show alert
+                    }
+                }
+                else if (newUser["name"] != "" && newUser["email"] != "" && newUser["token"] != "") {                           // If the server response contains valid User information
+                    CoreDataManager.shared.addUser(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)      // Save the user's information in Core Data
+                    
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true)                                                                                // Hide the Sign Up View
+                        
+                        // If the sign up view wasn't created from the profile tab
+                        // then, create the TabBar (we are assuming the tabbar hasn't been created yet)
+                        if (!self.isPoppedUp) {
+                            self.present(TabBarController(), animated: true)                                                        // Create and show the tabbar
+                        }
+                        
                     }
                 }
             }

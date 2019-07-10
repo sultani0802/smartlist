@@ -11,6 +11,7 @@ import UIKit
 class LoginViewController: UIViewController {
     //MARK: - PROPERTIES
     var activeText: UITextField?
+    var isPoppedUp : Bool = false
     
     //MARK: - UI ELEMENTS
     var spinner = UIActivityIndicatorView()
@@ -144,12 +145,23 @@ class LoginViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     self.present(alertController, animated: true)
+                    self.dismiss(animated: true)
                 }
                 
                 return
             }
                                                                                                     // If successful
             CoreDataManager.shared.addUser(name: response["name"]!, email: response["email"]!, token: token)    // log the user in and save the auth token
+            
+            DispatchQueue.main.async {
+                self.dismiss(animated: true)                                                            // Hide the login view
+                
+                // If the login view was not created from the profile tab
+                // then, create the TabBar (we are assuming the tabbar hasn't been created yet)
+                if (!self.isPoppedUp) {
+                    self.present(TabBarController(), animated: true)                                    // Create and show the tabbar
+                }
+            }
         }
     }
     
