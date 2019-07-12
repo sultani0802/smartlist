@@ -6,7 +6,8 @@ Smart List is an app that helps you keep track of all the food in your kitchen. 
 ## Feature List
 #### Make a shopping list that is organized by their department just like a grocery store
     - Automatically loads an image for you so you can identify your food at a glance
-    - Set the amount of food you bought, the store you bought it from, the date it expires, and any personal notes you may have
+    - Set the amount of food you bought, the store you bought it from, the date it  
+    expires, and any personal notes you may have
     - Refer to Step 1 for a preview
     
 #### Keep track of all the food in your kitchen
