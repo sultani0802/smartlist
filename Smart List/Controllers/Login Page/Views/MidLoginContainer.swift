@@ -16,6 +16,7 @@ class MidLoginContainer: UIView {
         view.adjustsFontSizeToFitWidth = true
         view.font = UIFont(name: Constants.Visuals.fontName, size: 14)
         view.textColor = Constants.ColorPalette.DarkGray
+        view.returnKeyType = .next
         view.placeholder = "Your email"
         view.keyboardType = .emailAddress
         view.autocorrectionType = .no
@@ -36,6 +37,7 @@ class MidLoginContainer: UIView {
         view.adjustsFontSizeToFitWidth = true
         view.font = UIFont(name: Constants.Visuals.fontName, size: 14)
         view.textColor = Constants.ColorPalette.DarkGray
+        view.returnKeyType = .go
         view.autocorrectionType = .no
         view.autocapitalizationType = .none
         view.placeholder = "Your password"

@@ -118,21 +118,21 @@ class ProfileViewController: UIViewController {
     //MARK: - My Methods
     @objc func logoutButtonTapped() {
         
-        self.tableView.showLargeSpinner(spinner: self.spinner, container: spinnerContainer) // Show spinner when user clicks logout button
+        self.tableView.showLargeSpinner(spinner: self.spinner, container: spinnerContainer)         // Show spinner when user clicks logout button
         
         Server.shared.logout() {
             response in
-                                                                                    // Hide the spinner
-            self.tableView.hideSpinner(spinner: self.spinner, container: self.spinnerContainer)
             
-            if let success = response["success"] {
-                CoreDataManager.shared.setOfflineMode(offlineMode: true)       // Set offline mode in Core Data
-                self.isLoggedIn = false                                      // Set offline mode in this class
-                self.toggleLogoutButton(toggle: false)
-                self.showSignUpContainer()                                   // Hide tableview, show sign up/log in container
+            self.tableView.hideSpinner(spinner: self.spinner, container: self.spinnerContainer)     // Hide the spinner
+            
+            if let success = response["success"] {                                                  // Server response is success
+                CoreDataManager.shared.setOfflineMode(offlineMode: true)                                // Set offline mode in Core Data
+                self.isLoggedIn = false                                                                 // Set offline mode in this class
+                self.toggleLogoutButton(toggle: false)                                                  // Disable logout button
                 
                 DispatchQueue.main.async {
-                    self.showLogoutAlert(message: success)
+                    self.showSignUpContainer()                                                          // Hide tableview, show sign up/log in container
+                    self.showLogoutAlert(message: success)                                              // Show alert to confirm logout
                 }
             } else {
                 let error = response["error"]
@@ -225,16 +225,42 @@ class ProfileViewController: UIViewController {
             UIAlertAction in
             
             let textField = alertController.textFields![0]                                  // Get the alert's textfield object
+            let updatedValue = textField.text!.capitalized
             
             if self.settings[setting].lowercased() == "name" {                              // If user is editing the name
-                CoreDataManager.shared.addUser(name: textField.text!, email: "", token: "")                // Save the name to Core Data
                 
-                self.values!["name"] = textField.text!                                          // Update that on the view
-                self.tableView.reloadData()
+                Server.shared.editUser(updates: ["name" : updatedValue]) {                   // Send name update to the MongoDB DB
+                    response in
+                    
+                    if let error = response["error"] {                                              // If the request failed
+                        print("error: \(error)")
+                    } else {                                                                        // If the request success
+                        CoreDataManager.shared.addUser(name: updatedValue, email: "", token: "")     // Save the name to Core
+                        self.values!["name"] = updatedValue                                          // Update that on the view
+                        print("Here is the values")
+                        print(self.values!)
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                }
             } else if self.settings[setting].lowercased() == "email" {
-                CoreDataManager.shared.addUser(name: "", email: textField.text!, token: "")
+                Server.shared.editUser(updates: ["email" : updatedValue]) {
+                    response in
+                    
+                    if let error = response["error"] {
+                        print("error: \(error)")
+                    } else {
+                        
+                        CoreDataManager.shared.addUser(name: "", email: updatedValue, token: "")                // Save the name to Core
+                        self.values!["email"] = updatedValue                                         // Update that on the view
+                        
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                }
             }
-            
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {             // Cancel action

@@ -161,7 +161,7 @@ class SignUpViewController: UIViewController {
     /// Send server request to create a new user, upon success, save the user name and email in Core Data
     ///
     /// - Parameter sender: The button the user tapped to trigger this action
-    @objc func signUpButtonTapped(_ sender: UIButton) {
+    @objc func signUpButtonTapped(_ sender: UIButton = UIButton()) {
         if (bottomContainer.nameField.text != nil &&
             bottomContainer.emailField.text != nil &&
             bottomContainer.passwordField.text != nil) {
@@ -177,7 +177,7 @@ class SignUpViewController: UIViewController {
                 
                 self.view.hideSpinner(spinner: self.spinner, container: self.spinnerContainer)                                  // Hide the spinner
                                             
-                if let error = newUser["error"] {                                                                               // Server responded with erro
+                if let error = newUser["error"] {                                                                               // Server responded with error
                     
                     let alertController = UIAlertController(title: "Error signing up",                                              // Alert user of an error
                         message: error,
@@ -193,14 +193,13 @@ class SignUpViewController: UIViewController {
                     CoreDataManager.shared.addUser(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)      // Save the user's information in Core Data
                     
                     DispatchQueue.main.async {
-                        self.dismiss(animated: true)                                                                                // Hide the Sign Up View
-                        
-                        // If the sign up view wasn't created from the profile tab
-                        // then, create the TabBar (we are assuming the tabbar hasn't been created yet)
-                        if (!self.isPoppedUp) {
-                            self.present(TabBarController(), animated: true)                                                        // Create and show the tabbar
+                        self.dismiss(animated: true) {                                                                               // Hide the Sign Up View
+                            // If the sign up view wasn't created from the profile tab
+                            // then, create the TabBar (we are assuming the tabbar hasn't been created yet)
+                            if (!self.isPoppedUp) {
+                                self.present(TabBarController(), animated: true)                                                        // Create and show the tabbar
+                            }
                         }
-                        
                     }
                 }
             }
@@ -211,7 +210,9 @@ class SignUpViewController: UIViewController {
     /// Displays the login page
     ///
     @objc func loginButtonTapped(_ sender: UIButton) {
-        self.present(LoginViewController(), animated: true)
+        self.dismiss(animated: true) {
+            self.present(LoginViewController(), animated: true)
+        }
     }
     
     //MARK: - UI Event Handling
@@ -223,7 +224,10 @@ class SignUpViewController: UIViewController {
         
         CoreDataManager.shared.setOfflineMode(offlineMode: true)    // Set offline mode to true
         
-        let tabbar = TabBarController()
-        self.present(tabbar, animated: true)
+        self.dismiss(animated: true) {
+            if (!self.isPoppedUp) {
+                self.present(TabBarController(), animated: true)
+            }
+        }
     }
 }

@@ -242,4 +242,65 @@ class Server {
                 }
         }
     }
+    
+    
+    func authUser(callback: @escaping (_ response : [String:String]) -> Void) {
+        sessionManager.request("\(SMARTLIST_DB_API)/users/auth",
+        method: .post,
+        encoding: JSONEncoding.default).validate().responseJSON {
+            response in
+            
+            switch response.result {
+            case .success(let data):
+                let obj = JSON(data)
+                
+                callback(["success" : "success"])
+                break
+                
+            case .failure(let error) :
+                let data = response.data                                        // Get response object from response
+                let errorMessage = JSON(data)["error"].stringValue              // Convert to JSON then get the error message
+                
+                print(error.localizedDescription)                               // Log request error
+                callback(["error" : errorMessage])                              // Callback with error message
+                
+                break
+            }
+        }
+    }
+    
+    
+    func editUser(updates : [String : String], callback: @escaping (_ response : [String : String]) -> Void) {
+        let params = updates
+        
+        sessionManager.request("\(SMARTLIST_DB_API)/users/update/me",
+            method: .patch,
+            parameters: params,
+            encoding: JSONEncoding.default).validate().responseJSON {
+                response in
+                
+                switch response.result {
+                case .success(let data):                                            // If response was a success
+                    let obj = JSON(data)                                                // Convert obj to JSON
+                    print(obj)                                                          // Log JSON
+                    
+                    let updatedUser = [                                                 // Create a dictionary with relevant info
+                        "name" : obj["name"].stringValue,
+                        "email" : obj["email"].stringValue
+                    ]
+                    
+                    callback(updatedUser)                                               // callback relevant info
+                    break
+                    
+                case .failure(let error):
+                    let data = response.data                                        // Get response object from response
+                    let errorMessage = JSON(data)["error"].stringValue              // Convert to JSON then get the error message
+                    
+                    print(error.localizedDescription)                               // Log request error
+                    callback(["error" : errorMessage])                              // Callback with error message
+                    
+                    break
+                }
+        }
+    }
 }

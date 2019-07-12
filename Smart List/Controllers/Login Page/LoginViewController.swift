@@ -118,10 +118,10 @@ class LoginViewController: UIViewController {
     }
     
     
-    /// Logs the user in by sendinga  request to the server and saving the auth token
+    /// Logs the user in by sending a request to the server and saving the auth token
     ///
     /// - Parameter sender: The button that activated this ui event
-    @objc func loginButtonTapped(_ sender: UIButton) {
+    @objc func loginButtonTapped(_ sender: UIButton = UIButton()) {
         
         self.view.showLargeSpinner(spinner: self.spinner, container: self.spinnerContainer)         // Show the spinner
         
@@ -144,8 +144,7 @@ class LoginViewController: UIViewController {
                 alertController.addAction(okAction)
                 
                 DispatchQueue.main.async {
-                    self.present(alertController, animated: true)
-                    self.dismiss(animated: true)
+                    self.present(alertController, animated: true)                                       // Show the alert
                 }
                 
                 return
@@ -154,12 +153,12 @@ class LoginViewController: UIViewController {
             CoreDataManager.shared.addUser(name: response["name"]!, email: response["email"]!, token: token)    // log the user in and save the auth token
             
             DispatchQueue.main.async {
-                self.dismiss(animated: true)                                                            // Hide the login view
-                
-                // If the login view was not created from the profile tab
-                // then, create the TabBar (we are assuming the tabbar hasn't been created yet)
-                if (!self.isPoppedUp) {
-                    self.present(TabBarController(), animated: true)                                    // Create and show the tabbar
+                self.dismiss(animated: true) {                                                           // Hide the login view
+                    // If the login view was not created from the profile tab
+                    // then, create the TabBar (we are assuming the tabbar hasn't been created yet)
+                    if (!self.isPoppedUp) {
+                        self.present(TabBarController(), animated: true)                                    // Create and show the tabbar
+                    }
                 }
             }
         }
@@ -170,7 +169,9 @@ class LoginViewController: UIViewController {
     ///
     /// - Parameter sender: The button that triggered this UI Event
     @objc func signUpButtonTapped(_ sender: UIButton) {
-        self.present(SignUpViewController(), animated: true)
+        self.dismiss(animated: true) {
+            self.present(SignUpViewController(), animated: true)
+        }
     }
     
     //MARK: - UI Event Handling
@@ -182,7 +183,10 @@ class LoginViewController: UIViewController {
         
         CoreDataManager.shared.setOfflineMode(offlineMode: true)        // Set offline mode to true
         
-        let tabbar = TabBarController()
-        self.present(tabbar, animated: true)
+        self.dismiss(animated: true) {
+            if (!self.isPoppedUp) {
+                self.present(TabBarController(), animated: true)
+            }
+        }
     }
 }

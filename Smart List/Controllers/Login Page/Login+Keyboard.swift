@@ -53,7 +53,13 @@ extension LoginViewController : UITextFieldDelegate{
     
     /// This method is called everytime the user hits the Enter key on the keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        if textField == midLoginContainer.emailField {
+            textField.resignFirstResponder()
+            midLoginContainer.passwordField.becomeFirstResponder()
+        } else if textField == midLoginContainer.passwordField {
+            textField.resignFirstResponder()
+            loginButtonTapped()
+        }
         
         return true
     }

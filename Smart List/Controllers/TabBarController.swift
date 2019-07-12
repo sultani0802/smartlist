@@ -55,14 +55,10 @@ class TabBarController: UITabBarController {
         // Setting our view controllers for the tab bar
         let tabBarList = [kitchenViewController, homeViewController, profileViewController]
         viewControllers = tabBarList.map{UINavigationController(rootViewController: $0)}
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -70,8 +66,18 @@ class TabBarController: UITabBarController {
         
         let settings = CoreDataManager.shared.loadSettings()
         
-        print(settings.isLoggedIn)
-        print(settings.offlineMode)
+        Server.shared.authUser() {
+            response in
+            
+            if let error = response["error"] {
+                print(error)
+                
+                settings.isLoggedIn = false
+            } else {
+                print(response["success"])
+            }
+        }
+        
         if !settings.isLoggedIn && !settings.offlineMode {
             self.present(SignUpViewController(), animated: animated)
         }

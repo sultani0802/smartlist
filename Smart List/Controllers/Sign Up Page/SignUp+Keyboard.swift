@@ -54,7 +54,15 @@ extension SignUpViewController: UITextFieldDelegate {
     
     /// This method is called everytime the user hits the Enter key on the keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        if textField == bottomContainer.nameField {
+            bottomContainer.nameField.resignFirstResponder()
+            bottomContainer.emailField.becomeFirstResponder()
+        } else if textField == bottomContainer.emailField {
+            bottomContainer.emailField.resignFirstResponder()
+            bottomContainer.passwordField.becomeFirstResponder()
+        } else if textField == bottomContainer.passwordField {
+            signUpButtonTapped()
+        }
         
         return true
     }
