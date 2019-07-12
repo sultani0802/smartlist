@@ -10,8 +10,10 @@ Smart List is an app that helps you keep track of all the food in your kitchen. 
     - Refer to Step 1 for a preview
     
 #### Keep track of all the food in your kitchen
-    - All your food is organized into 3 separate categories (Expired, Fresh, All). This allows you to plan your food ahead of time without having to try to guess what you have at home
-    - When your food is about to expire, the app will send you a notification so that you don't end up throwing out that food you told yourself you'd eat (for the 100th time)
+    - All your food is organized into 3 separate categories (Expired, Fresh, All).  
+    This allows you to plan your food ahead of time without having to try to guess what you have at home
+    - When your food is about to expire, the app will send you a notification so that you  
+    don't end up throwing out that food you told yourself you'd eat (for the 100th time)
     - Refer to Step 2 for a preview
 #### Collaborate with others
     - Create a House List that can be worked on by multiple people
