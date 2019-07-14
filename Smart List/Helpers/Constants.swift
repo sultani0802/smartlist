@@ -18,7 +18,8 @@ struct Constants {
     struct Settings {
         static let Name = 0
         static let Email = 1
-        static let Notifications = 2
+        static let Password = 2
+        static let Notifications = 3
     }
     
     struct Visuals {

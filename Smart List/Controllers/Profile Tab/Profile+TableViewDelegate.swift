@@ -11,30 +11,30 @@ import UIKit
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     /// Sets the number of settings
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.settings.count
+        return settings[section].count
     }
     
     /// Customizes each tableviewcell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.profileViewCellId, for: indexPath) as! ProfileTableViewCell
+
+        cell.titleLabel.text = settings[indexPath.section][indexPath.row]                       // Set the setting's title
         
-        cell.titleLabel.text = settings[indexPath.row]                      // Set the setting's title
-        
-        if let content = values![settings[indexPath.row].lowercased()] {    // Check if there is a setting for that title
-            cell.contentLabel.text = content                                    // Set the correct value for the correlating title
+        if let content = values![settings[indexPath.section][indexPath.row].lowercased()] {     // Check if there is a setting for that title
+            cell.contentLabel.text = content                                                        // Set the correct value for the correlating title
         }
         
-        return cell
+        return cell 
     }
     
     /// Detects which setting the user wants to modify
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if settings[indexPath.row].lowercased() == "notifications" {        // If the user wants to change the notifications setting
-            goToSettings(row: indexPath.row)                                    // Redirect them to iPhone settings
+        if settings[indexPath.section][indexPath.row].lowercased() == "notifications" {         // If the user wants to change the notifications setting
+            goToSettings(row: indexPath.row)                                                        // Redirect them to iPhone settings
         } else {
-            editSetting(setting: indexPath.row)                             // Perform the appropriate setting change
+            editSetting(section: indexPath.section, row: indexPath.row)                             // Perform the appropriate setting change
         }
         
-        tableView.deselectRow(at: indexPath, animated: true)                // Deselect the tableviewcell
+        tableView.deselectRow(at: indexPath, animated: true)                                    // Deselect the tableviewcell
     }
 }

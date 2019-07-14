@@ -15,11 +15,8 @@ class ProfileViewController: UIViewController {
     ///
     let coreDataManager = CoreDataManager.shared    // Reference to Core Data Manager
     let profileViewCellId : String = "profileViewCell"
-    var settings : [String] = [
-        "Name",
-        "Email",
-        "Notifications"
-    ]
+    var sections : [String] = ["Account", "General"]
+    var settings : [[String]] = [["Name", "Email", "Password"] , ["Notifications"]]
     var isLoggedIn : Bool = false
     var values : [String:String?]?
     
@@ -153,14 +150,16 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    func editSetting(setting: Int) {
-        switch setting {
+    func editSetting(section: Int, row: Int) {
+        switch row {
         case Constants.Settings.Name:
-            showAlert(message: "Enter your name.", setting: setting)
+            showAlert(message: "Enter your new name.", section: section, row: row)
         case Constants.Settings.Email:
-            showAlert(message: "Enter your email.", setting: setting)
+            showAlert(message: "Enter your new email.", section: section, row: row)
+        case Constants.Settings.Password:
+            showAlert(message: "Enter a new password", section: section, row: row)
         case Constants.Settings.Notifications:
-            showAlert(message: "Change your notification settings in the settings app.", setting: setting)
+            showAlert(message: "Change your notification settings in the settings app.", section: section, row: row)
         default:
             print("Cancel setting modification")
         }
@@ -212,7 +211,7 @@ class ProfileViewController: UIViewController {
     /// Shows an alert that allows the user to edit the setting
     ///
     /// - Parameter message: The message to be displayed appropriate to the setting being changed
-    func showAlert(message: String, setting: Int) {
+    func showAlert(message: String, section: Int, row: Int) {
         let alertController = UIAlertController(title: "Change Setting",                // Alert controller
             message: message,
             preferredStyle: .alert)
@@ -227,7 +226,7 @@ class ProfileViewController: UIViewController {
             let textField = alertController.textFields![0]                                  // Get the alert's textfield object
             let updatedValue = textField.text!.capitalized
             
-            if self.settings[setting].lowercased() == "name" {                              // If user is editing the name
+            if self.settings[section][row].lowercased() == "name" {                              // If user is editing the name
                 
                 Server.shared.editUser(updates: ["name" : updatedValue]) {                   // Send name update to the MongoDB DB
                     response in
@@ -244,7 +243,7 @@ class ProfileViewController: UIViewController {
                         }
                     }
                 }
-            } else if self.settings[setting].lowercased() == "email" {
+            } else if self.settings[section][row].lowercased() == "email" {
                 Server.shared.editUser(updates: ["email" : updatedValue]) {
                     response in
                     
