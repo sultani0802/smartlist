@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C03532E22E6B4AB00BEA228 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C03532D22E6B4AB00BEA228 /* ProfileViewModel.swift */; };
 		0C03948F221E37B700A7BEBF /* QuantityPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C03948E221E37B700A7BEBF /* QuantityPopUpView.swift */; };
 		0C039491221E420400A7BEBF /* Detail+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C039490221E420400A7BEBF /* Detail+Delegates.swift */; };
 		0C06D572221F677700E48F21 /* UIViewBordersExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C06D571221F677700E48F21 /* UIViewBordersExtension.swift */; };
@@ -95,6 +96,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C03532D22E6B4AB00BEA228 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		0C03948E221E37B700A7BEBF /* QuantityPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityPopUpView.swift; sourceTree = "<group>"; };
 		0C039490221E420400A7BEBF /* Detail+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Detail+Delegates.swift"; sourceTree = "<group>"; };
 		0C06D571221F677700E48F21 /* UIViewBordersExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewBordersExtension.swift; sourceTree = "<group>"; };
@@ -225,9 +227,10 @@
 		0C5C507D22C3004600175A57 /* Profile Tab */ = {
 			isa = PBXGroup;
 			children = (
+				0C03532D22E6B4AB00BEA228 /* ProfileViewModel.swift */,
 				0C5C507E22C3008100175A57 /* ProfileViewController.swift */,
-				0C93047322D9402D003FF6CA /* Profile+SectionMethods.swift */,
 				0C5C508122C4331600175A57 /* Profile+TableViewDelegate.swift */,
+				0C93047322D9402D003FF6CA /* Profile+SectionMethods.swift */,
 				0C5C508022C3009300175A57 /* Views */,
 			);
 			path = "Profile Tab";
@@ -663,6 +666,7 @@
 				0CE00E0122288FCE00BA0C43 /* UIViewController+keyboardHiding.swift in Sources */,
 				0CC767B221F0307D00752517 /* HomeTableViewCell.swift in Sources */,
 				0C11E69F22CFED6D00CDA177 /* BottomLoginContainer.swift in Sources */,
+				0C03532E22E6B4AB00BEA228 /* ProfileViewModel.swift in Sources */,
 				0C296E3F2239952000188959 /* ItemImageHelper.swift in Sources */,
 				0CF439B422CFB1D800D73C36 /* Login+Keyboard.swift in Sources */,
 				0CB180C6223EE71E00927014 /* Home+TextFieldDelegate.swift in Sources */,

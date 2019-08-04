@@ -46,7 +46,7 @@ class TabBarController: UITabBarController {
 
         kitchenViewController.tabBarItem = UITabBarItem(title: "Kitchen", image: UIImage(named: "kitchen"), tag: 1)
         
-        profileViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "profile"), tag: 2)
+        profileViewController.tabBarItem = UITabBarItem(title: "Me", image: UIImage(named: "profile"), tag: 2)
         
         tableViewAnimationDelegate = homeViewController
         collectionViewAnimationDelegate = kitchenViewController.kitchenPages
