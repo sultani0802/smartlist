@@ -32,7 +32,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         if viewModel.settings[indexPath.section][indexPath.row].lowercased() == "notifications" {         // If the user wants to change the notifications setting
             goToSettings(row: indexPath.row)                                                        // Redirect them to iPhone settings
         } else {
-            editSetting(section: indexPath.section, row: indexPath.row)                             // Perform the appropriate setting change
+            viewModel.showEditAlert(section: indexPath.section, row: indexPath.row)                             // Perform the appropriate setting change
         }
         
         tableView.deselectRow(at: indexPath, animated: true)                                    // Deselect the tableviewcell

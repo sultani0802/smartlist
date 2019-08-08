@@ -15,8 +15,6 @@ class ProfileViewController: UIViewController {
     ///
     let profileViewCellId : String = "profileViewCell"
     let viewModel : ProfileViewModel = ProfileViewModel()
-    var sections : [String] = []
-    var values : [String:String?]?
     
  
     
@@ -71,6 +69,7 @@ class ProfileViewController: UIViewController {
                                               style: .done,
                                               target: self,
                                               action: #selector(self.logoutButtonTapped))
+       
         navigationItem.rightBarButtonItem = logoutBarButtonItem                 // Set it to the right
         navigationItem.rightBarButtonItem?.tintColor = Constants.ColorPalette.Crimson
     }
@@ -122,7 +121,6 @@ class ProfileViewController: UIViewController {
                                         container: spinnerContainer)        // Show spinner when user clicks logout button
         viewModel.logoutRequest()                                           // Send logout request to the server
     }
-    
 
     
     func toggleLogoutButton(toggle: Bool) {
@@ -132,22 +130,6 @@ class ProfileViewController: UIViewController {
             logoutBarButtonItem?.isEnabled = true
         }
     }
-    
-    func editSetting(section: Int, row: Int) {
-        switch row {
-        case Constants.Settings.Name:
-            showAlert(message: "Enter your new name.", section: section, row: row)
-        case Constants.Settings.Email:
-            showAlert(message: "Enter your new email.", section: section, row: row)
-        case Constants.Settings.Password:
-            showAlert(message: "Enter a new password", section: section, row: row)
-        case Constants.Settings.Notifications:
-            showAlert(message: "Change your notification settings in the settings app.", section: section, row: row)
-        default:
-            print("Cancel setting modification")
-        }
-    }
-    
     
     
     /// Show the sign up/login container instead of the tableView
@@ -183,55 +165,39 @@ class ProfileViewController: UIViewController {
     /// Shows an alert that allows the user to edit the setting
     ///
     /// - Parameter message: The message to be displayed appropriate to the setting being changed
-    func showAlert(message: String, section: Int, row: Int) {
+    func willShowAlert(message: String, section: Int, row: Int) {
         let alertController = UIAlertController(title: "Change Setting",                // Alert controller
             message: message,
             preferredStyle: .alert)
         
         alertController.addTextField{(textField) in                                     // Adding textfield to alert controller
             textField.placeholder = "Type here"
+            textField.autocapitalizationType = .words
+            textField.returnKeyType = .done
+            textField.keyboardType = .emailAddress
         }
         
         let saveAction = UIAlertAction(title: "Save", style: .default) {                // Save action
             UIAlertAction in
             
-            let textField = alertController.textFields![0]                                  // Get the alert's textfield object
-            let updatedValue = textField.text!.capitalized
+            let textField = alertController.textFields![0]                              // Get the alert's textfield object
+            let updatedValue = textField.text!.capitalized                              // Get the text the user entered
             
-            if self.viewModel.settings[section][row].lowercased() == "name" {                              // If user is editing the name
+            let settingBeingUpdate : String = self.viewModel.settings[section][row].lowercased()    // Get the setting the user wanted to udpate
+            
+            self.viewModel.sendEditRequest(settingToBeUpdated: settingBeingUpdate, updatedValue) {
+                (message) -> () in
                 
-                Server.shared.editUser(updates: ["name" : updatedValue]) {                   // Send name update to the MongoDB DB
-                    response in
-                    
-                    if let error = response["error"] {                                              // If the request failed
-                        print("error: \(error)")
-                    } else {                                                                        // If the request success
-                        CoreDataManager.shared.addUser(name: updatedValue, email: "", token: "")     // Save the name to Core
-                        self.values!["name"] = updatedValue                                          // Update that on the view
-                        print("Here is the values")
-                        print(self.values!)
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                    }
+                let alertController = UIAlertController(title: "Updated Setting", message: message, preferredStyle: .alert)
+                let okAction = UIKit.UIAlertAction(title: "Ok", style: .default)
+                alertController.addAction(okAction)
+
+                DispatchQueue.main.async {
+                    self.present(alertController, animated: true)
+                    self.tableView.reloadData()
                 }
-            } else if self.viewModel.settings[section][row].lowercased() == "email" {
-                Server.shared.editUser(updates: ["email" : updatedValue]) {
-                    response in
-                    
-                    if let error = response["error"] {
-                        print("error: \(error)")
-                    } else {
-                        
-                        CoreDataManager.shared.addUser(name: "", email: updatedValue, token: "")                // Save the name to Core
-                        self.values!["email"] = updatedValue                                         // Update that on the view
-                        
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                    }
-                }
-            }
+                
+            }    // Send server request to update setting
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {             // Cancel action
@@ -297,9 +263,15 @@ class ProfileViewController: UIViewController {
 }
 
 
+/**
+ *
+ *  This extension has methods that will be called after a server request
+ *
+ */
+
 extension ProfileViewController : ProfileViewModelDelegate {
     
-    /// This method is called from the viewModel when the user tries to logout and the logout is successful
+    /// This method is called from the viewModel when the user tries to logout and the logout is successful. Make UI changes based on REST request
     ///
     /// - Parameter message: The success response from the server
     func didFinishLoggingOutSuccess(message: String) {
@@ -312,12 +284,11 @@ extension ProfileViewController : ProfileViewModelDelegate {
     }
     
     
-    /// This method is called from the viewModel when the user tries to logout and the logout fails
+    /// This method is called from the viewModel when the user tries to logout and the logout fails. Make UI changes based on REST request
     ///
     /// - Parameter error: The error response from the server
     func didFinishLoggingOutFailure(error: String) {
         tableView.hideSpinner(spinner: spinner, container: spinnerContainer)        // Hide the spinner
         showLogoutAlert(message: error)                                             // Show the unsuccessful logout alert
     }
-    
 }

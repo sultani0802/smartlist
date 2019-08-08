@@ -33,6 +33,10 @@ Once it's in your Kitchen, you can tap on an Item to edit it's details such as h
 ![Kitchen](/kitchen.png) ![Item Detail](/detail_view.png)
 
 
+### Other screenshots
+![Sign Up](/sign_up_page.png)
+
+
 ### Credits
 'list' icon made by Smashicons from www.flaticon.com
 'profile' icon made by Eucalyp from www.flaticon.com
