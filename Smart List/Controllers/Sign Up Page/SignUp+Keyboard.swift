@@ -76,9 +76,9 @@ extension SignUpViewController: UITextFieldDelegate {
         
         if (textField == bottomContainer.emailField) {                                      // If the user is typing in the email textField
             
-            if let email = bottomContainer.emailField.text {
+//            if let email = bottomContainer.emailField.text {
 //                toggleEmailImage(toggle: Regex.shared.validateEmail(candidate: email))          // User regex to validate their email
-            }
+//            }
         } else if (textField == bottomContainer.passwordField) {                            // If the user is typing in the password textField
             togglePasswordImage(toggle: true)
         }

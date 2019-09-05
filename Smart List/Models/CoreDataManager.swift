@@ -21,7 +21,7 @@ class CoreDataManager {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-
+    
     /// Saves the current working data to the Data Model
     func saveContext() {
         do {

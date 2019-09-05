@@ -74,7 +74,7 @@ class TabBarController: UITabBarController {
                 
                 settings.isLoggedIn = false
             } else {
-                print(response["success"])
+                print(response["success"] ?? "Succesfully authenticated")
             }
         }
         

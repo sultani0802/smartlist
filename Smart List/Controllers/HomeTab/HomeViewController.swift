@@ -82,7 +82,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        deleteAllCategories()
 //        deleteAllItems()
         
-        
         // Initialization
         setupView()                                 // Set up the view
         setupModels()                               // Set up the models

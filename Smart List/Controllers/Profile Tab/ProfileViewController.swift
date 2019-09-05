@@ -16,15 +16,15 @@ class ProfileViewController: UIViewController {
     let profileViewCellId : String = "profileViewCell"
     let viewModel : ProfileViewModel = ProfileViewModel()
     
- 
+    
     
     
     ///
     ///MARK: - UI Elements
     ///
-    var tableView: UITableView!                     // The tableview that will contain the different settings options
-    var spinner = UIActivityIndicatorView()         // Create spinner for this view
-    var spinnerContainer : UIView = UIView()        // Container for the spinner
+    var tableView: UITableView!                         // The tableview that will contain the different settings options
+    var spinner = UIActivityIndicatorView()             // Create spinner for this view
+    var spinnerContainer : UIView = UIView()            // Container for the spinner
     var signUpContainer : SettingsSignUpContainer = {
         var view = SettingsSignUpContainer()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -54,10 +54,10 @@ class ProfileViewController: UIViewController {
         setupTableView()
     }
     
+    
     //
     //MARK - Initialization Methods
     //
-    
     
     /// Sets up any visual settings for the profile view
     func setupVisualSettings() {

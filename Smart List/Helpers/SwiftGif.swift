@@ -11,6 +11,10 @@ import ImageIO
 
 extension UIImageView {
     
+    
+    /// Loads a gif from Gifs folder
+    ///
+    /// - Parameter name: Name of the .gif file
     public func loadGif(name: String) {
         DispatchQueue.global().async {
             let image = UIImage.gif(name: name)
@@ -216,7 +220,7 @@ extension UIImage {
             }
         }
         
-        // Heyhey
+        
         let animation = UIImage.animatedImage(with: frames,
                                               duration: Double(duration) / 1000.0)
         
