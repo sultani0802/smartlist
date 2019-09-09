@@ -15,13 +15,13 @@ extension HomeViewController {
     
     /// Returns the custom view I made for the headers of each section
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: headerCellReuseIdentifier) as?  HomeTableviewHeader else {
+        guard let headerView = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: viewModel.headerCellReuseIdentifier) as?  HomeTableviewHeader else {
             return nil
         }
         
         
-        if section < categories.count {
-            headerView.title.text = categories[section].name
+        if section < viewModel.categories.count {
+            headerView.title.text = viewModel.categories[section].name
         }
         
         return headerView
@@ -36,6 +36,6 @@ extension HomeViewController {
     
     /// Set the number of sections
     func numberOfSections(in tableView: UITableView) -> Int {
-        return categories.count
+        return viewModel.categories.count
     }
 }

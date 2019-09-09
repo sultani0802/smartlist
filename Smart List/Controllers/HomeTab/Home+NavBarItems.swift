@@ -28,19 +28,19 @@ extension HomeViewController {
     /// Deletes the Items from the list if they are completed
     @objc func doneShoppingButtonTapped() {
         
-        self.items.forEach {                                                                            // Go through each category
+        viewModel.items.forEach {                                                                            // Go through each category
             $0.forEach {                                                                                // Go through each item in that category
                 if $0.completed                                                                         // If it is completed
                 {
-                    self.coreDataManager.addKitchenItem(item: $0)                                       // Add the completed Item to our Core Data KitchenItem entity table
+                    viewModel.coreData.addKitchenItem(item: $0)                                       // Add the completed Item to our Core Data KitchenItem entity table
 
-                    let categoryIndex : Int = self.categories.firstIndex(of: $0.category!)!             // Get the category index of the item
-                    let itemIndex : Int = self.items[categoryIndex].firstIndex(of: $0)!                 // Get the item index of the item
+                    let categoryIndex : Int = viewModel.categories.firstIndex(of: $0.category!)!             // Get the category index of the item
+                    let itemIndex : Int = viewModel.items[categoryIndex].firstIndex(of: $0)!                 // Get the item index of the item
                     let indexPath: IndexPath = IndexPath(row: itemIndex, section: categoryIndex)        // Set the indexPath
                     
-                    self.items[categoryIndex].remove(at: itemIndex)                                     // Remove the item from the datasource array
+                    viewModel.items[categoryIndex].remove(at: itemIndex)                                     // Remove the item from the datasource array
                     self.tableView.deleteRows(at: [indexPath], with: .fade)                             // Remove from the cell from the tableview
-                    self.deleteItem(itemId: $0.id!, categoryName: $0.category!.name!)                   // Delete the Item entity from Core Data
+                    viewModel.deleteItem(itemId: $0.id!, categoryName: $0.category!.name!)                   // Delete the Item entity from Core Data
                 }
             }
         }
@@ -56,25 +56,34 @@ extension HomeViewController {
         let alert = UIAlertController(title: "New category", message: "Which category would you like to create?", preferredStyle: .actionSheet)
         
         // Goes through the filtered list of categories and adds the action to the alert controller
-        for cat in validateCategories() {
-            alert.addAction(UIAlertAction(title: cat, style: .default, handler: {(UIAlertAction) in
+        for cat in viewModel.validateCategories() {
+            alert.addAction(UIAlertAction(title: cat, style: .default, handler: {
+                [weak self] (UIAlertAction) in
+                guard let `self` = self else {return}
+
                 self.tableView.beginUpdates()
                 
-                self.addCategory(categoryName: cat)                                                                         // Add the Category entity to Core Data
-                self.tableView.insertSections(NSIndexSet(index: self.categories.count - 1) as IndexSet, with: .bottom)      // Insert the Category section into the table view
-                self.addPlaceHolderCell(toCategory: self.categories[self.categories.count-1])                               // Insert the dummy cell into the new Category
+                // Add the Category entity to Core Data if it doesn't already exist
+                if (self.viewModel.addCategory(categoryName: cat)) {
+                    self.toggleInstructions()
+                }
+                
+                self.tableView.insertSections(NSIndexSet(index: self.viewModel.categories.count - 1) as IndexSet, with: .bottom)      // Insert the Category section into the table view
+                self.addPlaceHolderCell(toCategory: self.viewModel.categories[self.viewModel.categories.count-1])                               // Insert the dummy cell into the new Category
                 
                 self.tableView.endUpdates()
                 // Scroll to the category the user just added
-                let indexPath = IndexPath(row: 0, section: self.categories.count-1)
+                let indexPath = IndexPath(row: 0, section: self.viewModel.categories.count-1)
                 self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
             }))
         }
         
         
         /// Creates another alert where user can type a custom category
-        alert.addAction(UIAlertAction(title: "Create my own", style: .default, handler:{ (UIAlertAction) in
-            
+        alert.addAction(UIAlertAction(title: "Create my own", style: .default, handler: {
+            [weak self] (UIAlertAction) in
+            guard let `self` = self else {return}
+
             // Create another alert that allows the user to type a name for their category
             let customAlert = UIAlertController(title: "Title", message: "Enter the name of your category", preferredStyle: .alert)
             
@@ -88,14 +97,18 @@ extension HomeViewController {
                 let textField = customAlert.textFields![0]
                 self.tableView.beginUpdates()
                 
-                self.addCategory(categoryName: textField.text!)                                                             // Add the Category entity to Core Data
-                self.tableView.insertSections(NSIndexSet(index: self.categories.count - 1) as IndexSet, with: .bottom)      // Insert the Category section into the table view
-                self.addPlaceHolderCell(toCategory: self.categories[self.categories.count-1])                               // Insert the dummy cell into the new Category
+                // Add the Category entity to Core Data if it doesn't already exist
+                if (self.viewModel.addCategory(categoryName: textField.text!)) {
+                    self.toggleInstructions()
+                }
+                
+                self.tableView.insertSections(NSIndexSet(index: self.viewModel.categories.count - 1) as IndexSet, with: .bottom)      // Insert the Category section into the table view
+                self.addPlaceHolderCell(toCategory: self.viewModel.categories[self.viewModel.categories.count-1])                               // Insert the dummy cell into the new Category
                 
                 self.tableView.endUpdates()
                 
                 // Scroll to the category the user just added
-                let indexPath = IndexPath(row: 0, section: self.categories.count-1)
+                let indexPath = IndexPath(row: 0, section: self.viewModel.categories.count-1)
                 self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
             })
             

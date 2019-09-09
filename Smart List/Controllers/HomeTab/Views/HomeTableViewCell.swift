@@ -9,14 +9,20 @@ import UIKit
 import SwipeCellKit
 
 
-
+// This protocol is used to pass information from the viewController
+// that contains the tableView in which this Cell is a part of
+//
+// The tableView conforms to this protocol so that it the
+// viewController can set the closure 'addNewCell'
 protocol HomeTableViewCellDelegate: class {
     
     // Called when the user finished typing
     func didEndEditing(onCell cell: HomeTableViewCell)
 }
 
-
+protocol ScannerDelegate : class {
+    func scanBarcode(cell: HomeTableViewCell)
+}
 
 
 class HomeTableViewCell: SwipeTableViewCell {
@@ -27,9 +33,8 @@ class HomeTableViewCell: SwipeTableViewCell {
     
     // The delegate class (the HomeTableViewController)
     // This will be set in cellForRowAt()
-    weak var textDelegate: HomeTableViewCellDelegate?
-    
-    
+    weak var textDelegate : HomeTableViewCellDelegate?
+    weak var scannerDelegate : ScannerDelegate?
     
     //MARK: - UI Elements
     var nameText: UITextField = {
@@ -56,29 +61,22 @@ class HomeTableViewCell: SwipeTableViewCell {
         return imageView
     }()
     
-    var quantityLabel: UILabel = {
-        var label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .left
-        label.text = ""
-        label.borders(for: [.left], width: 0.5, color: .black)
+    var scannerButton : UIButton = {
+        var button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "barcode"), for: .normal)
+        button.isHidden = true
+        button.sizeToFit()
+        button.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
         
-        if DeviceType.IS_IPHONE_5 {
-            label.font = UIFont(name: Constants.Visuals.fontName, size: 15)
-        }
-        else {
-            label.font = UIFont(name: Constants.Visuals.fontName, size: 20)
-        }
-        
-        return label
+        return button
     }()
-    
     
     
     //MARK: - Callbacks
     // This is called when the user hits 'Enter' on the keyboard
-    var addNewCell: ((_ text: String) -> Void)?
+    var addNewCell : ((_ text: String) -> Void)?
+    var scannerTapped : (() -> ())?
     
     
     //MARK: - Init Methods
@@ -86,6 +84,7 @@ class HomeTableViewCell: SwipeTableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         nameText.delegate = self
+        scannerButton.addTarget(self, action: #selector(scanButtonTapped), for: .touchUpInside)
         
         // Configure UI elements
         setupUI()
@@ -105,6 +104,7 @@ class HomeTableViewCell: SwipeTableViewCell {
         // Adding the UI elements to our cell
         addSubview(itemImageView)
         addSubview(nameText)
+        addSubview(scannerButton)
         
         // Setting up the constraints
         NSLayoutConstraint.activate([
@@ -115,6 +115,11 @@ class HomeTableViewCell: SwipeTableViewCell {
             itemImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
             itemImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
             
+            // Scanner Button
+            scannerButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            scannerButton.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+            scannerButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+            scannerButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
             
             // Item's name textfield
             nameText.leadingAnchor.constraint(equalTo: itemImageView.trailingAnchor, constant: 4),
@@ -122,5 +127,10 @@ class HomeTableViewCell: SwipeTableViewCell {
             nameText.trailingAnchor.constraint(equalTo: trailingAnchor),
             nameText.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
+    }
+    
+    
+    @objc func scanButtonTapped() {
+        scannerDelegate?.scanBarcode(cell: self)
     }
 }

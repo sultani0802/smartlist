@@ -13,5 +13,12 @@ extension HomeViewController : HomeTableViewCellDelegate {
     func didEndEditing(onCell cell: HomeTableViewCell) {
         cell.addNewCell?(cell.nameText.text!)       // Save the changes to the cell
     }
-    
+}
+
+
+extension HomeViewController : ScannerDelegate {
+    func scanBarcode(cell: HomeTableViewCell) {
+        cell.scannerTapped?()
+//        print(cell.nameText)
+    }
 }

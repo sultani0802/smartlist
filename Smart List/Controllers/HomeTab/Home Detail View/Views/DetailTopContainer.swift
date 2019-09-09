@@ -20,6 +20,10 @@ class DetailTopContainer: UIView {
         return view
     }()
     
+    @objc func imageTapped() {
+        print("tapped")
+    }
+    
     //MARK: - Constructors
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -45,9 +45,7 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
     //
     override func viewDidLoad() {
         super.viewDidLoad()
-        coreDataManager.deleteAllItems()
-        coreDataManager.deleteAllCategories()
-        
+
         setupView()                     // Set up this view
         initSegmentControl()            // Init segmented control and add constraints
         initPageViewController()        // Init page controller and add constraints

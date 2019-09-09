@@ -9,7 +9,6 @@
 import UIKit
 
 class MidLoginContainer: UIView {
-    
     var emailField : UITextField = {
         var view = UITextField()
         view.translatesAutoresizingMaskIntoConstraints = false

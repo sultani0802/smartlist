@@ -9,22 +9,27 @@
 import UIKit
 
 extension HomeTableViewCell: UITextFieldDelegate {
+    /// This delegate method is called when the user taps on the cell
+    /// it displays the cell's accessory button
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        self.accessoryType = .detailDisclosureButton
+        self.accessoryType = .detailDisclosureButton            // Set the accessory button
     }
     
+    /// This delegate method is called when the user is done editing the
+    /// item's name. This can be triggered by hitting 'Enter' or tapping
+    /// outside of the cell
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.accessoryType = self.completed ? .checkmark : .none
+        self.accessoryType = self.completed ? .checkmark : .none    // If the Item has been added to the cart, show the checkmark accessory, otherwise hide the accessory button
         
-        // Call the delegate to save changes made to the name
+        // Call the delegate to save changes made to the cell
         textDelegate?.didEndEditing(onCell: self)
     }
     
-    // This delegate method is called when the user hits 'Enter' when they're done typing in the item
-    // Once they are done adding an item to the list it creates a new empty cell below it
+    /// This delegate method is called when the user hits 'Enter'
+    /// when editing an Item's name in the tableView
+    /// It will hide the keyboard
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         nameText.resignFirstResponder()             // Hide the keyboard
-//        addNewCell?(nameText.text!)               // Call the callback
         
         return true
     }

@@ -34,15 +34,11 @@
 		0C5C508722C590CC00175A57 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C508622C590CC00175A57 /* SignUpViewController.swift */; };
 		0C5C508A22C591DF00175A57 /* SignUpTopContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C508922C591DF00175A57 /* SignUpTopContainer.swift */; };
 		0C5C508C22C5A13200175A57 /* SwiftGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C508B22C5A13200175A57 /* SwiftGif.swift */; };
-		0C5C508F22C5A22200175A57 /* chef.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0C5C508E22C5A22200175A57 /* chef.gif */; };
 		0C5C509122C5A31E00175A57 /* cook.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0C5C509022C5A31E00175A57 /* cook.gif */; };
 		0C5C509322C5B26500175A57 /* SignUpBottomContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C509222C5B26500175A57 /* SignUpBottomContainer.swift */; };
 		0C66EEF622C2F5E700AAB96C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC767A721F026B600752517 /* HomeViewController.swift */; };
 		0C6F5840220DC92B00C730CB /* Home+NavBarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */; };
 		0C76749D22CA7C19007E791E /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C76749C22CA7C19007E791E /* Regex.swift */; };
-		0C80888E22C98CC5007485BD /* kitchen loader.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0C80888D22C98CC5007485BD /* kitchen loader.gif */; };
-		0C80889022C98E72007485BD /* egg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0C80888F22C98E72007485BD /* egg.gif */; };
-		0C833AC122C84A7B001BD9A9 /* check.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0C833AC022C84A7B001BD9A9 /* check.gif */; };
 		0C833AC322C85311001BD9A9 /* upgrade.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0C833AC222C85311001BD9A9 /* upgrade.gif */; };
 		0C93047422D9402D003FF6CA /* Profile+SectionMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C93047322D9402D003FF6CA /* Profile+SectionMethods.swift */; };
 		0C96BF43223D904F00C9F00C /* UnitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96BF42223D904F00C9F00C /* UnitHelper.swift */; };
@@ -57,7 +53,7 @@
 		0CA3518222557D870044D166 /* DetailViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA3518122557D870044D166 /* DetailViewController+Extensions.swift */; };
 		0CA3518422557E740044D166 /* KitchenDetail+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA3518322557E740044D166 /* KitchenDetail+Extensions.swift */; };
 		0CAE5C6E221B761B00F764CB /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE5C6D221B761B00F764CB /* DateHelper.swift */; };
-		0CB180C6223EE71E00927014 /* Home+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB180C5223EE71E00927014 /* Home+TextFieldDelegate.swift */; };
+		0CB180C6223EE71E00927014 /* Home+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB180C5223EE71E00927014 /* Home+Delegates.swift */; };
 		0CB180C8223EFB2E00927014 /* HomeTVCell+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB180C7223EFB2E00927014 /* HomeTVCell+Delegates.swift */; };
 		0CB180CA223F4CEE00927014 /* KitchenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB180C9223F4CEE00927014 /* KitchenViewController.swift */; };
 		0CBDC87E2220653000A4B7FF /* Detail+ViewActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBDC87D2220653000A4B7FF /* Detail+ViewActions.swift */; };
@@ -74,6 +70,7 @@
 		0CD0F50E2214C3EC0018982E /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CD0F50D2214C3EC0018982E /* Storyboard.storyboard */; };
 		0CD0F5102214FC720018982E /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD0F50F2214FC720018982E /* UIButton+Extensions.swift */; };
 		0CDF962922D4136E007B97A8 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDF962822D4136E007B97A8 /* Spinner.swift */; };
+		0CDFA8042324196C004D966D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDFA8032324196C004D966D /* HomeViewModel.swift */; };
 		0CE00E0122288FCE00BA0C43 /* UIViewController+keyboardHiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE00E0022288FCE00BA0C43 /* UIViewController+keyboardHiding.swift */; };
 		0CEA620B230CDEBC0026F10B /* ProfileTabTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEA620A230CDEBC0026F10B /* ProfileTabTest.swift */; };
 		0CF439AF22CFA48F00D73C36 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF439AE22CFA48F00D73C36 /* LoginViewController.swift */; };
@@ -122,14 +119,10 @@
 		0C5C508622C590CC00175A57 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		0C5C508922C591DF00175A57 /* SignUpTopContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTopContainer.swift; sourceTree = "<group>"; };
 		0C5C508B22C5A13200175A57 /* SwiftGif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftGif.swift; sourceTree = "<group>"; };
-		0C5C508E22C5A22200175A57 /* chef.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = chef.gif; sourceTree = "<group>"; };
 		0C5C509022C5A31E00175A57 /* cook.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cook.gif; sourceTree = "<group>"; };
 		0C5C509222C5B26500175A57 /* SignUpBottomContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBottomContainer.swift; sourceTree = "<group>"; };
 		0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+NavBarItems.swift"; sourceTree = "<group>"; };
 		0C76749C22CA7C19007E791E /* Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
-		0C80888D22C98CC5007485BD /* kitchen loader.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "kitchen loader.gif"; sourceTree = "<group>"; };
-		0C80888F22C98E72007485BD /* egg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = egg.gif; sourceTree = "<group>"; };
-		0C833AC022C84A7B001BD9A9 /* check.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = check.gif; sourceTree = "<group>"; };
 		0C833AC222C85311001BD9A9 /* upgrade.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = upgrade.gif; sourceTree = "<group>"; };
 		0C93047322D9402D003FF6CA /* Profile+SectionMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profile+SectionMethods.swift"; sourceTree = "<group>"; };
 		0C96BF42223D904F00C9F00C /* UnitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitHelper.swift; sourceTree = "<group>"; };
@@ -144,7 +137,7 @@
 		0CA3518122557D870044D166 /* DetailViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailViewController+Extensions.swift"; sourceTree = "<group>"; };
 		0CA3518322557E740044D166 /* KitchenDetail+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KitchenDetail+Extensions.swift"; sourceTree = "<group>"; };
 		0CAE5C6D221B761B00F764CB /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
-		0CB180C5223EE71E00927014 /* Home+TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+TextFieldDelegate.swift"; sourceTree = "<group>"; };
+		0CB180C5223EE71E00927014 /* Home+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+Delegates.swift"; sourceTree = "<group>"; };
 		0CB180C7223EFB2E00927014 /* HomeTVCell+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeTVCell+Delegates.swift"; sourceTree = "<group>"; };
 		0CB180C9223F4CEE00927014 /* KitchenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenViewController.swift; sourceTree = "<group>"; };
 		0CBDC87D2220653000A4B7FF /* Detail+ViewActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Detail+ViewActions.swift"; sourceTree = "<group>"; };
@@ -166,6 +159,7 @@
 		0CD0F50D2214C3EC0018982E /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		0CD0F50F2214FC720018982E /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		0CDF962822D4136E007B97A8 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
+		0CDFA8032324196C004D966D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		0CE00E0022288FCE00BA0C43 /* UIViewController+keyboardHiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+keyboardHiding.swift"; sourceTree = "<group>"; };
 		0CEA620A230CDEBC0026F10B /* ProfileTabTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabTest.swift; sourceTree = "<group>"; };
 		0CF439AE22CFA48F00D73C36 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -268,11 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				0C833AC222C85311001BD9A9 /* upgrade.gif */,
-				0C833AC022C84A7B001BD9A9 /* check.gif */,
 				0C5C509022C5A31E00175A57 /* cook.gif */,
-				0C80888D22C98CC5007485BD /* kitchen loader.gif */,
-				0C80888F22C98E72007485BD /* egg.gif */,
-				0C5C508E22C5A22200175A57 /* chef.gif */,
 			);
 			path = Gifs;
 			sourceTree = "<group>";
@@ -412,12 +402,12 @@
 		0CC767A921F0302800752517 /* HomeTab */ = {
 			isa = PBXGroup;
 			children = (
+				0CDFA8032324196C004D966D /* HomeViewModel.swift */,
 				0CC767A721F026B600752517 /* HomeViewController.swift */,
 				0CF6B57F2210ECA30049CF63 /* Home+SectionMethods.swift */,
 				0CC767AF21F0306F00752517 /* Home+CellMethods.swift */,
 				0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */,
-				0CB180C5223EE71E00927014 /* Home+TextFieldDelegate.swift */,
-				0CB180C7223EFB2E00927014 /* HomeTVCell+Delegates.swift */,
+				0CB180C5223EE71E00927014 /* Home+Delegates.swift */,
 				0CF6B5812210ED940049CF63 /* Views */,
 				0C11B9B822138B4E0003A87D /* Home Detail View */,
 			);
@@ -458,6 +448,7 @@
 			children = (
 				0C97799C22020C73009C3161 /* HomeTableviewHeader.swift */,
 				0CC767B121F0307D00752517 /* HomeTableViewCell.swift */,
+				0CB180C7223EFB2E00927014 /* HomeTVCell+Delegates.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -571,12 +562,8 @@
 			files = (
 				0C5C509122C5A31E00175A57 /* cook.gif in Resources */,
 				0CC7678D21F0262400752517 /* Assets.xcassets in Resources */,
-				0C80888E22C98CC5007485BD /* kitchen loader.gif in Resources */,
 				0C11E6A122D0104C00CDA177 /* Launch Screen.storyboard in Resources */,
-				0C5C508F22C5A22200175A57 /* chef.gif in Resources */,
 				0C833AC322C85311001BD9A9 /* upgrade.gif in Resources */,
-				0C80889022C98E72007485BD /* egg.gif in Resources */,
-				0C833AC122C84A7B001BD9A9 /* check.gif in Resources */,
 				0CD0F50E2214C3EC0018982E /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -655,6 +642,7 @@
 				0C66EEF622C2F5E700AAB96C /* HomeViewController.swift in Sources */,
 				0CBDC8802220684100A4B7FF /* UIView+Animations.swift in Sources */,
 				0CF86C6C22C6684000AD6712 /* SignUp+Keyboard.swift in Sources */,
+				0CDFA8042324196C004D966D /* HomeViewModel.swift in Sources */,
 				0CA2CCF32226D5970093DA1A /* ExpiryPopUpView.swift in Sources */,
 				0C11B9BC22138E420003A87D /* DetailMidContainer.swift in Sources */,
 				0CF6B5802210ECA30049CF63 /* Home+SectionMethods.swift in Sources */,
@@ -668,7 +656,7 @@
 				0C03532E22E6B4AB00BEA228 /* ProfileViewModel.swift in Sources */,
 				0C296E3F2239952000188959 /* ItemImageHelper.swift in Sources */,
 				0CF439B422CFB1D800D73C36 /* Login+Keyboard.swift in Sources */,
-				0CB180C6223EE71E00927014 /* Home+TextFieldDelegate.swift in Sources */,
+				0CB180C6223EE71E00927014 /* Home+Delegates.swift in Sources */,
 				0CB180CA223F4CEE00927014 /* KitchenViewController.swift in Sources */,
 				0C039491221E420400A7BEBF /* Detail+Delegates.swift in Sources */,
 				0C76749D22CA7C19007E791E /* Regex.swift in Sources */,
