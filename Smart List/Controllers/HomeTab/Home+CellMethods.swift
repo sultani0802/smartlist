@@ -111,8 +111,9 @@ extension HomeViewController {
                 self.viewModel.items[indexPath.section].remove(at: indexPath.row)                             // Delete the Item from the tableView array
                 self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)     // Delete the cell from the tableView
                 self.viewModel.deleteItem(itemId: item.id!, categoryName: category.name!)                     // Delete from Core Data
-                tableView.reloadData()
-
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()             // Update the view
+                }
                 print("Can not add new cell since current cell is empty")
             }
         }
@@ -169,11 +170,13 @@ extension HomeViewController {
                     print("Deleting Category: \(categoryName)")
                     let indexSet = IndexSet(arrayLiteral: indexPath.section)                // Grab index of section
                     
-                    self.viewModel.categories.remove(at: indexPath.section)                           // Remove category from the tableview array
-                    self.viewModel.items.remove(at: indexPath.section)                                // Remove the items under that category in the tableview array
-                    self.tableView.deleteSections(indexSet, with: .automatic)               // Delete the section from the tableview
+                    self.viewModel.categories.remove(at: indexPath.section)                 // Remove category from the tableview array
+                    self.viewModel.items.remove(at: indexPath.section)                      // Remove the items under that category in the tableview array
+                    DispatchQueue.main.async {
+                        self.tableView.deleteSections(indexSet, with: .automatic)           // Delete the section from the tableview
+                    }
                     action.fulfill(with: .delete)                                           // Fulfill the delete action BEFORE deleting from Core Data
-                    self.viewModel.deleteCategory(categoryName: categoryName)                         // Delete the Category entity & cascade to the deletion of the Item entities
+                    self.viewModel.deleteCategory(categoryName: categoryName)               // Delete the Category entity & cascade to the deletion of the Item entities
                     self.toggleInstructions()
                 }
             }
@@ -204,13 +207,14 @@ extension HomeViewController {
                     }
                     
                     print("\nDELETING ITEM: \(item.name!), id: \(itemId)\n")
-                    self.viewModel.items[indexPath.section].remove(at: indexPath.row)                 // Delete the Item from the tableView array
+                    self.viewModel.items[indexPath.section].remove(at: indexPath.row)       // Delete the Item from the tableView array
                     action.fulfill(with: .delete)                                           // Fulfill the delete action BEFORE deleting from Core Data
-                    let categoryName = self.viewModel.categories[indexPath.section].name              // Grab Category name
-                    self.viewModel.deleteItem(itemId: itemId, categoryName: categoryName!)            // Delete from Core Data
-                    
-                    self.toggleDoneShoppingButton()
-                    tableView.reloadData()
+                    let categoryName = self.viewModel.categories[indexPath.section].name    // Grab Category name
+                    self.viewModel.deleteItem(itemId: itemId, categoryName: categoryName!)  // Delete from Core Data
+                    self.toggleDoneShoppingButton()                                         // Hide or show the 'Unload' nav bar button
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()                                         // Update the view
+                    }
                 }
             }
             // Customize visuals of the swipe buttons
@@ -249,8 +253,6 @@ extension HomeViewController {
             swipeActions = [deleteAction, completedAction]
         }
         
-        print(viewModel.numberOfCompletedItems)
-        
         // Returns the buttons on a swipe based on the type of the cell
         return swipeActions
     }
@@ -262,7 +264,6 @@ extension HomeViewController {
         var options = SwipeTableOptions()
         options.expansionStyle = .selection
         options.transitionStyle = .border
-        
         
         return options
     }

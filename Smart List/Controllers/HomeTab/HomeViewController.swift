@@ -249,8 +249,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     /// Saves the current working data to the Data Model
     func saveContext() {
-        viewModel.coreData.saveContext()           // Go to Data Model and save context
-        self.tableView.reloadData()             // Update the view
+        viewModel.coreData.saveContext()        // Go to Data Model and save context
+        DispatchQueue.main.async {
+            self.tableView.reloadData()             // Update the view
+        }
     }
     
     /// Adds empty placeholder cells that the user uses to add new items
