@@ -8,7 +8,6 @@
 
 
 import UIKit
-import CoreData
 import SwipeCellKit
 import ViewAnimator
 
@@ -20,8 +19,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     //MARK: - View Model
     /****************************************/
     /****************************************/
-
-    let viewModel : HomeViewModel = HomeViewModel()
+    
+    var viewModel : HomeViewModel
 
     
     /****************************************/
@@ -46,12 +45,28 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }()
     
     
+    
+    /****************************************/
+    /****************************************/
+    //MARK: - Initializers
+    /****************************************/
+    /****************************************/
+    
+    init(coreDataManager : CoreDataManager) {
+        self.viewModel = HomeViewModel(coreDataManager: coreDataManager)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     /****************************************/
     /****************************************/
     //MARK: - View Controller Methods
     /****************************************/
     /****************************************/
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,6 +89,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     deinit {
         // Unregister for the keyboard events
         unregisterFromKeyboardEvents()
+        
+        print("Deinitializing HomeViewController")
     }
     
     

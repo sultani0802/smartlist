@@ -20,19 +20,60 @@ protocol CollectionViewAnimationDelegate : class {
 
 class TabBarController: UITabBarController {
     
-    var tableViewAnimationDelegate : TableViewAnimationDelegate?                // The Item view controller (HomeViewController) conforms to this protocol for tableview animations
-    var collectionViewAnimationDelegate : [CollectionViewAnimationDelegate]?    // The Kitchen view controllers (KitchenViewController) conforms to this protocol for collectionview animations
-    var currentTab : UITabBarItem?                                              // Used to keep track of which tab is in view
-    // The first tab in the tab bar
-    let kitchenViewController = KitchenPageViewController()
-    // The second tab in the tab bar
-    let homeViewController = HomeViewController()
-    // The third tab in the tab bar
-    let profileViewController = ProfileViewController()
+    /****************************************/
+    /****************************************/
+    //MARK: - Properties
+    /****************************************/
+    /****************************************/
+    var viewModel : TabBarViewModel
+    
+    /****************************************/
+    /****************************************/
+    //MARK: - UI Properties
+    /****************************************/
+    /****************************************/
+    var currentTab : UITabBarItem?
+
+    private var kitchenViewController : KitchenPageViewController
+    private var homeViewController : HomeViewController
+    private var profileViewController : ProfileViewController
+    
+    /****************************************/
+    /****************************************/
+    //MARK: - Initializers
+    /****************************************/
+    /****************************************/
+    init(coreDataManager: CoreDataManager) {
+        self.viewModel = TabBarViewModel(coreDataManager: coreDataManager)
+        
+        // The first tab in the tab bar
+        self.kitchenViewController = KitchenPageViewController()
+        // The second tab in the tab bar
+        self.homeViewController = HomeViewController(coreDataManager: coreDataManager)
+        // The third tab in the tab bar
+        self.profileViewController = ProfileViewController(coreDataManager: coreDataManager)
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("Deinitializing TabBarController")
+    }
     
     
+    /****************************************/
+    /****************************************/
+    //MARK: - UIView Methods
+    /****************************************/
+    /****************************************/
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.viewModel.tabBarViewModelDelegate = self
         
         // Set the color of the tab bar
         tabBar.barTintColor = .white
@@ -48,8 +89,8 @@ class TabBarController: UITabBarController {
         
         profileViewController.tabBarItem = UITabBarItem(title: "Me", image: UIImage(named: "profile"), tag: 2)
         
-        tableViewAnimationDelegate = homeViewController
-        collectionViewAnimationDelegate = kitchenViewController.kitchenPages
+        viewModel.tableViewAnimationDelegate = homeViewController
+        viewModel.collectionViewAnimationDelegate = kitchenViewController.kitchenPages
         
         
         // Setting our view controllers for the tab bar
@@ -57,38 +98,22 @@ class TabBarController: UITabBarController {
         viewControllers = tabBarList.map{UINavigationController(rootViewController: $0)}
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let settings = CoreDataManager.shared.loadSettings()
-        
-        Server.shared.authUser() {
-            response in
-            
-            if let error = response["error"] {
-                print(error)
-                
-                settings.isLoggedIn = false
-            } else {
-                print(response["success"] ?? "Succesfully authenticated")
-            }
-        }
-        
-        if !settings.isLoggedIn && !settings.offlineMode {
-            self.present(SignUpViewController(), animated: animated)
-        }
+        viewModel.loadSettings()        // Load the user's app settings
     }
     
-    
+    /****************************************/
+    /****************************************/
+    //MARK: - Tab Bar Delegate Methods
+    /****************************************/
+    /****************************************/
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
         if item.title == "Shopping List" {
             if currentTab?.title != "Shopping List" {
-                tableViewAnimationDelegate?.animateTableView()
+                viewModel.tableViewAnimationDelegate?.animateTableView()
             }
         } else if item.title == "Kitchen" {
             if currentTab?.title != "Kitchen" {
@@ -97,5 +122,19 @@ class TabBarController: UITabBarController {
         }
         
         currentTab = item
+    }
+}
+
+
+/****************************************/
+/****************************************/
+//MARK: - Tab Bar View Model Delegates
+/****************************************/
+/****************************************/
+
+extension TabBarController : TabBarViewModelDelegate {
+    func presentSignUpVC() {
+        print("hi")
+        self.present(SignUpViewController(coreDataManager: self.viewModel.coreData), animated: true)
     }
 }

@@ -12,6 +12,7 @@ class LoginViewController: UIViewController {
     //MARK: - PROPERTIES
     var activeText: UITextField?
     var isPoppedUp : Bool = false
+    private var coreData : CoreDataManager
     
     //MARK: - UI ELEMENTS
     var spinner = UIActivityIndicatorView()
@@ -50,6 +51,21 @@ class LoginViewController: UIViewController {
         return view
     }()
     
+    // MARK: - Initialization
+    init(coreDataManager : CoreDataManager) {
+        self.coreData = coreDataManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("Deinitializing LoginViewController")
+    }
+    
+    // MARK: - View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,6 +76,7 @@ class LoginViewController: UIViewController {
     }
     
     
+    // MARK: - UI Setup Methods
     
     /// Adds all the UI Elements to the view and configures the constraints
     func setupViews() {
@@ -150,14 +167,14 @@ class LoginViewController: UIViewController {
                 return
             }
                                                                                                     // If successful
-            CoreDataManager.shared.addUser(name: response["name"]!, email: response["email"]!, token: token)    // log the user in and save the auth token
+            self.coreData.addUser(name: response["name"]!, email: response["email"]!, token: token)    // log the user in and save the auth token
             
             DispatchQueue.main.async {
                 self.dismiss(animated: true) {                                                           // Hide the login view
                     // If the login view was not created from the profile tab
                     // then, create the TabBar (we are assuming the tabbar hasn't been created yet)
                     if (!self.isPoppedUp) {
-                        self.present(TabBarController(), animated: true)                                    // Create and show the tabbar
+                        self.present(TabBarController(coreDataManager: self.coreData), animated: true)                                    // Create and show the tabbar
                     }
                 }
             }
@@ -170,7 +187,7 @@ class LoginViewController: UIViewController {
     /// - Parameter sender: The button that triggered this UI Event
     @objc func signUpButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true) {
-            self.present(SignUpViewController(), animated: true)
+            self.present(SignUpViewController(coreDataManager: self.coreData), animated: true)
         }
     }
     
@@ -181,11 +198,11 @@ class LoginViewController: UIViewController {
     @objc func skipButtonTapped(_ sender: UIButton) {
         print("skip sign up")
         
-        CoreDataManager.shared.setOfflineMode(offlineMode: true)        // Set offline mode to true
+        self.coreData.setOfflineMode(offlineMode: true)        // Set offline mode to true
         
         self.dismiss(animated: true) {
             if (!self.isPoppedUp) {
-                self.present(TabBarController(), animated: true)
+                self.present(TabBarController(coreDataManager: self.coreData), animated: true)
             }
         }
     }

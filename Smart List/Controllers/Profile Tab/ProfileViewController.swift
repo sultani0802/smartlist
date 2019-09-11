@@ -14,8 +14,7 @@ class ProfileViewController: UIViewController {
     //MARK: - Properties
     ///
     let profileViewCellId : String = "profileViewCell"
-    let viewModel : ProfileViewModel = ProfileViewModel()
-    
+    var viewModel : ProfileViewModel
     
     
     
@@ -34,6 +33,22 @@ class ProfileViewController: UIViewController {
     
     var logoutBarButtonItem : UIBarButtonItem?
     
+    
+    //
+    //MARK - Initialization
+    //
+    init(coreDataManager : CoreDataManager) {
+        self.viewModel = ProfileViewModel(coreDataManager: coreDataManager)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("Deinitializing ProfileViewController")
+    }
     
     
     ///
@@ -246,7 +261,7 @@ class ProfileViewController: UIViewController {
     
     
     @objc func signUpButtonTapped(_ button: UIButton) {
-        let signUpVC = SignUpViewController()
+        let signUpVC = SignUpViewController(coreDataManager: self.viewModel.coreData)
         signUpVC.isPoppedUp = true
         DispatchQueue.main.async {
             self.present(signUpVC, animated: true)
@@ -254,7 +269,7 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func loginButtonTapped(_ button: UIButton) {
-        let loginVC = LoginViewController()
+        let loginVC = LoginViewController(coreDataManager: self.viewModel.coreData)
         loginVC.isPoppedUp = true
         DispatchQueue.main.async {
             self.present(loginVC, animated: true)

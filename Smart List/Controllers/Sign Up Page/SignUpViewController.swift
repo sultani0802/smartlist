@@ -13,6 +13,7 @@ class SignUpViewController: UIViewController {
     //MARK: - Properties
     var activeText : UITextField?
     var isPoppedUp : Bool = false
+    private var coreData : CoreDataManager
     
     //MARK: - UI Elements
     var spinner = UIActivityIndicatorView()
@@ -41,6 +42,16 @@ class SignUpViewController: UIViewController {
     }()
 
     
+    init(coreDataManager: CoreDataManager) {
+        self.coreData = coreDataManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     //MARK: - View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +78,8 @@ class SignUpViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        print("Deinitializing Sign Up View Controller")
     }
     
     
@@ -190,14 +203,14 @@ class SignUpViewController: UIViewController {
                     }
                 }
                 else if (newUser["name"] != "" && newUser["email"] != "" && newUser["token"] != "") {                           // If the server response contains valid User information
-                    CoreDataManager.shared.addUser(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)      // Save the user's information in Core Data
+                    self.coreData.addUser(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)      // Save the user's information in Core Data
                     
                     DispatchQueue.main.async {
                         self.dismiss(animated: true) {                                                                               // Hide the Sign Up View
                             // If the sign up view wasn't created from the profile tab
                             // then, create the TabBar (we are assuming the tabbar hasn't been created yet)
                             if (!self.isPoppedUp) {
-                                self.present(TabBarController(), animated: true)                                                        // Create and show the tabbar
+                                self.present(TabBarController(coreDataManager: self.coreData), animated: true)                                                        // Create and show the tabbar
                             }
                         }
                     }
@@ -211,7 +224,7 @@ class SignUpViewController: UIViewController {
     ///
     @objc func loginButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true) {
-            self.present(LoginViewController(), animated: true)
+            self.present(LoginViewController(coreDataManager: self.coreData), animated: true)
         }
     }
     
@@ -222,11 +235,11 @@ class SignUpViewController: UIViewController {
     @objc func skipButtonTapped(_ sender: UIButton) {
         print("skip sign up")
         
-        CoreDataManager.shared.setOfflineMode(offlineMode: true)    // Set offline mode to true
+        self.coreData.setOfflineMode(offlineMode: true)    // Set offline mode to true
         
         self.dismiss(animated: true) {
             if (!self.isPoppedUp) {
-                self.present(TabBarController(), animated: true)
+                self.present(TabBarController(coreDataManager: self.coreData), animated: true)
             }
         }
     }

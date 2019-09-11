@@ -25,7 +25,7 @@ extension DetailViewController {
             
             self.item!.expiryDate = roundedDate                             // Set the expiration date of the Item
             
-            CoreDataManager.shared.saveContext()                            // Save to core data
+            self.coreData.saveContext()                            // Save to core data
             
                                                                             // Update the expiry UIButton's title with the new date
             self.midContainer.expiryDate.setTitle(DateHelper.shared.getDateString(of: (self.item?.expiryDate)!), for: .normal)
@@ -45,7 +45,7 @@ extension DetailViewController {
             let enteredQuantity : String = self.quantityView.quantityTextField.text! + " " + self.originalUnits[self.quantityView.pickerView.selectedRow(inComponent: 0)]
             // Set and save the Item's quantity
             self.item!.quantity = enteredQuantity
-            CoreDataManager.shared.saveContext()
+            self.coreData.saveContext()
             
             // Hide the keyboard
             quantityView.quantityTextField.resignFirstResponder()
@@ -70,7 +70,7 @@ extension DetailViewController {
             // Update the notes in the Item entity
             self.item?.notes = midContainer.noteTextView.text
             // Save to Core Data
-            CoreDataManager.shared.saveContext()
+            self.coreData.saveContext()
         }
     }
     
@@ -79,7 +79,7 @@ extension DetailViewController {
         if textField == midContainer.storeTextField && textField.text?.trimmingCharacters(in: .whitespaces) != "" {
             if let store = midContainer.storeTextField.text {
                 self.item?.store = store
-                CoreDataManager.shared.saveContext()
+                self.coreData.saveContext()
             }
         }
     }

@@ -278,7 +278,7 @@ extension HomeViewController {
     func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let item: Item = viewModel.items[indexPath.section][indexPath.row]
         
-        let detailVC = DetailViewController()
+        let detailVC = DetailViewController(coreDataManager: self.viewModel.coreData)
         detailVC.item = item
         self.navigationController?.pushViewController(detailVC, animated: true)
          

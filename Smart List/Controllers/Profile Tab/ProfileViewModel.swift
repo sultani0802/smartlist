@@ -17,7 +17,8 @@ protocol ProfileViewModelDelegate {
 class ProfileViewModel {
     
     //MARK: - Delegate
-    var delegate : ProfileViewController?
+    var delegate : ProfileViewModelDelegate?
+    var coreData : CoreDataManager
     
     //MARK: - Properties
     let navTitle : String = "Settings"
@@ -28,9 +29,14 @@ class ProfileViewModel {
     var isLoggedIn : Bool = false
     
     
+    init(coreDataManager: CoreDataManager) {
+        self.coreData = coreDataManager
+    }
+    
+    
     //MARK: - Core Data Methods
     func loadSettings() {
-        let settings = CoreDataManager.shared.loadSettings()
+        let settings = self.coreData.loadSettings()
         var name = ""
         var email = ""
         
@@ -62,7 +68,7 @@ class ProfileViewModel {
             response in
             
             if let success = response["success"] {
-                CoreDataManager.shared.setOfflineMode(offlineMode: true)
+                self.coreData.setOfflineMode(offlineMode: true)
                 self.isLoggedIn = false
                 self.delegate!.didFinishLoggingOutSuccess(message: success)
             } else {
@@ -84,7 +90,7 @@ class ProfileViewModel {
                     print("error: \(error)")
                     completion("Sorry. Can't update name right now.")
                 } else {                                                                        // If the request success
-                    CoreDataManager.shared.addUser(name: updatedValue, email: "", token: "")     // Save the name to Core
+                    self.coreData.addUser(name: updatedValue, email: "", token: "")     // Save the name to Core
                     self.settingValues!["name"] = updatedValue                                   // Update model
                     print("Here are the values")
                     print(self.settingValues!)
@@ -99,7 +105,7 @@ class ProfileViewModel {
                     print("error: \(error)")
                     completion("Sorry. Can't update your email right now.")
                 } else {
-                    CoreDataManager.shared.addUser(name: "", email: updatedValue, token: "")    // Save the name to Core
+                    self.coreData.addUser(name: "", email: updatedValue, token: "")    // Save the name to Core
                     self.settingValues!["email"] = updatedValue                                 // Update model
                     completion("Updated your name to \(updatedValue)")
                 }
@@ -112,13 +118,13 @@ class ProfileViewModel {
     func showEditAlert(section: Int, row: Int) {
         switch row {
         case Constants.Settings.Name:
-            delegate!.willShowAlert(message: "Enter your new name.", section: section, row: row)
+            delegate?.willShowAlert(message: "Enter your new name.", section: section, row: row)
         case Constants.Settings.Email:
-            delegate!.willShowAlert(message: "Enter your new email.", section: section, row: row)
+            delegate?.willShowAlert(message: "Enter your new email.", section: section, row: row)
         case Constants.Settings.Password:
-            delegate!.willShowAlert(message: "Enter a new password", section: section, row: row)
+            delegate?.willShowAlert(message: "Enter a new password", section: section, row: row)
         case Constants.Settings.Notifications:
-            delegate!.willShowAlert(message: "Change your notification settings in the settings app.", section: section, row: row)
+            delegate?.willShowAlert(message: "Change your notification settings in the settings app.", section: section, row: row)
         default:
             print("Cancel setting modification")
         }

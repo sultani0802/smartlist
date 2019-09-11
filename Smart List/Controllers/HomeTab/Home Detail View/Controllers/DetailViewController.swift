@@ -12,7 +12,22 @@ class DetailViewController: DetailVC {
     
     //MARK: - Data Source
     var item : Item?
+    var coreData : CoreDataManager
     
+    
+    // MARK: - Initializers
+    init(coreDataManager: CoreDataManager) {
+        self.coreData = coreDataManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("Deinitializing DetailViewController")
+    }
     //MARK: - View Delegates
     override func viewDidLoad() {
         super.viewDidLoad()

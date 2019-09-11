@@ -17,9 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let coreDataManager = CoreDataManager.shared
         
         window = UIWindow()
-        window?.rootViewController = TabBarController()
+        window?.rootViewController = TabBarController(coreDataManager: coreDataManager)
         window?.makeKeyAndVisible()
         
         UINavigationBar.appearance().barTintColor = .white

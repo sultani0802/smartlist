@@ -11,9 +11,14 @@ import CoreData
 
 class HomeViewModel {
     // MARK: - Constants
-    let coreData = CoreDataManager.shared
+    let coreData : CoreDataManager
     let homeCellReuseIdentifier: String = Constants.CellID.HomeTableViewCellID
     let headerCellReuseIdentifier: String = Constants.CellID.HomeHeaderID
+    
+    
+    init(coreDataManager : CoreDataManager) {
+        self.coreData = coreDataManager     // Dependency injection for core data manager
+    }
     
     
     // MARK: - TableView Datasource
