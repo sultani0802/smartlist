@@ -19,7 +19,7 @@ class CoreDataManager {
     static let shared = CoreDataManager()
     private init() {} // Prevents creation of another instances
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     
     /// Saves the current working data to the Data Model
