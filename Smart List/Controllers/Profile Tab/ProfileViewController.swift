@@ -270,7 +270,10 @@ class ProfileViewController: UIViewController {
     
     @objc func loginButtonTapped(_ button: UIButton) {
         let loginVC = LoginViewController(coreDataManager: self.viewModel.coreData)
-        loginVC.isPoppedUp = true
+//        loginVC.isPoppedUp = true
+        let notificationName = Notification.Name(Constants.NotificationKey.LoginViewPoppedUpNotificationKey)
+        NotificationCenter.default.post(name: notificationName, object: nil)
+        
         DispatchQueue.main.async {
             self.present(loginVC, animated: true)
         }

@@ -44,6 +44,9 @@ class TabBarViewModel {
     //MARK: - Model Methods
     /****************************************/
     /****************************************/
+    
+    /// Loads 'Settings' entity from Core Data
+    /// Makes API request to log in user with saved auth token in 'Settings' entity
     func loadSettings() {
         let settings = self.coreData.loadSettings()             // Get the settings from Core Data
         
@@ -60,7 +63,6 @@ class TabBarViewModel {
             }
             
             if !settings.isLoggedIn && !settings.offlineMode {      // If the user isn't logged in but they didn't skip the login/sign up before
-                print("hu")
                 self.tabBarViewModelDelegate?.presentSignUpVC()         // Show the Sign Up View Controller through delegate comms
             }
         }

@@ -10,14 +10,12 @@ import UIKit
 
 class LoginViewController: UIViewController {
     //MARK: - PROPERTIES
-    var activeText: UITextField?
-    var isPoppedUp : Bool = false
-    private var coreData : CoreDataManager
+    private var viewModel : LoginViewModel
     
     //MARK: - UI ELEMENTS
+    var activeText: UITextField?        // Keeps track of which textfield is currently being edited
     var spinner = UIActivityIndicatorView()
     var spinnerContainer = UIView()
-    
     var scrollView: UIScrollView = {
         var view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -53,8 +51,9 @@ class LoginViewController: UIViewController {
     
     // MARK: - Initialization
     init(coreDataManager : CoreDataManager) {
-        self.coreData = coreDataManager
+        viewModel = LoginViewModel(coreDataManager: coreDataManager)
         super.init(nibName: nil, bundle: nil)
+        registerForPoppedUpNotification()                       // Register for popped up notification
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,6 +62,7 @@ class LoginViewController: UIViewController {
     
     deinit {
         print("Deinitializing LoginViewController")
+        NotificationCenter.default.removeObserver(self)         // Remove notification observers
     }
     
     // MARK: - View Methods
@@ -70,7 +70,8 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = Constants.ColorPalette.OffWhite
-
+        viewModel.loginViewModelDelegate = self                 // Conform to View Model Protocol
+        
         setupViews()
         registerForKeyboardEvents()
     }
@@ -79,7 +80,7 @@ class LoginViewController: UIViewController {
     // MARK: - UI Setup Methods
     
     /// Adds all the UI Elements to the view and configures the constraints
-    func setupViews() {
+    private func setupViews() {
         // Configure scroll view
         view.addSubview(scrollView)
         NSLayoutConstraint.activate([
@@ -125,60 +126,31 @@ class LoginViewController: UIViewController {
         midLoginContainer.emailField.delegate = self
         midLoginContainer.passwordField.delegate = self
         
+        // Hide the keyboard if the user taps outside the keyboard
+        self.hideKeyboardWhenTappedAround()
+        
         // Listen for keyboard events that will adjust the view
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        
-        // Hide the keyboard if the user taps outside the keyboard
-        self.hideKeyboardWhenTappedAround()
     }
     
+    private func registerForPoppedUpNotification() {
+        print("registered")
+        let notificationName = Notification.Name(Constants.NotificationKey.LoginViewPoppedUpNotificationKey)
+        NotificationCenter.default.addObserver(self, selector: #selector(setPoppedUpToTrue), name: notificationName, object: nil)
+    }
+    
+    @objc private func setPoppedUpToTrue() {
+        self.viewModel.isPoppedUp = true
+        print("login view was popped up")
+    }
     
     /// Logs the user in by sending a request to the server and saving the auth token
     ///
     /// - Parameter sender: The button that activated this ui event
     @objc func loginButtonTapped(_ sender: UIButton = UIButton()) {
-        
-        self.view.showLargeSpinner(spinner: self.spinner, container: self.spinnerContainer)         // Show the spinner
-        
-        Server.shared.loginUser(email: midLoginContainer.emailField.text!, password: midLoginContainer.passwordField.text!) {
-            response in
-            
-            self.view.hideSpinner(spinner: self.spinner, container: self.spinnerContainer)          // Hide the spinner
-            
-            guard let token = response["token"] else {                                              // If unsuccessful request
-                let error = response["error"]
-                
-                print("Error when trying to login. Error: \(error!)")                                   // Print error
-                
-                let alertController = UIAlertController(title: "Error",                                 // Alert user of an error
-                    message: "\(error ?? "Something went wrong when logging in. Try again.")",
-                    preferredStyle: .alert)
-                
-                let okAction = UIAlertAction(title: "Ok", style: .default)
-                
-                alertController.addAction(okAction)
-                
-                DispatchQueue.main.async {
-                    self.present(alertController, animated: true)                                       // Show the alert
-                }
-                
-                return
-            }
-                                                                                                    // If successful
-            self.coreData.addUser(name: response["name"]!, email: response["email"]!, token: token)    // log the user in and save the auth token
-            
-            DispatchQueue.main.async {
-                self.dismiss(animated: true) {                                                           // Hide the login view
-                    // If the login view was not created from the profile tab
-                    // then, create the TabBar (we are assuming the tabbar hasn't been created yet)
-                    if (!self.isPoppedUp) {
-                        self.present(TabBarController(coreDataManager: self.coreData), animated: true)                                    // Create and show the tabbar
-                    }
-                }
-            }
-        }
+        viewModel.loginUser(email: midLoginContainer.emailField.text!, password: midLoginContainer.passwordField.text!)
     }
     
     
@@ -186,8 +158,17 @@ class LoginViewController: UIViewController {
     ///
     /// - Parameter sender: The button that triggered this UI Event
     @objc func signUpButtonTapped(_ sender: UIButton) {
-        self.dismiss(animated: true) {
-            self.present(SignUpViewController(coreDataManager: self.coreData), animated: true)
+        DispatchQueue.main.async {
+            self.dismiss(animated: true) {
+                // Get the top most view
+                var topController : UIViewController = UIApplication.shared.keyWindow!.rootViewController!
+                while(topController.presentedViewController != nil) {
+                    topController = topController.presentedViewController!
+                }
+                
+                // Present the Sign Up Page
+                topController.present(SignUpViewController(coreDataManager: self.viewModel.coreData), animated: true)
+            }
         }
     }
     
@@ -198,11 +179,76 @@ class LoginViewController: UIViewController {
     @objc func skipButtonTapped(_ sender: UIButton) {
         print("skip sign up")
         
-        self.coreData.setOfflineMode(offlineMode: true)        // Set offline mode to true
+        self.viewModel.coreData.setOfflineMode(offlineMode: true)        // Set offline mode to true
         
-        self.dismiss(animated: true) {
-            if (!self.isPoppedUp) {
-                self.present(TabBarController(coreDataManager: self.coreData), animated: true)
+        DispatchQueue.main.async {
+            self.dismiss(animated: true) {
+                if (!self.viewModel.isPoppedUp) {
+                    // Get the top most view
+                    var topController : UIViewController = UIApplication.shared.keyWindow!.rootViewController!
+                    while(topController.presentedViewController != nil) {
+                        topController = topController.presentedViewController!
+                    }
+                    
+                    // Init the Tab Bar and present it
+                    topController.present(TabBarController(coreDataManager: self.viewModel.coreData), animated: true)
+                }
+            }
+        }
+    }
+}
+
+
+extension LoginViewController : LoginViewModelDelegate {
+    
+    /// Displays a large spinner view
+    /// Called from LoginViewModel
+    func showSpinner() {
+        self.view.showLargeSpinner(spinner: self.spinner, container: self.spinnerContainer)
+    }
+    
+    /// Hides the spinner currently in view
+    /// Called from LoginViewModel
+    func hideSpinner() {
+        self.view.hideSpinner(spinner: self.spinner, container: self.spinnerContainer)
+    }
+    
+    /// Displays an alert; called from LoginViewModel
+    ///
+    /// - Parameters:
+    ///   - title: Title of the alert
+    ///   - message: Message of the alert
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title,                                 // Alert user of an error
+            message: message,
+            preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "Ok", style: .default)
+        
+        alertController.addAction(okAction)
+        
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true)                                       // Show the alert
+        }
+    }
+    
+    /// Dismisses the LoginViewController
+    /// Will initialize the TabBar if it hasn't already been initialized
+    func dismissLoginView() {
+        DispatchQueue.main.async {
+            self.dismiss(animated: true) {                                                      // Hide the login view
+                // If the login view was not created from the profile tab
+                // then, create the TabBar (we are assuming the tabbar hasn't been created yet)
+                if (!self.viewModel.isPoppedUp) {
+                    // Get the top most view
+                    var topController : UIViewController = UIApplication.shared.keyWindow!.rootViewController!
+                    while(topController.presentedViewController != nil) {
+                        topController = topController.presentedViewController!
+                    }
+                    
+                    // Init the Tab Bar and present it
+                    topController.present(TabBarController(coreDataManager: self.viewModel.coreData), animated: true)
+                }
             }
         }
     }

@@ -29,6 +29,7 @@
 		0C49DA3D2211D7090081D811 /* HomeGetStartedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */; };
 		0C4FA4F2226812C300FEAF6A /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4FA4F1226812C300FEAF6A /* Server.swift */; };
 		0C57EB4623288A0D00196A09 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57EB4523288A0D00196A09 /* TabBarViewModel.swift */; };
+		0C57EB4A2328921C00196A09 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57EB492328921C00196A09 /* LoginViewModel.swift */; };
 		0C5C507F22C3008100175A57 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C507E22C3008100175A57 /* ProfileViewController.swift */; };
 		0C5C508222C4331600175A57 /* Profile+TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C508122C4331600175A57 /* Profile+TableViewDelegate.swift */; };
 		0C5C508422C4338E00175A57 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C508322C4338E00175A57 /* ProfileTableViewCell.swift */; };
@@ -115,6 +116,7 @@
 		0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGetStartedView.swift; sourceTree = "<group>"; };
 		0C4FA4F1226812C300FEAF6A /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		0C57EB4523288A0D00196A09 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
+		0C57EB492328921C00196A09 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		0C5C507E22C3008100175A57 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		0C5C508122C4331600175A57 /* Profile+TableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profile+TableViewDelegate.swift"; sourceTree = "<group>"; };
 		0C5C508322C4338E00175A57 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
@@ -198,10 +200,7 @@
 		0C11B9B5221375CF0003A87D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0C57EB4523288A0D00196A09 /* TabBarViewModel.swift */,
-				0CC767A521F0268C00752517 /* TabBarController.swift */,
-				0C08646E221C623A0017AA6D /* PopUpCardView.swift */,
-				0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */,
+				0C57EB48232891C900196A09 /* TabBarController */,
 				0CF439AD22CFA47400D73C36 /* Login Page */,
 				0C5C508522C590AB00175A57 /* Sign Up Page */,
 				0CA3518022557D440044D166 /* Detail VC Templates */,
@@ -219,6 +218,24 @@
 				0CBDC88122206EAF00A4B7FF /* Views */,
 			);
 			path = "Home Detail View";
+			sourceTree = "<group>";
+		};
+		0C57EB47232891B200196A09 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0C08646E221C623A0017AA6D /* PopUpCardView.swift */,
+				0C49DA3C2211D7090081D811 /* HomeGetStartedView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0C57EB48232891C900196A09 /* TabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				0C57EB4523288A0D00196A09 /* TabBarViewModel.swift */,
+				0CC767A521F0268C00752517 /* TabBarController.swift */,
+			);
+			name = TabBarController;
 			sourceTree = "<group>";
 		};
 		0C5C507D22C3004600175A57 /* Profile Tab */ = {
@@ -384,6 +401,7 @@
 				0CC7678521F0262300752517 /* AppDelegate.swift */,
 				0C9779A022024173009C3161 /* Helpers */,
 				0CC767AE21F0305500752517 /* Models */,
+				0C57EB47232891B200196A09 /* Views */,
 				0C11B9B5221375CF0003A87D /* Controllers */,
 				0CC7679121F0262400752517 /* Info.plist */,
 				0CC7678C21F0262400752517 /* Assets.xcassets */,
@@ -430,6 +448,7 @@
 		0CF439AD22CFA47400D73C36 /* Login Page */ = {
 			isa = PBXGroup;
 			children = (
+				0C57EB492328921C00196A09 /* LoginViewModel.swift */,
 				0CF439AE22CFA48F00D73C36 /* LoginViewController.swift */,
 				0CF439B322CFB1D800D73C36 /* Login+Keyboard.swift */,
 				0CF439B022CFA4F200D73C36 /* Views */,
@@ -644,6 +663,7 @@
 			files = (
 				0C57EB4623288A0D00196A09 /* TabBarViewModel.swift in Sources */,
 				0C66EEF622C2F5E700AAB96C /* HomeViewController.swift in Sources */,
+				0C57EB4A2328921C00196A09 /* LoginViewModel.swift in Sources */,
 				0CBDC8802220684100A4B7FF /* UIView+Animations.swift in Sources */,
 				0CF86C6C22C6684000AD6712 /* SignUp+Keyboard.swift in Sources */,
 				0CDFA8042324196C004D966D /* HomeViewModel.swift in Sources */,

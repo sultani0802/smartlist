@@ -40,6 +40,9 @@ struct Constants {
         static let Frozen =             "Frozen"
     }
     
+    struct NotificationKey {
+        static let LoginViewPoppedUpNotificationKey = "com.sultani.Smart-List.loginViewPoppedUp"
+    }
     
     struct TableView {
         static let HeaderHeight = 50

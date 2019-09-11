@@ -25,7 +25,7 @@ class TabBarController: UITabBarController {
     //MARK: - Properties
     /****************************************/
     /****************************************/
-    var viewModel : TabBarViewModel
+    private var viewModel : TabBarViewModel
     
     /****************************************/
     /****************************************/
@@ -133,8 +133,10 @@ class TabBarController: UITabBarController {
 /****************************************/
 
 extension TabBarController : TabBarViewModelDelegate {
+    
+    /// Presents the Sign Up Page
+    /// Called from the Tab Bar View Model
     func presentSignUpVC() {
-        print("hi")
         self.present(SignUpViewController(coreDataManager: self.viewModel.coreData), animated: true)
     }
 }
