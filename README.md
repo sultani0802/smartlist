@@ -35,11 +35,7 @@ First, you add the items you need to your Shopping List and you "Load" the item 
 
 ### Step 2 -  Manage Your Kitchen
 Once it's in your Kitchen, you can tap on an Item to edit it's details such as how much of that item you bought, the store you bought it from, when it expires, and any notes you'd like to leave yourself. When you set an expiration date, the app will send you a notification reminding you that your item has expired.
-![Kitchen](/kitchen.png) ![Item Detail](/detail_view.png)
-
-
-### Other screenshots
-![Sign Up](/sign_up_page.png)
+![Kitchen](/kitchen.png)
 
 
 ### Credits
