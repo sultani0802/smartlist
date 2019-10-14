@@ -5,8 +5,9 @@ Smart List is an app that helps you keep track of all the food in your kitchen. 
 
 ## Feature List
 #### Upcoming
+    - Bug fixes
+    - Modernizing the UI
     - Scan UPC barcode on food items to automatically add to Shopping List/Kitchen
-    - UI overhaul
 
 #### Make a shopping list that is organized by their department just like a grocery store
     - Automatically loads an image for you so you can identify your food at a glance

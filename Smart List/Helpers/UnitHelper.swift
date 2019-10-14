@@ -32,5 +32,4 @@ class UnitHelper {
         // Return the abbreviated quantity
         return result
     }
-    
 }

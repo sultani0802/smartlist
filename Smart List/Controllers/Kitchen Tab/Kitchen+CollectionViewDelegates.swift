@@ -69,7 +69,7 @@ extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDel
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = ScreenSize.SCREEN_WIDTH/2 - 5
+        let size = ScreenSize.SCREEN_WIDTH/2 - 6
         
         return CGSize(width: size, height: size)
     }

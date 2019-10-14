@@ -39,7 +39,7 @@ class CoreDataManager {
     /****************************************/
     /****************************************/
 
-    func loadSettings() -> Settings{
+    func loadSettings() -> Settings {
         var result : [Settings]?
         
         let request : NSFetchRequest<Settings> = Settings.fetchRequest()

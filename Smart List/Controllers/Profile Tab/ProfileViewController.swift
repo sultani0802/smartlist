@@ -120,7 +120,7 @@ class ProfileViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false                                     // Use auto-layout
         
         tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: self.profileViewCellId)   // Register cells
-        
+        tableView.backgroundColor = .white
         tableView.rowHeight = 65                                                                   // Set height of the cell
         tableView.keyboardDismissMode = .onDrag                                                         // Dismiss keyboard when user drags on tableview
         tableView.separatorStyle = .none                                                                // Remove cell separators

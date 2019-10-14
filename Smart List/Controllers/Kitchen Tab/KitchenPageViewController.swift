@@ -92,6 +92,7 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
         self.view.backgroundColor = .white                          // Set background color
         
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.black]
         
                                                                     // Set up left navigation bar button
         let editBarButtonItem = UIBarButtonItem(title: "Edit",

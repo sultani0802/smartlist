@@ -107,7 +107,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Customize navigation bar elements
         self.navigationItem.title = "Shopping List"
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.black]
+
         setupTableview()                        // Add the tableview
         
         setupGetStartedView()                   // Add instruction view
@@ -138,6 +139,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView = UITableView(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.size.height, width: self.view.frame.width, height: self.view.frame.height))
         // Use auto-layout for the tableView
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        tableView.backgroundColor = .white
         
         // Constraints applied so that the tableView isn't displayed behind the tab bar
         let adjustForTabbarInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: self.tabBarController!.tabBar.frame.height, right: 0)

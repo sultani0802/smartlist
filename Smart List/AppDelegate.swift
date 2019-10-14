@@ -23,8 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = TabBarController(coreDataManager: coreDataManager)
         window?.makeKeyAndVisible()
         
-        UINavigationBar.appearance().barTintColor = .white
-        
         return true
     }
     

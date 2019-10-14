@@ -136,7 +136,6 @@ class LoginViewController: UIViewController {
     }
     
     private func registerForPoppedUpNotification() {
-        print("registered")
         let notificationName = Notification.Name(Constants.NotificationKey.LoginViewPoppedUpNotificationKey)
         NotificationCenter.default.addObserver(self, selector: #selector(setPoppedUpToTrue), name: notificationName, object: nil)
     }

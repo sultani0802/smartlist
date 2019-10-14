@@ -204,8 +204,8 @@
 				0CF439AD22CFA47400D73C36 /* Login Page */,
 				0C5C508522C590AB00175A57 /* Sign Up Page */,
 				0CA3518022557D440044D166 /* Detail VC Templates */,
-				0CC767A921F0302800752517 /* HomeTab */,
 				0CB180CB223F4CF300927014 /* Kitchen Tab */,
+				0CC767A921F0302800752517 /* HomeTab */,
 				0C5C507D22C3004600175A57 /* Profile Tab */,
 			);
 			path = Controllers;

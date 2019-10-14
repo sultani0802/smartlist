@@ -104,7 +104,7 @@ class HomeTableViewCell: SwipeTableViewCell {
         // Adding the UI elements to our cell
         addSubview(itemImageView)
         addSubview(nameText)
-        addSubview(scannerButton)
+//        addSubview(scannerButton)
         
         // Setting up the constraints
         NSLayoutConstraint.activate([
@@ -116,10 +116,10 @@ class HomeTableViewCell: SwipeTableViewCell {
             itemImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
             
             // Scanner Button
-            scannerButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            scannerButton.topAnchor.constraint(equalTo: topAnchor, constant: 15),
-            scannerButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
-            scannerButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
+//            scannerButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+//            scannerButton.topAnchor.constraint(equalTo: topAnchor, constant: 15),
+//            scannerButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
+//            scannerButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.2),
             
             // Item's name textfield
             nameText.leadingAnchor.constraint(equalTo: itemImageView.trailingAnchor, constant: 4),
