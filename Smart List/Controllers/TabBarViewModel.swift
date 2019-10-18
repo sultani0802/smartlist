@@ -62,9 +62,7 @@ class TabBarViewModel {
                 print(response["success"] ?? "Succesfully authenticated")
             }
             
-            if !settings.isLoggedIn && !settings.offlineMode {      // If the user isn't logged in but they didn't skip the login/sign up before
-                self.tabBarViewModelDelegate?.presentSignUpVC()         // Show the Sign Up View Controller through delegate comms
-            }
+
         }
     }
 }
