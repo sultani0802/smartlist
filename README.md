@@ -3,7 +3,7 @@
 ## About
 Smart List is an app that helps you keep track of all the food in your kitchen. Never again will you have to go through your fridge only to find some 7 month old cheese that has wrotten to dust. 
 
-![Sign Up Page](/gif1.gif) ![Real time app](/gif2.gif)
+![App usage](/gif1.gif)
 
 
 ## Feature List
