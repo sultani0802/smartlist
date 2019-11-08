@@ -20,7 +20,8 @@ extension HomeViewController {
     
     /// Set the number of rows for each section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.items[section].count
+        print(viewModel.items[section].count)
+		return viewModel.items[section].count
     }
     
     
@@ -44,7 +45,7 @@ extension HomeViewController {
         
         
         // Apply the Item entity's model to the cell
-        if item.cellType != Constants.CellType.DummyCell {
+        if item.cellType != CellType.DummyCell {
             cell.accessoryType = item.completed ? .checkmark : .none                    // Display a checkmark if the item is completed
             cell.nameText.text = item.name                                              // Set the name of the cell
             cell.itemImageView.isHidden = false                                         // Show item's image
@@ -56,7 +57,7 @@ extension HomeViewController {
             cell.nameText.text = ""
         }
         
-        if item.cellType != Constants.CellType.DummyCell {
+        if item.cellType != CellType.DummyCell {
             if let imgURL = item.imageThumbURL {                                            // If Item's thumbnail image url isn't nil
                 cell.itemImageView.kf.setImage(with: URL(string: imgURL))                   // Download and set the Item's image to the image at the URL
             } else {
@@ -73,14 +74,15 @@ extension HomeViewController {
         cell.addNewCell = { [weak self] newTitle in
             guard let `self` = self else {return}                                       // Capture self
             
+			
             // If the user hits RETURN on a cell that isn't empty
             if cell.nameText.text != "" {
                 cell.scannerButton.isHidden = true              // Hide the scanner button
-                let itemToUpdate = self.viewModel.items[indexPath.section][indexPath.row]         // Get the Item instance from the array
+                let itemToUpdate = item//self.viewModel.items[indexPath.section][indexPath.row]         // Get the Item instance from the array
                 
                 // Set the new Item entity's values in Core Data and save
                 itemToUpdate.setValue(newTitle, forKey: "name")                         // Set Item's name in Core Data entity
-                itemToUpdate.setValue(Constants.CellType.ValidCell, forKey: "cellType") // Set Item's cell type in Core Data entity
+                itemToUpdate.setValue(CellType.ValidCell, forKey: "cellType") // Set Item's cell type in Core Data entity
                 
                 Server.shared.getItemThumbnailURL(itemName: newTitle) {                 // Set the image of the Item based on Nutritionix pic
                     imageURL in
@@ -104,7 +106,7 @@ extension HomeViewController {
                     print("There is already a dummy cell in that category")
                 }
 
-            } else if (cell.nameText.text == "" && self.viewModel.items[indexPath.section][indexPath.row].cellType != Constants.CellType.DummyCell) {
+            } else if (cell.nameText.text == "" && item.cellType != CellType.DummyCell) {
                 // another cell in the section is a dummy cell
                 // remove the cell the user just saved with an empty name
                 
@@ -120,7 +122,7 @@ extension HomeViewController {
 
         
         cell.scannerTapped = { [weak self] in
-            guard let `self` = self else {return}
+            guard let self = self else {return}
             
             print("scanner closure")
         }
@@ -161,7 +163,7 @@ extension HomeViewController {
         
         /// If swiping on a dummy cell & there are no other items
         /// Delete the category, the dummy cell from the tableview array and core data
-        if viewModel.items[indexPath.section][indexPath.row].cellType == Constants.CellType.DummyCell && viewModel.items[indexPath.section].count <= 1 {
+        if viewModel.items[indexPath.section][indexPath.row].cellType == CellType.DummyCell && viewModel.items[indexPath.section].count <= 1 {
             let deleteCategorySwipe = SwipeAction(style: .default, title: "Delete section") {
                 [weak self] (action, indexPath) in
                 guard let `self` = self else {return}
@@ -182,7 +184,7 @@ extension HomeViewController {
             }
             // Customize the visuals of the swipe button
             deleteCategorySwipe.image = UIImage(named: "delete")
-            deleteCategorySwipe.backgroundColor = Constants.ColorPalette.Crimson
+			deleteCategorySwipe.backgroundColor = Constants.Visuals.ColorPalette.Crimson
             
             // Set the button(s) to the swipe options
             swipeActions = [deleteCategorySwipe]
@@ -195,7 +197,7 @@ extension HomeViewController {
         /// Mark the Item as done
         ///         OR
         /// Delete the valid cell from the tableview array and core data
-        else if viewModel.items[indexPath.section][indexPath.row].cellType != Constants.CellType.DummyCell {
+        else if viewModel.items[indexPath.section][indexPath.row].cellType != CellType.DummyCell {
             /// Swipe action to delete the Item
             let deleteAction = SwipeAction(style: .default, title: "Delete") {
                 [weak self] (action, indexPath) in
@@ -207,20 +209,22 @@ extension HomeViewController {
                     }
                     
                     print("\nDELETING ITEM: \(item.name!), id: \(itemId)\n")
+					DispatchQueue.main.async {
+						self.tableView.deleteRows(at: [indexPath], with: .left)
+					}
                     self.viewModel.items[indexPath.section].remove(at: indexPath.row)       // Delete the Item from the tableView array
                     action.fulfill(with: .delete)                                           // Fulfill the delete action BEFORE deleting from Core Data
                     let categoryName = self.viewModel.categories[indexPath.section].name    // Grab Category name
                     self.viewModel.deleteItem(itemId: itemId, categoryName: categoryName!)  // Delete from Core Data
                     self.toggleDoneShoppingButton()                                         // Hide or show the 'Unload' nav bar button
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()                                         // Update the view
-                    }
+					
+					print(self.viewModel.items)
                 }
             }
             // Customize visuals of the swipe buttons
             deleteAction.image = UIImage(named: "delete")                                   // Set the image of the delete icon
             
-            deleteAction.backgroundColor = Constants.ColorPalette.Crimson
+			deleteAction.backgroundColor = Constants.Visuals.ColorPalette.Crimson
             
             
             /// Swipe action to mark an Item entity as done
@@ -246,7 +250,7 @@ extension HomeViewController {
                 self.viewModel.coreData.saveContext()
             }
             
-            completedAction.backgroundColor = Constants.ColorPalette.SeaGreen
+			completedAction.backgroundColor = Constants.Visuals.ColorPalette.SeaGreen
             completedAction.hidesWhenSelected = true
             
             // Set the button(s) to the swipe options

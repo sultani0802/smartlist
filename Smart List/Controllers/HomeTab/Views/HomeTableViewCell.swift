@@ -44,11 +44,11 @@ class HomeTableViewCell: SwipeTableViewCell {
         textField.textAlignment = .left
         textField.adjustsFontSizeToFitWidth = true
         textField.font = UIFont(name: Constants.Visuals.fontName, size: 20)
-        textField.textColor = Constants.ColorPalette.TealBlue
+		textField.textColor = Constants.Visuals.ColorPalette.TealBlue
         textField.setRightPaddingPoints(55)                             // Add padding to the right side
         textField.attributedPlaceholder = NSAttributedString(string: "tap here to start",
                                                              attributes: [
-                                                                NSAttributedString.Key.foregroundColor: Constants.ColorPalette.BabyBlue]) // Set placeholder text for the cell
+																NSAttributedString.Key.foregroundColor: Constants.Visuals.ColorPalette.BabyBlue]) // Set placeholder text for the cell
         
         return textField
     }()

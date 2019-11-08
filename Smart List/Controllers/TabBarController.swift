@@ -78,9 +78,9 @@ class TabBarController: UITabBarController {
         // Set the color of the tab bar
         tabBar.barTintColor = .white
         // Set the color of the selected tab bar button
-        tabBar.tintColor = Constants.ColorPalette.Yellow
+		tabBar.tintColor = Constants.Visuals.ColorPalette.Yellow
         // Set the color of the unselected tab bar button
-        tabBar.unselectedItemTintColor = Constants.ColorPalette.DarkGray
+		tabBar.unselectedItemTintColor = Constants.Visuals.ColorPalette.DarkGray
         
         
         homeViewController.tabBarItem = UITabBarItem(title: "Shopping List", image: UIImage(named: "list"), tag: 0)

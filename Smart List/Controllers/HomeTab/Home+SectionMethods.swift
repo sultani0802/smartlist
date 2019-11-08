@@ -12,7 +12,8 @@
 import UIKit
 
 extension HomeViewController {
-    
+	
+	
     /// Returns the custom view I made for the headers of each section
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let headerView = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: viewModel.headerCellReuseIdentifier) as?  HomeTableviewHeader else {
@@ -30,7 +31,7 @@ extension HomeViewController {
     
     /// Set the height of the section label
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat(Constants.TableView.HeaderHeight)
+		return CGFloat(Constants.Visuals.tableViewHeaderHeight)
     }
     
     

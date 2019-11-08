@@ -17,7 +17,7 @@ class ProfileTableViewCell: UITableViewCell {
         lbl.textAlignment = .left                                           // Text aligned to the left
         lbl.adjustsFontSizeToFitWidth = true                                // Adjust font size to fit cell
         lbl.font = UIFont(name: Constants.Visuals.fontName, size: 20)       // Set font
-        lbl.textColor = Constants.ColorPalette.Charcoal                     // Set color
+		lbl.textColor = Constants.Visuals.ColorPalette.Charcoal                     // Set color
         
         return lbl
     }()
@@ -28,7 +28,7 @@ class ProfileTableViewCell: UITableViewCell {
         lbl.textAlignment = .left                                           // Text aligned to the left
         lbl.adjustsFontSizeToFitWidth = true                                // Adjust font size to fit cell
         lbl.font = UIFont(name: Constants.Visuals.fontName, size: 18)       // Set font
-        lbl.textColor = Constants.ColorPalette.BabyBlue                      // Set color
+		lbl.textColor = Constants.Visuals.ColorPalette.BabyBlue                      // Set color
         
         return lbl
     }()

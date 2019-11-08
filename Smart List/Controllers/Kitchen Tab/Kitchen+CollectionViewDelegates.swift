@@ -18,7 +18,7 @@ extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDel
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellID.KitchenCollectionViewCellID, for: indexPath) as! KitchenCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.ReuseIdentifier.KitchenCollectionViewCellID, for: indexPath) as! KitchenCollectionViewCell
         let item = self.model[indexPath.row]
         
         if item.imageFullURL == nil || item.imageFullURL!.isEmpty {
@@ -39,7 +39,6 @@ extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDel
             cell.itemImageView.kf.setImage(with: URL(string: item.imageFullURL!))
         }
         
-        
         cell.nameLabel.text = item.name
         cell.deleteDelegate = self
         cell.deleteButton.tag = indexPath.row
@@ -49,29 +48,31 @@ extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDel
             let date = DateHelper.shared.getDateString(of: expiryDate)
             
             if item.expiryDate != nil, item.expiryDate! > DateHelper.shared.getCurrentDateObject() {
-                cell.expiryLabel.textColor = Constants.ColorPalette.SeaGreen
+				cell.expiryLabel.textColor = Constants.Visuals.ColorPalette.SeaGreen
                 cell.expiryLabel.text = "Expires \(date)"
             } else {
-                cell.expiryLabel.textColor = Constants.ColorPalette.Crimson
+				cell.expiryLabel.textColor = Constants.Visuals.ColorPalette.Crimson
                 cell.expiryLabel.text = "Expired \(date)"
             }
             
         } else {
             cell.expiryLabel.text = "Set an expiration date"
-            cell.expiryLabel.textColor = Constants.ColorPalette.BabyBlue
+			cell.expiryLabel.textColor = Constants.Visuals.ColorPalette.BabyBlue
         }
         
         return cell
     }
     
     
-    
+	func customizeCellView(cell: KitchenCollectionViewCell) {
+		
+	}
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = ScreenSize.SCREEN_WIDTH/2 - 6
+        let size = Constants.ScreenSize.SCREEN_WIDTH/2
         
-        return CGSize(width: size, height: size)
+		return CGSize(width: size - 15, height: size - 15)
     }
     
     

@@ -15,11 +15,11 @@ extension HomeViewController {
     /// Sets up the navigation bar buttons
     func setupNavItems() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addButtonTapped))
-        navigationItem.rightBarButtonItem?.tintColor = Constants.ColorPalette.BabyBlue
+		navigationItem.rightBarButtonItem?.tintColor = Constants.Visuals.ColorPalette.BabyBlue
         
         doneShoppingBarButtonItem = UIBarButtonItem(title: "Unload", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneShoppingButtonTapped))
         navigationItem.leftBarButtonItem = doneShoppingBarButtonItem
-        navigationItem.leftBarButtonItem?.tintColor = Constants.ColorPalette.SeaGreen
+		navigationItem.leftBarButtonItem?.tintColor = Constants.Visuals.ColorPalette.SeaGreen
     }
     
     
@@ -47,7 +47,7 @@ extension HomeViewController {
     }
     
     
-    /// Purpose: This method is called when the user taps on the + sign at the top right
+    /// Description: This method is called when the user taps on the + sign at the top right
     ///
     /// Allows the user to add a category to the TableView
     /// They are presented with a list of options, one of them being an option to add their own
@@ -59,7 +59,7 @@ extension HomeViewController {
         for cat in viewModel.validateCategories() {
             alert.addAction(UIAlertAction(title: cat, style: .default, handler: {
                 [weak self] (UIAlertAction) in
-                guard let `self` = self else {return}
+                guard let self = self else {return}
 
                 self.tableView.beginUpdates()
                 

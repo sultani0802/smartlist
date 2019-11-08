@@ -17,7 +17,7 @@ class ExpiryPopUpView: PopUpCardView {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Expiration Date"
-        label.textColor = Constants.ColorPalette.BabyBlue
+		label.textColor = Constants.Visuals.ColorPalette.BabyBlue
         label.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         label.textAlignment = .center
         label.layer.masksToBounds = true
@@ -30,7 +30,7 @@ class ExpiryPopUpView: PopUpCardView {
         var button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Save", for: .normal)
-        button.setTitleColor(Constants.ColorPalette.SeaGreen, for: .normal)
+		button.setTitleColor(Constants.Visuals.ColorPalette.SeaGreen, for: .normal)
         button.titleLabel!.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(DetailViewController.doneButtonTapped(_:)), for: .touchUpInside)

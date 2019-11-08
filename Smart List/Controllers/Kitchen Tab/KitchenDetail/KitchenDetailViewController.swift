@@ -122,7 +122,7 @@ class KitchenDetailViewController: DetailVC {
         if let notes = self.item?.notes {
             self.midContainer.noteTextView.text = notes
         } else {
-            self.midContainer.noteTextView.text = Constants.DetailView.notesPlaceholder
+			self.midContainer.noteTextView.text = Constants.Visuals.detailViewNotesPlaceHolderText
         }
     }
     

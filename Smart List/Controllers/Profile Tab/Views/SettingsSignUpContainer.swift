@@ -16,7 +16,7 @@ class SettingsSignUpContainer: UIView {
         lbl.textAlignment = .center
         lbl.text = "Don't have an account?"
         lbl.font = UIFont(name: Constants.Visuals.fontName, size: 20)
-        lbl.textColor = Constants.ColorPalette.TealBlue
+		lbl.textColor = Constants.Visuals.ColorPalette.TealBlue
         lbl.adjustsFontSizeToFitWidth = true
         
         return lbl
@@ -31,7 +31,7 @@ class SettingsSignUpContainer: UIView {
         button.contentEdgeInsets = UIEdgeInsets(top: 1, left: 4, bottom: 1, right: 4)
         button.addTarget(self, action: #selector(ProfileViewController.signUpButtonTapped(_:)), for: .touchUpInside)
         button.isUserInteractionEnabled = true
-        button.tintColor = Constants.ColorPalette.BabyBlue
+		button.tintColor = Constants.Visuals.ColorPalette.BabyBlue
         button.titleLabel?.font = UIFont(name: Constants.Visuals.fontName, size: 18)
         
         return button
@@ -43,7 +43,7 @@ class SettingsSignUpContainer: UIView {
         lbl.textAlignment = .center
         lbl.text = "Already have an account?"
         lbl.font = UIFont(name: Constants.Visuals.fontName, size: 20)
-        lbl.textColor = Constants.ColorPalette.TealBlue
+		lbl.textColor = Constants.Visuals.ColorPalette.TealBlue
         lbl.adjustsFontSizeToFitWidth = true
         
         return lbl
@@ -58,7 +58,7 @@ class SettingsSignUpContainer: UIView {
         button.contentEdgeInsets = UIEdgeInsets(top: 1, left: 4, bottom: 1, right: 4)
         button.addTarget(self, action: #selector(ProfileViewController.loginButtonTapped(_:)), for: .touchUpInside)
         button.isUserInteractionEnabled = true
-        button.tintColor = Constants.ColorPalette.SeaGreen
+		button.tintColor = Constants.Visuals.ColorPalette.SeaGreen
         button.titleLabel?.font = UIFont(name: Constants.Visuals.fontName, size: 18)
         
         return button

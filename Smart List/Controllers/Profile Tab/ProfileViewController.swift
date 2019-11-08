@@ -12,8 +12,6 @@ import UIKit
 class ProfileViewController: UIViewController {
     ///
     //MARK: - Properties
-    ///
-    let profileViewCellId : String = "profileViewCell"
     var viewModel : ProfileViewModel
     
     
@@ -86,7 +84,7 @@ class ProfileViewController: UIViewController {
                                               action: #selector(self.logoutButtonTapped))
        
         navigationItem.rightBarButtonItem = logoutBarButtonItem                 // Set it to the right
-        navigationItem.rightBarButtonItem?.tintColor = Constants.ColorPalette.Crimson
+		navigationItem.rightBarButtonItem?.tintColor = Constants.Visuals.ColorPalette.Crimson
     }
     
     
@@ -119,7 +117,7 @@ class ProfileViewController: UIViewController {
         tableView.delegate = self                                                                       // Delegate to self (extension)
         tableView.translatesAutoresizingMaskIntoConstraints = false                                     // Use auto-layout
         
-        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: self.profileViewCellId)   // Register cells
+		tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: self.viewModel.tableViewCellId)   // Register cells
         tableView.backgroundColor = .white
         tableView.rowHeight = 65                                                                   // Set height of the cell
         tableView.keyboardDismissMode = .onDrag                                                         // Dismiss keyboard when user drags on tableview

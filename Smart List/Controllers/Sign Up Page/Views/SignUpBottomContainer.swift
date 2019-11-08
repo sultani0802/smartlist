@@ -18,7 +18,7 @@ class SignUpBottomContainer : UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.adjustsFontSizeToFitWidth = true
         view.font = UIFont(name: Constants.Visuals.fontName, size: 14)
-        view.textColor = Constants.ColorPalette.DarkGray
+		view.textColor = Constants.Visuals.ColorPalette.DarkGray
         view.returnKeyType = .next
         view.placeholder = "Your name"
         view.autocorrectionType = .no
@@ -39,7 +39,7 @@ class SignUpBottomContainer : UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.adjustsFontSizeToFitWidth = true
         view.font = UIFont(name: Constants.Visuals.fontName, size: 14)
-        view.textColor = Constants.ColorPalette.DarkGray
+		view.textColor = Constants.Visuals.ColorPalette.DarkGray
         view.returnKeyType = .next
         view.placeholder = "Your email"
         view.keyboardType = .emailAddress
@@ -73,7 +73,7 @@ class SignUpBottomContainer : UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.adjustsFontSizeToFitWidth = true
         view.font = UIFont(name: Constants.Visuals.fontName, size: 14)
-        view.textColor = Constants.ColorPalette.DarkGray
+		view.textColor = Constants.Visuals.ColorPalette.DarkGray
         view.returnKeyType = .go
         view.autocorrectionType = .no
         view.autocapitalizationType = .none
@@ -132,7 +132,7 @@ class SignUpBottomContainer : UIView {
         button.contentEdgeInsets = UIEdgeInsets(top: 1, left: 4, bottom: 1, right: 4)
         button.addTarget(self, action: #selector(SignUpViewController.signUpButtonTapped(_:)), for: .touchUpInside)
         button.isUserInteractionEnabled = true
-        button.tintColor = Constants.ColorPalette.SeaGreen
+		button.tintColor = Constants.Visuals.ColorPalette.SeaGreen
         button.titleLabel?.font = UIFont(name: Constants.Visuals.fontName, size: 18)
         button.isEnabled = false
         
@@ -148,7 +148,7 @@ class SignUpBottomContainer : UIView {
         button.contentEdgeInsets = UIEdgeInsets(top: 1, left: 4, bottom: 1, right: 4)
         button.addTarget(self, action: #selector(SignUpViewController.loginButtonTapped(_:)), for: .touchUpInside)
         button.isUserInteractionEnabled = true
-        button.tintColor = Constants.ColorPalette.SeaGreen
+		button.tintColor = Constants.Visuals.ColorPalette.SeaGreen
         button.titleLabel?.font = UIFont(name: Constants.Visuals.fontName, size: 18)
         
         return button

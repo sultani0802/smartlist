@@ -86,7 +86,7 @@ class SignUpViewController: UIViewController {
     
     //MARK: - Initialization Methods
     private func setupView() {
-        view.backgroundColor = Constants.ColorPalette.OffWhite
+		view.backgroundColor = Constants.Visuals.ColorPalette.OffWhite
         
         // Adding top container and configuring
         view.addSubview(scrollView)

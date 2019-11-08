@@ -20,7 +20,7 @@ class BottomLoginContainer: UIView{
         button.contentEdgeInsets = UIEdgeInsets(top: 1, left: 4, bottom: 1, right: 4)
         button.addTarget(self, action: #selector(LoginViewController.loginButtonTapped(_:)), for: .touchUpInside)
         button.isUserInteractionEnabled = true
-        button.tintColor = Constants.ColorPalette.SeaGreen
+		button.tintColor = Constants.Visuals.ColorPalette.SeaGreen
         button.titleLabel?.font = UIFont(name: Constants.Visuals.fontName, size: 18)
         
         return button
@@ -46,7 +46,7 @@ class BottomLoginContainer: UIView{
         button.contentEdgeInsets = UIEdgeInsets(top: 1, left: 4, bottom: 1, right: 4)
         button.addTarget(self, action: #selector(LoginViewController.signUpButtonTapped(_:)), for: .touchUpInside)
         button.isUserInteractionEnabled = true
-        button.tintColor = Constants.ColorPalette.BabyBlue
+		button.tintColor = Constants.Visuals.ColorPalette.BabyBlue
         button.titleLabel?.font = UIFont(name: Constants.Visuals.fontName, size: 18)
         
         return button

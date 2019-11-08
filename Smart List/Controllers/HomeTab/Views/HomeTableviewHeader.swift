@@ -24,7 +24,7 @@ class HomeTableviewHeader: UITableViewHeaderFooterView {
         var lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.textAlignment = .left
-        lbl.textColor = Constants.ColorPalette.Charcoal
+		lbl.textColor = Constants.Visuals.ColorPalette.Charcoal
         lbl.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         
         return lbl

@@ -38,7 +38,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var getStartedView: HomeGetStartedView = {
         var view = HomeGetStartedView()
         view.translatesAutoresizingMaskIntoConstraints = false                          // Conforms to auto-layout
-        view.backgroundColor = Constants.ColorPalette.Yellow.withAlphaComponent(0.7)
+		view.backgroundColor = Constants.Visuals.ColorPalette.Yellow.withAlphaComponent(0.7)
         view.isHidden = true                                                            // Instruction view is hidden unless the table view is empty
         
         return view
@@ -288,7 +288,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let categoryIndex = viewModel.categories.firstIndex(of: category)                             // Grab the index of the Category entity we are working in
         
         let newDummyItem: Item = viewModel.coreData.addItem(toCategory: category, withItemName: "",
-                                                         cellType: Constants.CellType.DummyCell) // Create a new dummmy Item entity
+                                                         cellType: CellType.DummyCell) // Create a new dummmy Item entity
         viewModel.items[categoryIndex!].append(newDummyItem)                                          // Add the dummy entity to our tableView array
         
         let itemIndex = viewModel.items[categoryIndex!].count-1                                  // Get the index of the dummy Item we just added to our tableView array

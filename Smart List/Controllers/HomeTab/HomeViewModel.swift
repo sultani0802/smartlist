@@ -9,12 +9,25 @@
 import Foundation
 import CoreData
 
+struct DefaultCategories {
+	static let Produce =            "Produce"
+	static let Bakery =             "Bakery"
+	static let MeatSeafood =        "Meat/Seafood"
+	static let Dairy =              "Dairy"
+	static let PackagedCanned =     "Packaged/Canned"
+	static let Frozen =             "Frozen"
+}
+
+struct CellType {
+	static let ValidCell = "valid"
+	static let DummyCell = "dummy"
+}
+
 class HomeViewModel {
     // MARK: - Constants
     let coreData : CoreDataManager
-    let homeCellReuseIdentifier: String = Constants.CellID.HomeTableViewCellID
-    let headerCellReuseIdentifier: String = Constants.CellID.HomeHeaderID
-    
+    let homeCellReuseIdentifier: String = Constants.ReuseIdentifier.HomeTableViewCellID
+    let headerCellReuseIdentifier: String = Constants.ReuseIdentifier.HomeHeaderID
     
     init(coreDataManager : CoreDataManager) {
         self.coreData = coreDataManager     // Dependency injection for core data manager
@@ -23,12 +36,12 @@ class HomeViewModel {
     
     // MARK: - TableView Datasource
     let defaultCategories : [String] = [
-        Constants.DefaultCategories.Produce,
-        Constants.DefaultCategories.Bakery,
-        Constants.DefaultCategories.MeatSeafood,
-        Constants.DefaultCategories.Dairy,
-        Constants.DefaultCategories.PackagedCanned,
-        Constants.DefaultCategories.Frozen
+        DefaultCategories.Produce,
+        DefaultCategories.Bakery,
+        DefaultCategories.MeatSeafood,
+        DefaultCategories.Dairy,
+        DefaultCategories.PackagedCanned,
+        DefaultCategories.Frozen
     ]
     
     var categories: [Category] = [Category]()

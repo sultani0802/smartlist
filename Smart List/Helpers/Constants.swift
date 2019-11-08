@@ -8,177 +8,97 @@
 
 import UIKit
 
+
+/// File containing all the Constants that will be used throughout the app
 struct Constants {
-    
+	
+	/// General Smart List app constants
     struct General {
-        static let AppName = "Smart Kitchen"
-        static let Server = "https://sultani-smartlist-api.herokuapp.com"
+        // Name of the app
+		static let AppName = "Smart Kitchen"
+        // Endpoint for the REST API
+		static let Server = "https://sultani-smartlist-api.herokuapp.com"
     }
     
-    struct Settings {
-        static let Name = 0
-        static let Email = 1
-        static let Password = 2
-        static let Notifications = 3
-    }
-    
+	/// UI values that are used through the app
+	/// > These constants are to be used throughout the app to ensure the UI is consistent
     struct Visuals {
         static let fontName = "Gill Sans"
+		static let tableViewHeaderHeight = 50
+		static let detailViewNotesPlaceHolderText = "Write some notes about the item here.\n\nFavorite recipes, etc."
+		
+		
+		/// Colors used throughout the app
+		/// > UIColors initialized using hex values
+		struct ColorPalette {
+			static let Charcoal = UIColor(hexString: "#121B20")
+			static let TealBlue = UIColor(hexString: "#33658A")
+			static let DarkGray = UIColor(hexString: "#2F4858")
+			static let BabyBlue = UIColor(hexString: "#86BBD8")
+			static let Yellow = UIColor(hexString: "#F6AE2D")
+			static let Orange = UIColor(hexString: "#F26419")
+			static let SeaGreen = UIColor(hexString: "#3CB371")
+			static let Crimson = UIColor(hexString: "#DC143C")
+			static let OffWhite = UIColor(hexString: "F2F3F5")
+		}
     }
-    
-    struct CellType {
-        static let ValidCell = "valid"
-        static let DummyCell = "dummy"
-    }
-    
-    struct DefaultCategories {
-        static let Produce =            "Produce"
-        static let Bakery =             "Bakery"
-        static let MeatSeafood =        "Meat/Seafood"
-        static let Dairy =              "Dairy"
-        static let PackagedCanned =     "Packaged/Canned"
-        static let Frozen =             "Frozen"
-    }
-    
+	
+	/// Notification Keys (names) used for notifications
+	/// > These Keys are used throughout the application for the Notification communication pattern
     struct NotificationKey {
         static let LoginViewPoppedUpNotificationKey = "com.sultani.Smart-List.loginViewPoppedUp"
     }
-    
-    struct TableView {
-        static let HeaderHeight = 50
-    }
-    
-    struct DetailView {
-        static let notesPlaceholder = "Write some notes about the item here.\n\nFavorite recipes, etc."
-    }
-    
-    struct CellID {
+	
+	/// Reuse Identifiers for the different CollectionView cells
+    struct ReuseIdentifier {
         static let HomeHeaderID =               "homeHeaderCellID"
         static let HomeTableViewCellID =        "homeCellID"
-        static let KitchenTableViewCellID =     "kitchenTVCellID"
         static let KitchenCollectionViewCellID = "kitchenCVCellID"
+		static let ProfileTableViewCellID =		"profileViewCellID"
     }
     
-    struct ColorPalette {
-        static let Charcoal = UIColor(hexString: "#121B20")
-        static let TealBlue = UIColor(hexString: "#33658A")
-        static let DarkGray = UIColor(hexString: "#2F4858")
-        static let BabyBlue = UIColor(hexString: "#86BBD8")
-        static let Yellow = UIColor(hexString: "#F6AE2D")
-        static let Orange = UIColor(hexString: "#F26419")
-        static let SeaGreen = UIColor(hexString: "#3CB371")
-        static let Crimson = UIColor(hexString: "#DC143C")
-        static let OffWhite = UIColor(hexString: "F2F3F5")
-    }
-    
-    static let Units = ["milligrams":"mgs",
-                        "grams":"gs",
-                        "kilograms":"kgs",
-                        "pounds":"lbs",
-                        "millilitres":"mLs",
-                        "litres":"Ls",
-                        "units":"units",
-                        "teaspoons":"tsps",
-                        "tablespoons":"tbsps",
-                        "cups":"cups",
-                        "ounces":"oz"]
-    
-    static let ItemImages : [String] = [
-                        "apples",
-                        "asparagus",
-                        "avocados",
-                        "bacon",
-                        "baguette",
-                        "bananas",
-                        "beer",
-                        "bell peppers",
-                        "biscuits",
-                        "black pepper",
-                        "blueberries",
-                        "blueberry jam",
-                        "bottle thermos",
-                        "bowl",
-                        "bread",
-                        "broccoli",
-                        "burgers",
-                        "cabbage",
-                        "cake",
-                        "candy",
-                        "canned food",
-                        "carrots",
-                        "cauliflower",
-                        "cereals",
-                        "cheese",
-                        "cherries",
-                        "chicken drumsticks",
-                        "chives",
-                        "chocolate bar",
-                        "coconut",
-                        "coffee",
-                        "cookies",
-                        "corn",
-                        "croissant",
-                        "cupcakes",
-                        "doughnuts",
-                        "eggs",
-                        "eggplant",
-                        "fig",
-                        "fish",
-                        "flour",
-                        "garlic",
-                        "gingerbead",
-                        "grapes",
-                        "grean peas",
-                        "groceries",
-                        "ham",
-                        "honey",
-                        "hot dogs",
-                        "ice cream",
-                        "ketchup",
-                        "lemon",
-                        "limes",
-                        "milk",
-                        "mushrooms",
-                        "nutella",
-                        "octopus",
-                        "olives",
-                        "onions",
-                        "oranges",
-                        "pancakes",
-                        "pasta",
-                        "peaches",
-                        "pears",
-                        "peppers",
-                        "pepsi",
-                        "pickles",
-                        "pie",
-                        "pineapple",
-                        "pizza",
-                        "pomegranates",
-                        "popsicles",
-                        "potato wedges",
-                        "potatoes",
-                        "pretzels",
-                        "pumpkin",
-                        "radish",
-                        "raspberries",
-                        "rice",
-                        "salad",
-                        "salami",
-                        "salmon",
-                        "salt",
-                        "sausages",
-                        "shrimp",
-                        "soda pop",
-                        "spaghetti",
-                        "steak",
-                        "strawberries",
-                        "strawberry jam",
-                        "sushi",
-                        "tea",
-                        "tomatoes",
-                        "turkey",
-                        "watermelon",
-                        "wine"
-    ]
+	/// Dictionary of units of measurement
+	/// > [String:String] dictionary, where Keys are the full unit of measurement and Values are the abbreviation
+	///
+	/// > Example:
+	/// * **Key**: milligrams
+	/// * **Value**: mgs
+    static let Units = ["milligrams"	: "mgs",
+                        "grams"			: "gs",
+                        "kilograms"		: "kgs",
+                        "pounds"		: "lbs",
+                        "millilitres"	: "mLs",
+                        "litres"		: "Ls",
+                        "units"			: "units",
+                        "teaspoons"		: "tsps",
+                        "tablespoons"	: "tbsps",
+                        "cups"			: "cups",
+                        "ounces"		: "oz"]
+	
+	
+	
+	enum UIUserInterfaceIdiom : Int
+	{
+		case Unspecified
+		case Phone
+		case Pad
+	}
+	
+	/// Contains the device's screen dimensions
+	struct ScreenSize
+	{
+		static let SCREEN_WIDTH         = UIScreen.main.bounds.size.width
+		static let SCREEN_HEIGHT        = UIScreen.main.bounds.size.height
+		static let SCREEN_MAX_LENGTH    = max(ScreenSize.SCREEN_WIDTH, ScreenSize.SCREEN_HEIGHT)
+		static let SCREEN_MIN_LENGTH    = min(ScreenSize.SCREEN_WIDTH, ScreenSize.SCREEN_HEIGHT)
+	}
+	
+	struct DeviceType
+	{
+		static let IS_IPHONE_4_OR_LESS  = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH < 568.0
+		static let IS_IPHONE_5          = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 568.0
+		static let IS_IPHONE_6          = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 667.0
+		static let IS_IPHONE_6P         = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 736.0
+		static let IS_IPAD              = UIDevice.current.userInterfaceIdiom == .pad && ScreenSize.SCREEN_MAX_LENGTH == 1024.0
+	}
 }

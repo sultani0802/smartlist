@@ -16,10 +16,10 @@ class DateHelper {
     private init() {}                                   // Prevents creation of multiple instances
     
     
-    /// Creates a Date object with todays date and
-    /// time and then...
-    /// - Returns: the string version
-    func getCurrentDate() -> String {
+    /// Gets today's date and time
+	///
+    /// - Returns: String representation of today's date and time
+	func getCurrentDate() -> String {
         let currentDate = Date()                        // Get current date and time
         
         // Format the date
@@ -34,13 +34,14 @@ class DateHelper {
     
     /// Creates a Date object with the current time and date
     ///
-    /// - Returns: the Date object that was just created
+    /// - Returns: A Date object with the current date and time.
     func getCurrentDateObject() -> Date {
         return Date()
     }
     
     
-    /// Converts a given Date object to it's string counterpart
+    /// Converts a Date object to it's string representation
+	/// > Formats the Date object to "MMM DD, YYYY"
     ///
     /// - Parameter date: The Date object we want to stringify
     /// - Returns: The stringified version of the Date object

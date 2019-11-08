@@ -14,7 +14,7 @@ class MidLoginContainer: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.adjustsFontSizeToFitWidth = true
         view.font = UIFont(name: Constants.Visuals.fontName, size: 14)
-        view.textColor = Constants.ColorPalette.DarkGray
+		view.textColor = Constants.Visuals.ColorPalette.DarkGray
         view.returnKeyType = .next
         view.placeholder = "Your email"
         view.keyboardType = .emailAddress
@@ -35,7 +35,7 @@ class MidLoginContainer: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.adjustsFontSizeToFitWidth = true
         view.font = UIFont(name: Constants.Visuals.fontName, size: 14)
-        view.textColor = Constants.ColorPalette.DarkGray
+		view.textColor = Constants.Visuals.ColorPalette.DarkGray
         view.returnKeyType = .go
         view.autocorrectionType = .no
         view.autocapitalizationType = .none
@@ -53,7 +53,7 @@ class MidLoginContainer: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = Constants.ColorPalette.OffWhite
+		backgroundColor = Constants.Visuals.ColorPalette.OffWhite
 
         setupViews()
     }

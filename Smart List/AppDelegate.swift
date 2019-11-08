@@ -14,10 +14,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
+	// MARK: - Core Data stack
+	lazy var persistentContainer: NSPersistentContainer = {
+		let container = NSPersistentContainer(name: "DataModel")
+		
+		container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+			if let error = error as NSError? {
+				fatalError("Unresolved error \(error), \(error.userInfo)")
+			}
+		})
+		
+		return container
+	}()
+	
+	
      
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let coreDataManager = CoreDataManager.shared
+        let coreDataManager = CoreDataManager()	// refactor core data here
         
         window = UIWindow()
         window?.rootViewController = TabBarController(coreDataManager: coreDataManager)
@@ -31,22 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    // MARK: - Core Data stack
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "DataModel")
-        
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        
-        return container
-    }()
+
     
     
     // MARK: - Core Data Saving support
-    func saveContext () {
+    private func saveContext () {
         // Get context
         let context = persistentContainer.viewContext
         

@@ -27,6 +27,15 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0CC7678121F0262300752517"
+            BuildableName = "Smart List.app"
+            BlueprintName = "Smart List"
+            ReferencedContainer = "container:Smart List.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -37,19 +46,73 @@
                BlueprintName = "Smart ListTests"
                ReferencedContainer = "container:Smart List.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "ProfileTabTest">
+               </Test>
+            </SkippedTests>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0CC3A7EA235CE16400C44CFC"
+               BuildableName = "SmartListUITests.xctest"
+               BlueprintName = "SmartListUITests"
+               ReferencedContainer = "container:Smart List.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0C23B56E235CE2AF00B02A82"
+               BuildableName = "Smart ListUITests.xctest"
+               BlueprintName = "Smart ListUITests"
+               ReferencedContainer = "container:Smart List.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0C23B57C235D038500B02A82"
+               BuildableName = "Smart_List_Date_Tests.xctest"
+               BlueprintName = "Smart_List_Date_Tests"
+               ReferencedContainer = "container:Smart List.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0C23B58A235D37AB00B02A82"
+               BuildableName = "SmartListCoreDataTests.xctest"
+               BlueprintName = "SmartListCoreDataTests"
+               ReferencedContainer = "container:Smart List.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0CDB4379237479A5007AD24A"
+               BuildableName = "Smart List_Levenshtein_Tests.xctest"
+               BlueprintName = "Smart List_Levenshtein_Tests"
+               ReferencedContainer = "container:Smart List.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0CDB438723751AD0007AD24A"
+               BuildableName = "Smart List_Regex_Tests.xctest"
+               BlueprintName = "Smart List_Regex_Tests"
+               ReferencedContainer = "container:Smart List.xcodeproj">
+            </BuildableReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0CC7678121F0262300752517"
-            BuildableName = "Smart List.app"
-            BlueprintName = "Smart List"
-            ReferencedContainer = "container:Smart List.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -71,8 +134,6 @@
             ReferencedContainer = "container:Smart List.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

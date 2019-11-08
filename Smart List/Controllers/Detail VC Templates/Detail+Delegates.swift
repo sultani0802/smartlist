@@ -63,7 +63,7 @@ extension DetailVC: UITextFieldDelegate, UITextViewDelegate {
             }
         } else if notification.name == UIResponder.keyboardWillHideNotification {
             //Once keyboard disappears, restore original positions
-            var info = notification.userInfo!
+            let info = notification.userInfo!
             let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
             let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: -keyboardSize!.height, right: 0.0)
             self.scrollView.contentInset = UIEdgeInsets.zero

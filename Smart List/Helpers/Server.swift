@@ -14,10 +14,16 @@ import SwiftyJSON
 /// This allows each Request made on a Session to be inspected and adapted before being created.
 /// In this case, it is being used to append an Authorization header to requests behind a certain type of authentication (Bearer in our case)
 struct EnvironmentInterceptor : RequestInterceptor {
+	
+	let coreData = CoreDataManager()	// refactor core data here
+	
+	
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
         var adaptedRequest = urlRequest
         
-        guard let token = CoreDataManager.shared.loadSettings().token else {            // Get the token from Core Data
+		
+		
+        guard let token = coreData.loadSettings().token else {            // Get the token from Core Data
             print("token is null in Core Data")
             completion(.success(adaptedRequest))                                            // If it doesn't exist, then run the callback
             return
@@ -46,7 +52,8 @@ class Server {
     
     // Nurtirionix API properties
     let nutriAppID : String = "b3bc8e5b"                                    // Nutritionix App ID
-    let nutriAppKey : String = "868c6f6027df0a34334a232b2543b5bf"           // Nutritionix App Key
+//    let nutriAppID : String = "a3bc8e5b"                                    // fake ID DELETE THIS
+	let nutriAppKey : String = "868c6f6027df0a34334a232b2543b5bf"           // Nutritionix App Key
     let remoteUserID : String = "0"                                         // Remote User ID = 0 (development)
     let NUTRITIONIX_API : String = "https://trackapi.nutritionix.com/"      // Base URL for requests
     

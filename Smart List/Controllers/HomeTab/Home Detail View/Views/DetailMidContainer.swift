@@ -18,10 +18,10 @@ class DetailMidContainer: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = false
         label.text = "Tomato"
-        label.textColor = Constants.ColorPalette.TealBlue
+		label.textColor = Constants.Visuals.ColorPalette.TealBlue
         label.adjustsFontSizeToFitWidth = true
         
-        if DeviceType.IS_IPHONE_5 {
+        if Constants.DeviceType.IS_IPHONE_5 {
             label.font = UIFont(name: Constants.Visuals.fontName, size: 28)
         } else {
             label.font = UIFont(name: Constants.Visuals.fontName, size: 35)
@@ -38,7 +38,7 @@ class DetailMidContainer: UIView {
         button.contentEdgeInsets = UIEdgeInsets(top: 1, left: 4, bottom: 1, right: 4)
         button.addTarget(self, action: #selector(DetailVC.quantityButtonTapped(_:)), for: .touchUpInside)
         
-        if DeviceType.IS_IPHONE_5 {
+        if Constants.DeviceType.IS_IPHONE_5 {
             button.titleLabel?.font = UIFont(name: Constants.Visuals.fontName, size: 15)
         } else {
             button.titleLabel?.font = UIFont(name: Constants.Visuals.fontName, size: 20)
@@ -67,9 +67,9 @@ class DetailMidContainer: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Purchased"
         label.textAlignment = .left
-        label.textColor = Constants.ColorPalette.TealBlue
+		label.textColor = Constants.Visuals.ColorPalette.TealBlue
         
-        if DeviceType.IS_IPHONE_5 {
+        if Constants.DeviceType.IS_IPHONE_5 {
             label.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         } else {
             label.font = UIFont(name: Constants.Visuals.fontName, size: 28)
@@ -83,10 +83,10 @@ class DetailMidContainer: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Today"
         label.textAlignment = .left
-        label.textColor = Constants.ColorPalette.BabyBlue
+		label.textColor = Constants.Visuals.ColorPalette.BabyBlue
         label.adjustsFontSizeToFitWidth = true
         
-        if DeviceType.IS_IPHONE_5 {
+        if Constants.DeviceType.IS_IPHONE_5 {
             label.font = UIFont(name: Constants.Visuals.fontName, size: 15)
         }
         else {
@@ -105,7 +105,7 @@ class DetailMidContainer: UIView {
         textfield.adjustsFontSizeToFitWidth = true
         textfield.returnKeyType = .done
         
-        if DeviceType.IS_IPHONE_5 {
+        if Constants.DeviceType.IS_IPHONE_5 {
             textfield.font = UIFont(name: Constants.Visuals.fontName, size: 12)
         }
         else {
@@ -134,7 +134,7 @@ class DetailMidContainer: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Expires"
         label.textAlignment = .left
-        label.textColor = Constants.ColorPalette.TealBlue
+		label.textColor = Constants.Visuals.ColorPalette.TealBlue
         label.font = UIFont(name: Constants.Visuals.fontName, size: 28)
 
         return label
@@ -172,7 +172,7 @@ class DetailMidContainer: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Notes"
         label.textAlignment = .left
-        label.textColor = Constants.ColorPalette.TealBlue
+		label.textColor = Constants.Visuals.ColorPalette.TealBlue
         label.font = UIFont(name: Constants.Visuals.fontName, size: 28)
 
         return label
@@ -189,7 +189,7 @@ class DetailMidContainer: UIView {
         view.addDoneToolbar()
         
         // Draw border for the notes section
-        view.borders(for: [.all], width: 0.5, color: Constants.ColorPalette.TealBlue.withAlphaComponent(0.18))
+		view.borders(for: [.all], width: 0.5, color: Constants.Visuals.ColorPalette.TealBlue.withAlphaComponent(0.18))
         
         return view
     }()

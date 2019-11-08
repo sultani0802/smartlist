@@ -29,7 +29,7 @@ class LoginViewController: UIViewController {
         lbl.textAlignment = .center
         lbl.text = "Smart Kitchen"
         lbl.font = UIFont(name: Constants.Visuals.fontName, size: 40)
-        lbl.textColor = Constants.ColorPalette.TealBlue
+		lbl.textColor = Constants.Visuals.ColorPalette.TealBlue
         lbl.adjustsFontSizeToFitWidth = true
         
         return lbl
@@ -69,7 +69,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = Constants.ColorPalette.OffWhite
+		view.backgroundColor = Constants.Visuals.ColorPalette.OffWhite
         viewModel.loginViewModelDelegate = self                 // Conform to View Model Protocol
         
         setupViews()

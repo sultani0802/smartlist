@@ -29,7 +29,7 @@ class PopUpCardView: UIView {
     func setupView() {
         // Rounded borders around the pop up
         self.layer.cornerRadius = 10
-        self.backgroundColor = Constants.ColorPalette.DarkGray.withAlphaComponent(0.95)
+		self.backgroundColor = Constants.Visuals.ColorPalette.DarkGray.withAlphaComponent(0.95)
     }
     
     // Method to be overidden by the inheriting view

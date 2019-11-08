@@ -23,7 +23,7 @@ extension KitchenDetailViewController {
             
             self.item!.expiryDate = roundedDate           // Set the expiration date of the Item
             
-            CoreDataManager.shared.saveContext()                            // Save to core data
+//            CoreDataManager.saveContext()                            // refactor core data here
             
             // Update the expiry UIButton's title with the new date
             self.midContainer.expiryDate.setTitle(DateHelper.shared.getDateString(of: (self.item?.expiryDate)!), for: .normal)
@@ -41,7 +41,7 @@ extension KitchenDetailViewController {
             let enteredQuantity : String = self.quantityView.quantityTextField.text! + " " + self.originalUnits[self.quantityView.pickerView.selectedRow(inComponent: 0)]
             // Set and save the Item's quantity
             self.item!.quantity = enteredQuantity
-            CoreDataManager.shared.saveContext()
+//            CoreDataManager.shared.saveContext()	// refactor core data here
             
             // Hide the keyboard
             quantityView.quantityTextField.resignFirstResponder()
@@ -70,7 +70,7 @@ extension KitchenDetailViewController {
             // Update the notes in the Item entity
             self.item?.notes = midContainer.noteTextView.text
             // Save to Core Data
-            CoreDataManager.shared.saveContext()
+//            CoreDataManager.shared.saveContext()	// refacor core data here
         }
     }
     
@@ -81,7 +81,7 @@ extension KitchenDetailViewController {
         if textField == midContainer.storeTextField && textField.text?.trimmingCharacters(in: .whitespaces) != "" {
             if let store = midContainer.storeTextField.text {
                 self.item?.store = store
-                CoreDataManager.shared.saveContext()
+//                CoreDataManager.shared.saveContext()	// refactor core data here
             }
         } 
     }

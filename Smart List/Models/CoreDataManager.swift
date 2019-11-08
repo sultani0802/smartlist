@@ -13,53 +13,96 @@ import UIKit
 class CoreDataManager {
     /****************************************/
     /****************************************/
-    // MARK: - Variables
+    // MARK: - Properties
     /****************************************/
     /****************************************/
-    static let shared = CoreDataManager()
-    private init() {} // Prevents creation of another instances
-    
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    
+   
+	let persistentContainer : NSPersistentContainer!
+	lazy var backgroundContext : NSManagedObjectContext = {			// This var is used to save context using background thread
+		return self.persistentContainer.newBackgroundContext()
+	}()
+	
+	
+	/****************************************/
+	/****************************************/
+	// MARK: - Initialization
+	/****************************************/
+	/****************************************/
+	
+	// Init with Dependency
+	public init(container: NSPersistentContainer) {
+		self.persistentContainer = container
+		self.persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
+	}
+	
+	convenience init() {
+		// Use default container for production environment
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+			fatalError("Could not get shared app delegate within CoreDataManager")
+		}
+		
+		self.init(container: appDelegate.persistentContainer)
+	}
+	
+	
+	
+	
     /// Saves the current working data to the Data Model
     func saveContext() {
-        do {
-            try context.save()
-        } catch {
-            print("Error saving context: \(error)")
-        }
+		if backgroundContext.hasChanges {
+			do {
+				try backgroundContext.save()
+			} catch {
+				let nserror = error as NSError
+				fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+			}
+		}
     }
     
     
     
     /****************************************/
     /****************************************/
-    //MARK: - Settings in Core Data
+    //MARK: - Settings Entity
     /****************************************/
     /****************************************/
 
+	
+	/// Fetches Settings entity from Core Data
+	/// - Returns: Settings Entity
     func loadSettings() -> Settings {
-        var result : [Settings]?
+        // Will be instantiated to the result of the fetch request
+		var result : [Settings]?
         
         let request : NSFetchRequest<Settings> = Settings.fetchRequest()
         
         do {
-            result = try context.fetch(request)
+            result = try backgroundContext.fetch(request)
         } catch {
             print("Error loading Settings from core date: \(error)")
         }
         
+		
         if result == nil || result!.count == 0 {
-            let newSettings = Settings(context: self.context)
-            newSettings.kitchenTableViewSort = "date"
-            saveContext()
-            
-            return newSettings
-        }
-        
-        return result![0]
+			// Initialize a new Settings entity if one doesn't exist already
+			return createSettingsEntity()
+		} else {
+			// Return the settings entity
+			return result![0]
+		}
     }
+	
+	/// Creates a new Settings Entity
+	func createSettingsEntity() -> Settings {
+		
+		
+		
+		let newSettings = Settings(context: self.backgroundContext)		// Init Settings entity
+		newSettings.kitchenTableViewSort = "date"						// Set the Kitchen Collection View to be sorted by expiry date
+		saveContext()
+		
+		return newSettings
+	}
 
     
     /// If the user chooses to skip sign up or log in then they will be in offline mode
@@ -118,7 +161,7 @@ class CoreDataManager {
         let request : NSFetchRequest<Settings> = Settings.fetchRequest()
         
         do {
-            let result = try context.fetch(request)                 // Fetch the Settings object from Core Data
+            let result = try backgroundContext.fetch(request)                 // Fetch the Settings object from Core Data
             user["name"] = result[0].name                           // Grab name
             user["email"] = result[0].email                         // Grab email
         } catch {
@@ -144,7 +187,7 @@ class CoreDataManager {
         let request: NSFetchRequest<Category> = Category.fetchRequest()
         
         do {
-            result = try context.fetch(request)
+            result = try backgroundContext.fetch(request)
         } catch {
             print("Error loading categories from context: \(error)")
         }
@@ -160,7 +203,11 @@ class CoreDataManager {
     func addCategory(categoryName: String) -> Category? {
         if !categoryExists(categoryName: categoryName) {
             // Create new category
-            let newCategory = Category(context: context)
+			guard let newCategory = NSEntityDescription.insertNewObject(forEntityName: "Category", into: backgroundContext) as? Category else {
+				print("ERROR: Could not create new Category entity: \(categoryName)")
+				return nil
+			}
+			
             newCategory.name = categoryName
             newCategory.hasDummy = false
             saveContext()
@@ -178,10 +225,10 @@ class CoreDataManager {
     func deleteCategory(categoryName: String) {
         let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "name = %@", categoryName)
-        let results: [Category] = try! context.fetch(fetchRequest)
+        let results: [Category] = try! backgroundContext.fetch(fetchRequest)
         
         for obj in results {
-            context.delete(obj)
+            backgroundContext.delete(obj)
         }
         
         saveContext()
@@ -192,7 +239,7 @@ class CoreDataManager {
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
         
         do {
-            try context.execute(deleteRequest)
+            try backgroundContext.execute(deleteRequest)
             saveContext()
         } catch {
             print("There was an error deleting all Categories: \(error)")
@@ -212,7 +259,7 @@ class CoreDataManager {
         var results: [Category] = []
         
         do {
-            results = try context.fetch(fetchRequest)
+            results = try backgroundContext.fetch(fetchRequest)
         } catch {
             print("Error checking if category \'\(categoryName)\' exists: \(error)")
         }
@@ -236,7 +283,7 @@ class CoreDataManager {
         var result: [Item] = []
         
         do {
-            result = try context.fetch(request)
+            result = try backgroundContext.fetch(request)
         } catch {
             print("Error fetching items: \(error)")
         }
@@ -251,7 +298,7 @@ class CoreDataManager {
     func fetchCompletedItems() -> [Item] {
         let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "completed == %@", NSNumber(booleanLiteral: true))  // predicate looks for completed attribute to be true
-        let results : [Item] = try! context.fetch(fetchRequest)
+        let results : [Item] = try! backgroundContext.fetch(fetchRequest)
         
         return results
     }
@@ -267,7 +314,7 @@ class CoreDataManager {
         let request: NSFetchRequest<KitchenItem> = KitchenItem.fetchRequest()
         
         do {
-            result = try context.fetch(request)
+            result = try backgroundContext.fetch(request)
         } catch {
             print("Error loading Kitchen Items from context: \(error)")
         }
@@ -296,7 +343,7 @@ class CoreDataManager {
         request.sortDescriptors = [sort!]                       // Add the sort to the fetch request
         
         do {
-            results = try context.fetch(request)                // Fetch
+            results = try backgroundContext.fetch(request)                // Fetch
         } catch {
             print("Error fetching sorted Kitchen Items from context: \(error)")
         }
@@ -309,7 +356,7 @@ class CoreDataManager {
     ///
     /// - Parameter item: The Item that the user just completed (aka just purchased)
     func addKitchenItem(item: Item) {
-        let newItem = KitchenItem(context: context)                             // Create new Kitchen Item
+        let newItem = KitchenItem(context: backgroundContext)                             // Create new Kitchen Item
         newItem.completed = item.completed
         newItem.expiryDate = item.expiryDate
         newItem.id = item.id
@@ -333,7 +380,7 @@ class CoreDataManager {
     ///   - name: The title of the Item entity
     /// - Returns: The new Item entity to be added to the Table View
     func addItem(toCategory category: Category, withItemName name: String, cellType: String) -> Item {
-        let newItem = Item(context: context)                                    // Create new Item
+        let newItem = Item(context: backgroundContext)                                    // Create new Item
         newItem.name = name                                                     // Set the name
         newItem.cellType = cellType                                             // Set the type to a real or dummy cell
         category.addToItems(newItem)                                            // Create relationship with appropriate Category
@@ -352,10 +399,10 @@ class CoreDataManager {
     func deleteItem(itemId: String, categoryName: String) {
         let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %@ && category.name = %@", String(itemId), categoryName)
-        let results: [Item] = try! context.fetch(fetchRequest)
+        let results: [Item] = try! backgroundContext.fetch(fetchRequest)
         
         for obj in results {
-            context.delete(obj)
+            backgroundContext.delete(obj)
         }
         
         saveContext()
@@ -365,11 +412,11 @@ class CoreDataManager {
     func deleteKitchenItem(item: KitchenItem) {
         let fetchRequest: NSFetchRequest<KitchenItem> = KitchenItem.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %@", item.id!)
-        let results : [KitchenItem] = try! context.fetch(fetchRequest)
+        let results : [KitchenItem] = try! backgroundContext.fetch(fetchRequest)
         
         for obj in results {
             print(obj)
-            context.delete(obj)
+            backgroundContext.delete(obj)
         }
         
         saveContext()
@@ -383,7 +430,7 @@ class CoreDataManager {
         
         // Try to delete all Item entities
         do {
-            try context.execute(deleteRequest)
+            try backgroundContext.execute(deleteRequest)
             saveContext()
         } catch {
             print("There was an error deleting all Items: \(error)")

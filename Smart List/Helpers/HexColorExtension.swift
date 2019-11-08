@@ -9,11 +9,13 @@
 // https://stackoverflow.com/users/1363156/luca-torella
 //
 //
-// This extension allows me to create colors using hex code
 
 import UIKit
 
 extension UIColor {
+	
+	/// Intializes a UIColor object using a hexcode
+	/// - Parameter hexString: The Hex value of the color
     convenience init(hexString: String) {
         let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int = UInt32()

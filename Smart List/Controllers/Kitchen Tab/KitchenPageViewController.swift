@@ -22,7 +22,7 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
     //
     // MARK: - Class Properties
     //
-    let coreDataManager = CoreDataManager.shared
+    let coreDataManager = CoreDataManager()	// refactor core data here
     weak var sortDelegate : KitchenSortDelegate?
     
     //
@@ -100,7 +100,7 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
                                                 target: self,
                                                 action: #selector(self.editButtonTapped))
         navigationItem.leftBarButtonItem = editBarButtonItem
-        navigationItem.leftBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
+		navigationItem.leftBarButtonItem?.tintColor = Constants.Visuals.ColorPalette.Yellow
         
         
         let rightBarButtonItem = UIBarButtonItem(title: "Sort",
@@ -108,7 +108,7 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
                                                  target: self,
                                                  action: #selector(sortButtonTapped))
         navigationItem.rightBarButtonItem = rightBarButtonItem
-        navigationItem.rightBarButtonItem?.tintColor = Constants.ColorPalette.Yellow
+		navigationItem.rightBarButtonItem?.tintColor = Constants.Visuals.ColorPalette.Yellow
     }
     
     
@@ -118,7 +118,6 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
         let segmentioViewRect = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: view.frame.height*0.07)
         segmentControl = Segmentio(frame: segmentioViewRect)
         segmentControl.translatesAutoresizingMaskIntoConstraints = false
-//        segmentControl.layer.borderColor = UIColor.clear.cgColor
         segmentControl.layer.borderWidth = 0
         view.addSubview(segmentControl)                             // Add segmented control to view
         
@@ -151,17 +150,24 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
             if self.pageIndex > segmentIndex {
                 direction = .reverse
                 self.pageIndex = segmentIndex                                                       // Set the page index to the new index
-                self.pageViewController.setViewControllers([self.kitchenPages[segmentIndex]],       // Perform the animation
-                    direction: direction,
-                    animated: true,
-                    completion: nil)
+				DispatchQueue.main.async {
+					self.pageViewController.setViewControllers([self.kitchenPages[segmentIndex]],       // Perform the animation
+						direction: direction,
+						animated: true,
+						completion: nil)
+				}
+
             } else if self.pageIndex < segmentIndex {
                 direction = .forward
                 self.pageIndex = segmentIndex                                                       // Set the page index to the new index
-                self.pageViewController.setViewControllers([self.kitchenPages[segmentIndex]],       // Perform the animation
-                    direction: direction,
-                    animated: true,
-                    completion: nil)
+				
+				DispatchQueue.main.async {
+					self.pageViewController.setViewControllers([self.kitchenPages[segmentIndex]],       // Perform the animation
+						direction: direction,
+						animated: true,
+						completion: nil)
+				}
+
             }
             
             self.sortDelegate = self.kitchenPages[self.pageIndex]                                   // Update the delegate to the visible page
@@ -202,7 +208,7 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate {
             pageViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             pageViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             pageViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pageViewController.view.bottomAnchor.constraint(equalTo: segmentControl.topAnchor, constant: -8)
+            pageViewController.view.bottomAnchor.constraint(equalTo: segmentControl.topAnchor, constant: -1)
             ])
     }
     

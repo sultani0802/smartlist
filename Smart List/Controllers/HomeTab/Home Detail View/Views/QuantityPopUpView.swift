@@ -17,7 +17,7 @@ class QuantityPopUpView: PopUpCardView {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Quantity"
-        label.textColor = Constants.ColorPalette.BabyBlue
+		label.textColor = Constants.Visuals.ColorPalette.BabyBlue
         label.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         label.textAlignment = .center
         label.layer.masksToBounds = true
@@ -30,7 +30,7 @@ class QuantityPopUpView: PopUpCardView {
         var button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Done", for: .normal)
-        button.setTitleColor(Constants.ColorPalette.SeaGreen, for: .normal)
+		button.setTitleColor(Constants.Visuals.ColorPalette.SeaGreen, for: .normal)
         button.titleLabel!.font = UIFont(name: Constants.Visuals.fontName, size: 20)
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(DetailVC.doneButtonTapped(_:)), for: .touchUpInside)
@@ -62,7 +62,7 @@ class QuantityPopUpView: PopUpCardView {
         textfield.textColor = .white
         textfield.textAlignment = .center
         textfield.adjustsFontSizeToFitWidth = true
-        textfield.borders(for: [.top, .right], width: 1, color: Constants.ColorPalette.Charcoal.withAlphaComponent(0.3))
+		textfield.borders(for: [.top, .right], width: 1, color: Constants.Visuals.ColorPalette.Charcoal.withAlphaComponent(0.3))
         textfield.addDoneToolbar()
         
         
@@ -77,7 +77,7 @@ class QuantityPopUpView: PopUpCardView {
     var pickerView: UIPickerView = {
         var picker = UIPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
-        picker.borders(for: [.top], width: 1, color: Constants.ColorPalette.Charcoal.withAlphaComponent(0.3))
+		picker.borders(for: [.top], width: 1, color: Constants.Visuals.ColorPalette.Charcoal.withAlphaComponent(0.3))
         
         return picker
     }()

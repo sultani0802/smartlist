@@ -16,7 +16,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// Customizes each tableviewcell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: self.profileViewCellId, for: indexPath) as! ProfileTableViewCell
+		let cell = tableView.dequeueReusableCell(withIdentifier: self.viewModel.tableViewCellId, for: indexPath) as! ProfileTableViewCell
 
         cell.titleLabel.text = viewModel.settings[indexPath.section][indexPath.row]                       // Set the setting's title
         

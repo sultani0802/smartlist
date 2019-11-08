@@ -33,9 +33,7 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
                                       "All Kitchen Items will appear here when you unload from the List."]
     
     // Core Data Manager (Singleton)
-    let coreDataManager = CoreDataManager.shared        // Core Data reference
-    //Set the cell identifier for the collection view
-    let kitchenTableViewCellIdentifier: String = Constants.CellID.KitchenTableViewCellID
+    let coreDataManager = CoreDataManager()        // refactor core data here
     
     // The delegate that handles performing a segue to a the Detail View
     // when the user selects an Item in one of the pages
@@ -51,7 +49,7 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     var getStartedView: HomeGetStartedView = {
         var view = HomeGetStartedView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = Constants.ColorPalette.Yellow.withAlphaComponent(0.7)
+		view.backgroundColor = Constants.Visuals.ColorPalette.Yellow.withAlphaComponent(0.7)
         view.isHidden = true                           // Instruction view is hidden unless the collection view is empty
         
         return view
@@ -128,33 +126,38 @@ class KitchenViewController: UIViewController, KitchenCellDeleteDelegate, Collec
     
     func initCollectionView() {
         // Set the collection view layout
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()           // Instantiate layout
+		let spacing : CGFloat = 15
+		let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()           // Instantiate layout
         layout.scrollDirection = .vertical                                              // Scrolls vertically
-        
+		layout.minimumInteritemSpacing = spacing
+		layout.minimumLineSpacing = spacing
+		
         // Instantiate the collectionView
         collectionView = UICollectionView(frame: CGRect(x: 0, y: UIApplication.shared.statusBarFrame.size.height,
                                                         width: self.view.frame.width,
                                                         height: self.view.frame.height),
                                           collectionViewLayout: layout)
-        collectionView.backgroundColor = .white                                         // Set background color
-        collectionView.translatesAutoresizingMaskIntoConstraints = false                // Uses auto-layout
+		collectionView.backgroundColor = .white                                         // Set background color
+		collectionView.translatesAutoresizingMaskIntoConstraints = false                // Uses auto-layout
         
         view.addSubview(collectionView)                                                 // Add to view
         
         NSLayoutConstraint.activate([                                                   // Apply constraints
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
+			collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
         
+		
+		
         // Apply offset of the tabbar and the segment control to the collection view
         let tabBarOffset: UIEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         collectionView.contentInset = tabBarOffset
         collectionView.scrollIndicatorInsets = tabBarOffset
         
         collectionView.register(KitchenCollectionViewCell.self,                         // Register cell class
-            forCellWithReuseIdentifier: Constants.CellID.KitchenCollectionViewCellID)
+            forCellWithReuseIdentifier: Constants.ReuseIdentifier.KitchenCollectionViewCellID)
         
         collectionView.delegate = self                                                  // Set collectionview delegate
         collectionView.dataSource = self                                                // Set collectionview datasource

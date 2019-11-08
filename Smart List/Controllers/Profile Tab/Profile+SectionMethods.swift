@@ -10,7 +10,7 @@ import UIKit
 
 extension ProfileViewController {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat(Constants.TableView.HeaderHeight)
+		return CGFloat(Constants.Visuals.tableViewHeaderHeight)
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

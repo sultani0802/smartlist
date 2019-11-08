@@ -61,8 +61,6 @@ class TabBarViewModel {
             } else {
                 print(response["success"] ?? "Succesfully authenticated")
             }
-            
-
-        }
+		}
     }
 }

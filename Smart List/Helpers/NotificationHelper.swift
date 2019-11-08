@@ -5,10 +5,14 @@
 //  Created by Haamed Sultani on Apr/1/19.
 //  Copyright © 2019 Haamed Sultani. All rights reserved.
 //
+//
+//
 
 import UIKit
 import UserNotifications
 
+
+/// Singleton that creates and sends local notifications at a specified date and time
 class NotificationHelper {
     static let shared = NotificationHelper()
     private init() {}
@@ -51,20 +55,28 @@ class NotificationHelper {
         
         // If the user has granted us access to send notifications
         if self.notificationsAllowed {
-            let content = UNMutableNotificationContent()                                                                    // Init the notification
+            // Init the notification
+			let content = UNMutableNotificationContent()
+			
+			// Make notification title plural/singular form
             if itemName.last == "s" {
-                content.title = "Your \(itemName) are about to expire!"                                                     // (plural) Set the notitication title
+                content.title = "Your \(itemName) are about to expire!"
             } else {
-                content.title = "Your \(itemName) is about to expire!"                                                      // (singular) Set the notitication title
+                content.title = "Your \(itemName) is about to expire!"
             }
-            content.body = "Expiring \(DateHelper.shared.getDateString(of: expiryDate))"                                    // Set the notification's body
+			
+			// Set the notification's body
+            content.body = "Expiring \(DateHelper.shared.getDateString(of: expiryDate))"
+			
             if !imageURL.isEmpty {
+				// If the item has an imageUrl, attach it to the notification
                 let imageData = NSData(contentsOf: URL(string: imageURL)!)!
                 let attachment = UNNotificationAttachment.saveImageToDisk(fileIdentifier: "image.jpg", data: imageData, options: nil)
                 content.attachments = [attachment] as! [UNNotificationAttachment]
             }
             
-            let today = DateHelper.shared.getCurrentDateObject()                                                            // Get today's date
+			// Set the notification's date/time to the Item's expiration date
+            let today = DateHelper.shared.getCurrentDateObject()
             let timeDifference = Calendar.current.dateComponents([.hour], from: today, to: expiryDate).hour                 // Get the number of hours from now until the expiration date
             let seconds = timeDifference!*3600                                                                              // Get the number of seconds from now until the expiration date at 1PM
 
@@ -77,16 +89,24 @@ class NotificationHelper {
                 UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)                                 // Add the notification to the UserNotificationCenter
             }
         } else {
-            print("Notifications denied")
+            print("User has denied Push Notifications")
         }
     }
-    
 }
 
 
 @available(iOSApplicationExtension 10.0, *)
 extension UNNotificationAttachment {
     
+	
+	/// Saves an image to the device and returns a Notification Attachment that will be used in local notifications
+	///
+	/// - Parameters:
+	///   - fileIdentifier: The image's description
+	///   - data: The image data
+	///   - options: Notification options
+	///
+	/// - Returns: A Notification Attachment
     static func saveImageToDisk(fileIdentifier: String, data: NSData, options: [NSObject : AnyObject]?) -> UNNotificationAttachment? {
         let fileManager = FileManager.default
         let folderName = ProcessInfo.processInfo.globallyUniqueString
