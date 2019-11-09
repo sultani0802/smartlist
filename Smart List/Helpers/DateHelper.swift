@@ -11,11 +11,11 @@
 import Foundation
 
 class DateHelper {
-    
+
     static let shared = DateHelper()
     private init() {}                                   // Prevents creation of multiple instances
-    
-    
+
+
     /// Gets today's date and time
 	///
     /// - Returns: String representation of today's date and time

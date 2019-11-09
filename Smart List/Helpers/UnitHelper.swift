@@ -13,21 +13,46 @@ class UnitHelper {
     private init() {}                                           // Prevents creation of another instances
     
     
-    /// Converts the long version of the units to their short-hand/abbreviated version
-    /// and makes it get reflected in the Detail View's quantity button
-    ///
-    /// - Parameter u: The quantity that is saved to the Item's entity
+	/**
+	Abbreviates a unit of measurement
+	
+	- Parameter u: The long version of the unit of measurement
+	- Returns : The abbreviated unit of measurement
+	
+	> If the unit of measurement isn't valid, the original string will be returned
+	
+	**Example Usage**
+	```
+	let shortForm = abbreviateUnit(u: "15 millimeters") // 15 mLs
+	```
+	*/
     func abbreviateUnit(u : String) -> String {
-        let components = u.components(separatedBy: " ")         // Separate the numeral and unit
+		// Separate the numeral and unit
+		let components = u.components(separatedBy: " ")
+		
+		// Guard that the parameter is 2 words (i.e. 15 millimeters)
+		guard components.count == 2 else { return u }
+		
         let unit : String = components[1]                       // Grab the unit
-        var shortUnit : String = Constants.Units[unit]!         // Grab the short-hand version of it in Costants
-        
+		var shortUnit : String = ""								// Will be instantiated to the the abbreviation
+		
+		// Check if the unit of measurement they used exists in our list of units
+		// Otherwise, return the original string
+		if (Constants.Units[unit] != nil) {
+			shortUnit = Constants.Units[unit]!
+		} else if (Constants.Units["\(unit)s"] != nil) {
+			shortUnit = Constants.Units["\(unit)s"]!
+		} else {
+			return u
+		}
+		
         // Change unit to singular form iff quantity equals 1
         if components[0] == "1" && shortUnit.last == "s" {
             shortUnit = String(shortUnit.dropLast())
         }
         
-        let result = components[0] + " " + shortUnit            // Combine the numeral and short-hand unit
+		// Combine the number and abbreviation
+        let result = components[0] + " " + shortUnit
         
         // Return the abbreviated quantity
         return result

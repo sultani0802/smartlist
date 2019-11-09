@@ -112,6 +112,26 @@
                ReferencedContainer = "container:Smart List.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0CDB43952375F593007AD24A"
+               BuildableName = "Smart List_Spinner_UITests.xctest"
+               BlueprintName = "Smart List_Spinner_UITests"
+               ReferencedContainer = "container:Smart List.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0CDB43A32376096D007AD24A"
+               BuildableName = "Smart List_UnitHelper_Tests.xctest"
+               BlueprintName = "Smart List_UnitHelper_Tests"
+               ReferencedContainer = "container:Smart List.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

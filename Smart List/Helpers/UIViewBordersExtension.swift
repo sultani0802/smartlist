@@ -8,20 +8,24 @@
 //  Thanks to user 'seeppp' for the code
 //  https://stackoverflow.com/a/42654937/3365488
 //
-//
-//
-// Allows me to draw borders for specific sides of views
 
 import UIKit
 
 public extension UIView {
-    
-    /// Adds borders to the specified sides of a UIView with a color of my choice and thickness
-    ///
-    /// - Parameters:
-    ///   - edges: any mixture of these: [.top, .left, .right, .bottom]
-    ///   - width: Thickness of the edge
-    ///   - color: Constants.ColorPalette.MyColor.withAlphaComponent()
+	/**
+	
+	Adds a border to specified edges.
+	
+	- Parameters:
+		- for: The edges of the UIView to add the border to [.top, .left, .right, .bottom, or .all]
+		- width: Optional value for thickness of the border. Defaults to 1
+		- color: The borders' color. Defaults to .black
+	>
+	**Example Usage**
+	```
+	UIView.borders(for: [.all], width: 1, color: .red)
+	```
+	*/
     func borders(for edges:[UIRectEdge], width:CGFloat = 1, color: UIColor = .black) {
         
         if edges.contains(.all) {

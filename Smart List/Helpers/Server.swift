@@ -12,7 +12,7 @@ import SwiftyJSON
 
 
 /// This allows each Request made on a Session to be inspected and adapted before being created.
-/// In this case, it is being used to append an Authorization header to requests behind a certain type of authentication (Bearer in our case)
+/// In this case, it is being used to append an Bearer Authorization header to requests
 struct EnvironmentInterceptor : RequestInterceptor {
 	
 	let coreData = CoreDataManager()	// refactor core data here

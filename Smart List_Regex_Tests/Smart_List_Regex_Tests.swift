@@ -38,7 +38,7 @@ class Smart_List_Regex_Tests: XCTestCase {
 		XCTAssertTrue(regexB)
 		XCTAssertTrue(regexC)
 	}
-	// datehelper, levenshtein, regex
+	
 	func test_email_failing() {
 		// Given
 		let emailA = "dwajkh@dakw."

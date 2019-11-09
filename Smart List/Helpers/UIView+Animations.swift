@@ -10,28 +10,56 @@
 import UIKit
 
 extension UIView {
-    
-    // Makes a UIView object become visible with a fading in animation
-    func fadeIn(_ duration: TimeInterval? = 0.2, onCompletion: (() -> Void)? = nil) {
-        self.alpha = 0
-        self.isHidden = false
-        UIView.animate(withDuration: duration!,
-                       animations: { self.alpha = 1 },
-                       completion: { (value: Bool) in
-                        if let complete = onCompletion { complete() }
-        }
-        )
-    }
-    
-    // Makes a UIView object disappear with a fading out animation
-    func fadeOut(_ duration: TimeInterval? = 0.2, onCompletion: (() -> Void)? = nil) {
-        UIView.animate(withDuration: duration!,
-                       animations: { self.alpha = 0 },
-                       completion: { (value: Bool) in
-                        self.isHidden = true
-                        if let complete = onCompletion { complete() }
-        }
-        )
-    }
-    
+	
+	
+	/**
+	Fades in a UIView using an animation
+	
+	- Parameters:
+	- duration: How long the fading animation takes. Default is 0.2 seconds
+	- onCompletion: Completion handler called when animation was successful
+	
+	> **Example Usage**
+	```
+	UIVIew.fadeIn()
+	```
+	or
+	```
+	UIView.fadeIn(0.5)
+	```
+	*/
+	func fadeIn(_ duration: TimeInterval = 0.2, onCompletion: (() -> Void)? = nil) {
+		self.alpha = 0
+		self.isHidden = false
+		
+		UIView.animate(withDuration: duration, animations: { self.alpha = 1 }, completion: { (value: Bool) in
+			if let onCompletion = onCompletion { onCompletion() }
+		})
+	}
+	
+	
+	/**
+	Fades in a UIView using an animation
+	
+	- Parameters:
+	- duration: How long the fading animation takes. Default is 0.2 seconds
+	- onCompletion: Completion handler called when animation was successful
+	
+	> **Example Usage**
+	```
+	UIVIew.fadeOut()
+	```
+	or
+	```
+	UIView.fadeOut(1.0)
+	```
+	*/
+	func fadeOut(_ duration: TimeInterval = 0.2, onCompletion: (() -> Void)? = nil) {
+		
+		UIView.animate(withDuration: duration, animations: { self.alpha = 0 }, completion: { (value: Bool) in
+			self.isHidden = true
+			if let onCompletion = onCompletion { onCompletion() }
+		})
+	}
+	
 }

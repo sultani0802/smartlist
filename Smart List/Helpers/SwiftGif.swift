@@ -10,11 +10,17 @@ import UIKit
 import ImageIO
 
 extension UIImageView {
-    
-    
-    /// Loads a gif from Gifs folder
-    ///
-    /// - Parameter name: Name of the .gif file
+	/**
+	Loads a gif from the Gifs folder
+	
+	- Parameter name: Name of the .gif file
+	
+	**Example Usage**
+	```
+	UIImageView.loadGif(name: "mygif")
+	```
+	
+	*/
     public func loadGif(name: String) {
         DispatchQueue.global().async {
             let image = UIImage.gif(name: name)
