@@ -100,7 +100,7 @@ struct SmartListUserDefaults {
 		self.email = email
 		self.token = token
 		self.loggedInStatus = true
-		self.offlineMode = true
+		self.offlineMode = false
 	}
 	
 	/// Sets user session information to an empty String
@@ -110,5 +110,6 @@ struct SmartListUserDefaults {
 		self.email = ""
 		self.token = ""
 		self.loggedInStatus = false
+		self.offlineMode = false
 	}
 }

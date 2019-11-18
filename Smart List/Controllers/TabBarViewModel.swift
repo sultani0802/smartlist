@@ -56,7 +56,7 @@ class TabBarViewModel {
 			[weak self] response in
 			
 			if let error = response["error"] {
-				print(error)
+				print("Error when authenticating user: \(error)")
 				
 				// Save user's logged in status
 				self?.defaults.loggedInStatus = false
