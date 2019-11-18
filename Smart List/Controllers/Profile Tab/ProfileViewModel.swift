@@ -64,11 +64,11 @@ class ProfileViewModel {
 	//MARK: - Server Requests
 	func logoutRequest() {
 		Server.shared.logout() {
-			response in
+			[weak self] response in
+			guard let self = self else { return }
 			
 			if let success = response["success"] {
-				//				self.coreData.setOfflineMode(offlineMode: true)
-				self.defaults.offlineMode = true
+				self.defaults.userLoggedOut()
 				self.delegate!.didFinishLoggingOutSuccess(message: success)
 			} else {
 				let error = response["error"]

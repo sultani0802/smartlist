@@ -20,7 +20,6 @@ extension HomeViewController {
     
     /// Set the number of rows for each section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(viewModel.items[section].count)
 		return viewModel.items[section].count
     }
     

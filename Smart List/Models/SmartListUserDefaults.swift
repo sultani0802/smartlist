@@ -102,4 +102,13 @@ struct SmartListUserDefaults {
 		self.loggedInStatus = true
 		self.offlineMode = true
 	}
+	
+	/// Sets user session information to an empty String
+	/// > name, email, token, and loggedInStatus = ""
+	mutating func userLoggedOut() {
+		self.name = ""
+		self.email = ""
+		self.token = ""
+		self.loggedInStatus = false
+	}
 }

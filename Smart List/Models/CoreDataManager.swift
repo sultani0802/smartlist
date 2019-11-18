@@ -156,7 +156,7 @@ class CoreDataManager {
 //
 //        saveContext()                   // Save settings object
 //    }
-//    
+//
 //    func loadUser() -> [String: String] {
 //        var user : [String:String] = [:]
 //
