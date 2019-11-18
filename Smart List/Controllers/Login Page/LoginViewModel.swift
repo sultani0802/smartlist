@@ -23,6 +23,7 @@ class LoginViewModel {
     /****************************************/
     /****************************************/
     var coreData : CoreDataManager
+	var defaults : SmartListUserDefaults!
     var isPoppedUp : Bool = false           // Keeps track of whether the view is in view or not
     weak var loginViewModelDelegate : LoginViewModelDelegate?
     
@@ -31,8 +32,9 @@ class LoginViewModel {
     //MARK: - Initializers
     /****************************************/
     /****************************************/
-    init(coreDataManager : CoreDataManager) {
+	init(coreDataManager : CoreDataManager, userDefaults: SmartListUserDefaults) {
         self.coreData = coreDataManager
+		self.defaults = userDefaults
     }
     
     
@@ -59,9 +61,9 @@ class LoginViewModel {
                 return
             }
             
-                                                                                                        // If successful
-            self.coreData.addUser(name: response["name"]!, email: response["email"]!, token: token)         // Save user account information in Core Data
-            
+			// Save user's session in User Defaults
+			self.defaults.userLoggedIn(name: response["name"]!, email: response["email"]!, token: token)
+			
             self.loginViewModelDelegate?.dismissLoginView()                                                  // Hide the login view controller through delegate
         }
     }

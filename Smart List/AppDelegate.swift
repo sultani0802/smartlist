@@ -31,10 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let coreDataManager = CoreDataManager()	// refactor core data here
-        
+        let coreDataManager = CoreDataManager()
+		let userDefaults = SmartListUserDefaults()
+		
         window = UIWindow()
-        window?.rootViewController = TabBarController(coreDataManager: coreDataManager)
+        window?.rootViewController = TabBarController(coreDataManager: coreDataManager, userDefaults: userDefaults)
         window?.makeKeyAndVisible()
         
         return true

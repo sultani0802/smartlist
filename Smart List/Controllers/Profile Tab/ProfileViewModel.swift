@@ -14,11 +14,17 @@ protocol ProfileViewModelDelegate {
 	func willShowAlert(message: String, section: Int, row: Int)
 }
 
+/// Used to determine which settings the User wants to edit
+enum SettingsOptions : Int {
+	case name = 0, email, password, notifications
+}
+
 class ProfileViewModel {
 	
 	//MARK: - Delegate
 	var delegate : ProfileViewModelDelegate?
-	var coreData : CoreDataManager
+	var coreData : CoreDataManager!
+	var defaults : SmartListUserDefaults!
 	
 	//MARK: - Properties
 	let tableViewCellId = Constants.ReuseIdentifier.ProfileTableViewCellID
@@ -27,33 +33,25 @@ class ProfileViewModel {
 	var settings : [[String]]!
 	var settingValues : [String:String?]?
 	
-	var isLoggedIn : Bool = false
 	
-	
-	init(coreDataManager: CoreDataManager) {
+	init(coreDataManager: CoreDataManager, userDefaults: SmartListUserDefaults) {
 		self.coreData = coreDataManager
+		self.defaults = userDefaults
 	}
 	
 	
 	//MARK: - Core Data Methods
 	func loadSettings() {
-		let settings = self.coreData.loadSettings()
 		var name = ""
 		var email = ""
 		
-		if (settings.name != "") {
-			name = settings.name ?? ""
-		}
+		name = defaults.name
 		
-		if (settings.email != "") {
-			email = settings.email ?? ""
-		}
+		email = defaults.email
 		
 		settingValues = ["name":name, "email":email]
 		
-		isLoggedIn = settings.isLoggedIn                    // Set logged in status
-		
-		if (isLoggedIn) {
+		if (self.defaults.loggedInStatus) {
 			self.sections = ["Account" , "General"]
 			self.settings = [["Name", "Email", "Password"], ["Notifications"]]
 		} else {
@@ -69,8 +67,8 @@ class ProfileViewModel {
 			response in
 			
 			if let success = response["success"] {
-				self.coreData.setOfflineMode(offlineMode: true)
-				self.isLoggedIn = false
+				//				self.coreData.setOfflineMode(offlineMode: true)
+				self.defaults.offlineMode = true
 				self.delegate!.didFinishLoggingOutSuccess(message: success)
 			} else {
 				let error = response["error"]
@@ -91,7 +89,8 @@ class ProfileViewModel {
 					print("error: \(error)")
 					completion("Sorry. Can't update name right now.")
 				} else {                                                                        // If the request success
-					self.coreData.addUser(name: updatedValue, email: "", token: "")     // Save the name to Core
+					//					self.coreData.addUser(name: updatedValue, email: "", token: "")     // Save the name to Core
+					self.defaults.name = updatedValue
 					self.settingValues!["name"] = updatedValue                                   // Update model
 					print("Here are the values")
 					print(self.settingValues!)
@@ -106,7 +105,8 @@ class ProfileViewModel {
 					print("error: \(error)")
 					completion("Sorry. Can't update your email right now.")
 				} else {
-					self.coreData.addUser(name: "", email: updatedValue, token: "")    // Save the name to Core
+					//					self.coreData.addUser(name: "", email: updatedValue, token: "")    // Save the name to Core
+					self.defaults.email = updatedValue
 					self.settingValues!["email"] = updatedValue                                 // Update model
 					completion("Updated your name to \(updatedValue)")
 				}
@@ -131,14 +131,8 @@ class ProfileViewModel {
 				delegate?.willShowAlert(message: "Change your notification settings in the settings app.", section: section, row: row)
 			
 			default:
-				print("Cancel setting modification")
+				print("Cancel changing a setting")
 		}
 	}
 	
-}
-
-
-/// <#Description#>
-enum SettingsOptions : Int {
-	case name = 0, email, password, notifications
 }

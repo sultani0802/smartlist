@@ -7,60 +7,67 @@
 //
 
 import Foundation
+import UserNotifications
+
 
 protocol TabBarViewModelDelegate : class {
-    func presentSignUpVC()
+	func presentSignUpVC()
 }
 
 class TabBarViewModel {
-    
-    /****************************************/
-    /****************************************/
-    //MARK: - Properties
-    /****************************************/
-    /****************************************/
-    var coreData : CoreDataManager
-    weak var tabBarViewModelDelegate : TabBarViewModelDelegate?
-    
-    // The Item view controller (HomeViewController) conforms to this protocol for tableview animations
-    var tableViewAnimationDelegate : TableViewAnimationDelegate?
-    // The Kitchen view controllers (KitchenViewController) conforms to this protocol for collectionview animations
-    var collectionViewAnimationDelegate : [CollectionViewAnimationDelegate]?
-     // Used to keep track of which tab is in view
-    
-    
-    /****************************************/
-    /****************************************/
-    //MARK: - Initializers
-    /****************************************/
-    /****************************************/
-    init(coreDataManager : CoreDataManager) {
-        self.coreData = coreDataManager
-    }
-    
-    
-    /****************************************/
-    /****************************************/
-    //MARK: - Model Methods
-    /****************************************/
-    /****************************************/
-    
-    /// Loads 'Settings' entity from Core Data
-    /// Makes API request to log in user with saved auth token in 'Settings' entity
-    func loadSettings() {
-        let settings = self.coreData.loadSettings()             // Get the settings from Core Data
-        
-        Server.shared.authUser() {                              // Make a call to log the user in
-            response in
-            
-            if let error = response["error"] {                  // If user didn't automatically get logged in
-                print(error)
-                
-                settings.isLoggedIn = false                     // Save user's logged in status as false
-                self.coreData.saveContext()                     // Save in Core Data
-            } else {
-                print(response["success"] ?? "Succesfully authenticated")
-            }
+	
+	/****************************************/
+	/****************************************/
+	// MARK: - Properties
+	/****************************************/
+	/****************************************/
+	var coreData : CoreDataManager!
+	var defaults : SmartListUserDefaults!
+	weak var tabBarViewModelDelegate : TabBarViewModelDelegate?
+	
+	// HomeViewController conforms to this protocol for tableview animations
+	var tableViewAnimationDelegate : TableViewAnimationDelegate?
+	// The KitchenViewController's conform to this protocol for collectionview animations
+	var collectionViewAnimationDelegate : [CollectionViewAnimationDelegate]?
+	
+	
+	/****************************************/
+	/****************************************/
+	// MARK: - Initializers
+	/****************************************/
+	/****************************************/
+	init(coreDataManager : CoreDataManager, userDefaults: SmartListUserDefaults) {
+		self.coreData = coreDataManager
+		self.defaults = userDefaults
+	}
+	
+	
+	/****************************************/
+	/****************************************/
+	// MARK: - Authentication Methods
+	/****************************************/
+	/****************************************/
+	
+	/// Loads 'Settings' entity from Core Data
+	/// Makes API request to log in user with saved auth token in 'Settings' entity
+	func loadSettings() {
+		// Authenticate the user
+		Server.shared.authUser() {
+			[weak self] response in
+			
+			if let error = response["error"] {
+				print(error)
+				
+				// Save user's logged in status
+				self?.defaults.loggedInStatus = false
+				
+				// If the user has offline mode off, show the sign up page
+				if (self?.defaults.offlineMode == false) {
+					self?.tabBarViewModelDelegate?.presentSignUpVC()
+				}
+			} else {
+				print(response["success"] ?? "Succesfully authenticated")
+			}
 		}
-    }
+	}
 }

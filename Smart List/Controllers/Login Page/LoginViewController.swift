@@ -50,8 +50,8 @@ class LoginViewController: UIViewController {
     }()
     
     // MARK: - Initialization
-    init(coreDataManager : CoreDataManager) {
-        viewModel = LoginViewModel(coreDataManager: coreDataManager)
+	init(coreDataManager : CoreDataManager, userDefaults: SmartListUserDefaults) {
+        viewModel = LoginViewModel(coreDataManager: coreDataManager, userDefaults: userDefaults)
         super.init(nibName: nil, bundle: nil)
         registerForPoppedUpNotification()                       // Register for popped up notification
     }
@@ -166,7 +166,7 @@ class LoginViewController: UIViewController {
                 }
                 
                 // Present the Sign Up Page
-                topController.present(SignUpViewController(coreDataManager: self.viewModel.coreData), animated: true)
+				topController.present(SignUpViewController(coreDataManager: self.viewModel.coreData, userDefaults: self.viewModel.defaults), animated: true)
             }
         }
     }
@@ -178,10 +178,12 @@ class LoginViewController: UIViewController {
     @objc func skipButtonTapped(_ sender: UIButton) {
         print("skip sign up")
         
-        self.viewModel.coreData.setOfflineMode(offlineMode: true)        // Set offline mode to true
+		// Save offline mode to User Defaults
+		self.viewModel.defaults.offlineMode = true
         
         DispatchQueue.main.async {
             self.dismiss(animated: true) {
+				
                 if (!self.viewModel.isPoppedUp) {
                     // Get the top most view
                     var topController : UIViewController = UIApplication.shared.keyWindow!.rootViewController!
@@ -190,7 +192,7 @@ class LoginViewController: UIViewController {
                     }
                     
                     // Init the Tab Bar and present it
-                    topController.present(TabBarController(coreDataManager: self.viewModel.coreData), animated: true)
+					topController.present(TabBarController(coreDataManager: self.viewModel.coreData, userDefaults: self.viewModel.defaults), animated: true)
                 }
             }
         }
@@ -236,7 +238,7 @@ extension LoginViewController : LoginViewModelDelegate {
     func dismissLoginView() {
         DispatchQueue.main.async {
             self.dismiss(animated: true) {                                                      // Hide the login view
-                // If the login view was not created from the profile tab
+                // If the login view was not instantiated from the profile tab
                 // then, create the TabBar (we are assuming the tabbar hasn't been created yet)
                 if (!self.viewModel.isPoppedUp) {
                     // Get the top most view
@@ -246,7 +248,7 @@ extension LoginViewController : LoginViewModelDelegate {
                     }
                     
                     // Init the Tab Bar and present it
-                    topController.present(TabBarController(coreDataManager: self.viewModel.coreData), animated: true)
+					topController.present(TabBarController(coreDataManager: self.viewModel.coreData, userDefaults: self.viewModel.defaults), animated: true)
                 }
             }
         }

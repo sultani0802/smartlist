@@ -64,7 +64,7 @@ extension HomeViewController {
                 self.tableView.beginUpdates()
                 
                 // Add the Category entity to Core Data if it doesn't already exist
-                if (self.viewModel.addCategory(categoryName: cat)) {
+                if (self.viewModel.createAndSaveCategory(categoryName: cat)) {
                     self.toggleInstructions()
                 }
                 
@@ -98,7 +98,7 @@ extension HomeViewController {
                 self.tableView.beginUpdates()
                 
                 // Add the Category entity to Core Data if it doesn't already exist
-                if (self.viewModel.addCategory(categoryName: textField.text!)) {
+                if (self.viewModel.createAndSaveCategory(categoryName: textField.text!)) {
                     self.toggleInstructions()
                 }
                 

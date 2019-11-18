@@ -12,7 +12,7 @@ import UIKit
 class ProfileViewController: UIViewController {
     ///
     //MARK: - Properties
-    var viewModel : ProfileViewModel
+    var viewModel : ProfileViewModel!
     
     
     
@@ -35,8 +35,8 @@ class ProfileViewController: UIViewController {
     //
     //MARK - Initialization
     //
-    init(coreDataManager : CoreDataManager) {
-        self.viewModel = ProfileViewModel(coreDataManager: coreDataManager)
+	init(coreDataManager : CoreDataManager, userDefaults: SmartListUserDefaults) {
+		self.viewModel = ProfileViewModel(coreDataManager: coreDataManager, userDefaults: userDefaults)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -94,7 +94,7 @@ class ProfileViewController: UIViewController {
             self.tableView.removeFromSuperview()
         }
         
-        if !viewModel.isLoggedIn {
+		if !self.viewModel.defaults.loggedInStatus {
             tableView = UITableView(frame: CGRect(x: 0,                                                     // Instantiate tableView
                 y: UIApplication.shared.statusBarFrame.size.height,
                 width: self.view.frame.width,
@@ -259,7 +259,7 @@ class ProfileViewController: UIViewController {
     
     
     @objc func signUpButtonTapped(_ button: UIButton) {
-        let signUpVC = SignUpViewController(coreDataManager: self.viewModel.coreData)
+		let signUpVC = SignUpViewController(coreDataManager: self.viewModel.coreData, userDefaults: self.viewModel.defaults)
         signUpVC.isPoppedUp = true
         DispatchQueue.main.async {
             self.present(signUpVC, animated: true)
@@ -267,7 +267,7 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func loginButtonTapped(_ button: UIButton) {
-        let loginVC = LoginViewController(coreDataManager: self.viewModel.coreData)
+		let loginVC = LoginViewController(coreDataManager: self.viewModel.coreData, userDefaults: self.viewModel.defaults)
 //        loginVC.isPoppedUp = true
         let notificationName = Notification.Name(Constants.NotificationKey.LoginViewPoppedUpNotificationKey)
         NotificationCenter.default.post(name: notificationName, object: nil)

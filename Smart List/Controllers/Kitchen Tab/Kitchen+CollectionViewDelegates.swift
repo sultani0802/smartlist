@@ -64,18 +64,11 @@ extension KitchenViewController: UICollectionViewDataSource, UICollectionViewDel
     }
     
     
-	func customizeCellView(cell: KitchenCollectionViewCell) {
-		
-	}
-    
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = Constants.ScreenSize.SCREEN_WIDTH/2
         
 		return CGSize(width: size - 15, height: size - 15)
     }
-    
-    
     
     
     

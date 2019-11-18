@@ -114,13 +114,14 @@ class HomeViewModel {
     
     /// Loads the Categories from Data Model
     private func loadCategoriesFromContext() {
-        categories = coreData.loadCategories()   // Make a request to fetch the Category entities in the database
+        categories = coreData.loadCategoriesForShoppingList()   // Make a request to fetch the Category entities in the database
     }
     
-    /// Adds a Category to the Data Model and the Table View
+    /// Tries to add a new Category entity to Core Data if it doesn't exist already and then adds it to the TableView datasource.
     ///
     /// - Parameter categoryName: The title of the Category entity
-    func addCategory(categoryName: String) -> Bool {
+	/// - Returns: A boolean flag based on whether it was successful
+    func createAndSaveCategory(categoryName: String) -> Bool {
         if !categoryExists(categoryName: categoryName) {
             // Get the new Category created
             if let newCategory = coreData.addCategory(categoryName: categoryName) {
@@ -136,10 +137,10 @@ class HomeViewModel {
     }
     
     
-    /// Deletes a Category entity
+    /// Deletes a Category entity from Core Data
     ///
-    /// - Parameter categoryName: The title of the Category entity
-    func deleteCategory(categoryName: String) {
+    /// - Parameter categoryName: The title of the Category entity that was deleted
+    func deleteCategoryFromCoreData(categoryName: String) {
         coreData.deleteCategory(categoryName: categoryName)
     }
     
@@ -157,18 +158,15 @@ class HomeViewModel {
         return coreData.categoryExists(categoryName: categoryName)
     }
     
-    
+	
+	/// Loads the Items for the Categories present in the TableView from Core Data
     func loadItemsFromContext() {
-        let requestItems: NSFetchRequest<Item> = Item.fetchRequest()
-        
         // Cycle through the categories and load all the items related to each Category entity
-        for index in 0 ..< categories.count {
-            // Predicate = all items in this category
-            let itemPredicate = NSPredicate(format: "ANY category.name in %@", [categories[index].name])
-            requestItems.predicate = itemPredicate
-            
-            // Instantiate the items datasource array with the loaded Item entities
-            items.append(coreData.fetchItems(request: requestItems))
+        for category in categories {
+			if let categoryName = category.name {
+				// Instantiate the TableView datasource array with the loaded Item entities
+				items.append(coreData.fetchItems(categoryName: categoryName))
+			}
         }
     }
     

@@ -9,13 +9,15 @@
 import UIKit
 
 class KitchenDetailViewController: DetailVC {
-    var item : KitchenItem?
-    
+    var item : KitchenItem!
+	var coreData : CoreDataManager!
+	
+	
     //MARK: - View Delegates
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = item?.name
+        self.navigationItem.title = item.name
     }
     
     
@@ -27,7 +29,7 @@ class KitchenDetailViewController: DetailVC {
         loadQuantityPopUpModel()
         loadExpiryPopUpModel()
         
-        self.midContainer.quantityButton.setTitle(UnitHelper.shared.abbreviateUnit(u: ((self.item?.quantity)!)), for: .normal)
+        self.midContainer.quantityButton.setTitle(UnitHelper.shared.abbreviateUnit(u: ((self.item.quantity)!)), for: .normal)
         updateUnitDataSource()
         loadItemNotes()
         loadPurchaseStore()
@@ -38,15 +40,26 @@ class KitchenDetailViewController: DetailVC {
     
     
     //MARK: - Initializers
+	init(coreDataManager: CoreDataManager) {
+//		self.item = item
+		self.coreData = coreDataManager
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	
     override func setupModels() {
         // Populate the Units of measurement array
         originalUnits.append(contentsOf: Constants.Units.keys)
         workingUnits.append(contentsOf: originalUnits)
         
         // Set the name of the Item
-        midContainer.nameLabel.text = item?.name
+        midContainer.nameLabel.text = item.name
         // Set the quantity of the Item
-        midContainer.quantityButton.setTitle(item?.quantity, for: .normal)
+        midContainer.quantityButton.setTitle(item.quantity, for: .normal)
         
         // Set the dates for the Item
         setItemDates()
@@ -55,7 +68,7 @@ class KitchenDetailViewController: DetailVC {
     
     /// Sets the image in the top container of kitchen detail view
     func setItemImage() {
-        if self.item?.imageFullURL == nil || (self.item?.imageFullURL!.isEmpty)! {                      // If Item doesn't have an image url
+        if self.item.imageFullURL == nil || (self.item.imageFullURL!.isEmpty) {                      // If Item doesn't have an image url
             Server.shared.getItemFullURL(itemName: self.item!.name!) { imageURL in                          // Set the image of the Item based of Nutritionix pic
                 
                 if imageURL != "" || !imageURL.isEmpty{
@@ -78,7 +91,7 @@ class KitchenDetailViewController: DetailVC {
         //
         // Item's Purchase Date property
         //
-        if let purchaseDate = item?.purchaseDate {  // Get the Item's purchaseDate
+        if let purchaseDate = item.purchaseDate {  // Get the Item's purchaseDate
             midContainer.purchaseDate.text = DateHelper.shared.getDateString(of: purchaseDate)
         } else { // If it hasn't been set, display a message
             midContainer.purchaseDate.text = "Not purchased yet"
@@ -87,7 +100,7 @@ class KitchenDetailViewController: DetailVC {
         //
         // The Item's Expiration Date property
         //
-        if let expiryDate = item?.expiryDate {      // Get the Item's expiration date
+        if let expiryDate = item.expiryDate {      // Get the Item's expiration date
             midContainer.expiryDate.setTitle(DateHelper.shared.getDateString(of: expiryDate), for: .normal)     // Get a readable, string version of the date if it was set
         } else {
             midContainer.expiryDate.setTitle("Tap to set expiry", for: .normal)         // If it wasn't set, display a message
@@ -98,7 +111,7 @@ class KitchenDetailViewController: DetailVC {
     /// and pickerview with the corresponding info
     override func loadQuantityPopUpModel() {
         // Scroll the pickerview to the corresponding unit of measurement in the pop up view
-        guard let components = item?.quantity?.components(separatedBy: " ") else {return}   // Safely separate the quantity string from the Item entity into an array
+        guard let components = item.quantity?.components(separatedBy: " ") else {return}   // Safely separate the quantity string from the Item entity into an array
         if components.count == 2 {                                                          // If there are 2 words in the array
             let unit = components[1]                                                        // grab the second index of the array (which should be the unit of measurement)
             guard let unitIndex = workingUnits.firstIndex(of: unit) else {return}           // Grab the index of the unit in the working model
@@ -112,14 +125,14 @@ class KitchenDetailViewController: DetailVC {
     /// Gets the expiration date saved for the Item entity
     /// Scrolls the datepicker to the Data we just loaded
     override func loadExpiryPopUpModel() {
-        guard let expiryDate : Date = self.item?.expiryDate else {return}
+        guard let expiryDate : Date = self.item.expiryDate else {return}
         
         expiryDateView.datePicker.setDate(expiryDate, animated: true)
     }
     
     /// Loads the Notes and is displayed onto the notes section
     override func loadItemNotes() {
-        if let notes = self.item?.notes {
+        if let notes = self.item.notes {
             self.midContainer.noteTextView.text = notes
         } else {
 			self.midContainer.noteTextView.text = Constants.Visuals.detailViewNotesPlaceHolderText
@@ -127,12 +140,9 @@ class KitchenDetailViewController: DetailVC {
     }
     
     override func loadPurchaseStore() {
-        if let store = self.item?.store {
+        if let store = self.item.store {
             midContainer.storeTextField.text = store
         }
     }
-    
-    
-    
 }
 

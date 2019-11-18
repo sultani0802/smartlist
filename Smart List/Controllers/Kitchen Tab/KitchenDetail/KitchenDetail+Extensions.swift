@@ -21,15 +21,17 @@ extension KitchenDetailViewController {
             // Set the expiration date's time to 9AM
             let roundedDate = Calendar.current.date(bySettingHour: 13, minute: 0, second: 0, of: expiryDateView.datePicker.date)
             
-            self.item!.expiryDate = roundedDate           // Set the expiration date of the Item
+            self.item.expiryDate = roundedDate           // Set the expiration date of the Item
             
-//            CoreDataManager.saveContext()                            // refactor core data here
-            
+			
+			// Save changes to core data
+			self.coreData.saveContext()
+			
             // Update the expiry UIButton's title with the new date
-            self.midContainer.expiryDate.setTitle(DateHelper.shared.getDateString(of: (self.item?.expiryDate)!), for: .normal)
+            self.midContainer.expiryDate.setTitle(DateHelper.shared.getDateString(of: (self.item.expiryDate)!), for: .normal)
             
             // Send a notification that will trigger when the item is expired
-            NotificationHelper.shared.sendNotification(withExpiryDate: (self.item?.expiryDate!)!, itemName: (self.item?.name!)!, imageURL: self.item!.imageThumbURL!)
+            NotificationHelper.shared.sendNotification(withExpiryDate: self.item.expiryDate!, itemName: self.item.name!, imageURL: self.item.imageThumbURL!)
             
             // Hide the pop up view
             self.expiryDateView.fadeOut()
@@ -41,19 +43,21 @@ extension KitchenDetailViewController {
             let enteredQuantity : String = self.quantityView.quantityTextField.text! + " " + self.originalUnits[self.quantityView.pickerView.selectedRow(inComponent: 0)]
             // Set and save the Item's quantity
             self.item!.quantity = enteredQuantity
-//            CoreDataManager.shared.saveContext()	// refactor core data here
+            
+			// Save changes to Core Data
+			self.coreData.saveContext()
             
             // Hide the keyboard
             quantityView.quantityTextField.resignFirstResponder()
             
             // Update the view with the new quantity
-            self.midContainer.quantityButton.setTitle(self.item?.quantity, for: .normal)
+            self.midContainer.quantityButton.setTitle(self.item.quantity, for: .normal)
             
             // Hide the pop up view
             self.quantityView.fadeOut()
             
             // Change the unit of measurement to the short-hand version
-            self.midContainer.quantityButton.setTitle(UnitHelper.shared.abbreviateUnit(u: ((self.item?.quantity)!)), for: .normal)
+            self.midContainer.quantityButton.setTitle(UnitHelper.shared.abbreviateUnit(u: ((self.item.quantity)!)), for: .normal)
             
         }
     }
@@ -62,26 +66,25 @@ extension KitchenDetailViewController {
     
     override func textViewDidEndEditing(_ textView: UITextView) {
         
-        
         if textView == midContainer.noteTextView {
             print("save notes to DB")
             
             
             // Update the notes in the Item entity
-            self.item?.notes = midContainer.noteTextView.text
+            self.item.notes = midContainer.noteTextView.text
             // Save to Core Data
-//            CoreDataManager.shared.saveContext()	// refacor core data here
+			self.coreData.saveContext()
         }
     }
     
     override func textFieldDidEndEditing(_ textField: UITextField) {
         
-        
         // If the user dismisses the keyboard or taps the Done key
         if textField == midContainer.storeTextField && textField.text?.trimmingCharacters(in: .whitespaces) != "" {
             if let store = midContainer.storeTextField.text {
-                self.item?.store = store
-//                CoreDataManager.shared.saveContext()	// refactor core data here
+                self.item.store = store
+				// Save changes to Core Data
+				self.coreData.saveContext()
             }
         } 
     }

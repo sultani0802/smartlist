@@ -16,7 +16,7 @@ class CoreDataManager {
     // MARK: - Properties
     /****************************************/
     /****************************************/
-   
+	
 	let persistentContainer : NSPersistentContainer!
 	lazy var backgroundContext : NSManagedObjectContext = {			// This var is used to save context using background thread
 		return self.persistentContainer.newBackgroundContext()
@@ -35,6 +35,7 @@ class CoreDataManager {
 		self.persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
 	}
 	
+	// Initializer will instantiate persistentContainer from appDelegate
 	convenience init() {
 		// Use default container for production environment
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -50,6 +51,7 @@ class CoreDataManager {
     /// Saves the current working data to the Data Model
     func saveContext() {
 		if backgroundContext.hasChanges {
+			print("has changes")
 			do {
 				try backgroundContext.save()
 			} catch {
@@ -70,106 +72,106 @@ class CoreDataManager {
 	
 	/// Fetches Settings entity from Core Data
 	/// - Returns: Settings Entity
-    func loadSettings() -> Settings {
-        // Will be instantiated to the result of the fetch request
-		var result : [Settings]?
-        
-        let request : NSFetchRequest<Settings> = Settings.fetchRequest()
-        
-        do {
-            result = try backgroundContext.fetch(request)
-        } catch {
-            print("Error loading Settings from core date: \(error)")
-        }
-        
-		
-        if result == nil || result!.count == 0 {
-			// Initialize a new Settings entity if one doesn't exist already
-			return createSettingsEntity()
-		} else {
-			// Return the settings entity
-			return result![0]
-		}
-    }
-	
-	/// Creates a new Settings Entity
-	func createSettingsEntity() -> Settings {
-		
-		
-		
-		let newSettings = Settings(context: self.backgroundContext)		// Init Settings entity
-		newSettings.kitchenTableViewSort = "date"						// Set the Kitchen Collection View to be sorted by expiry date
-		saveContext()
-		
-		return newSettings
-	}
-
-    
-    /// If the user chooses to skip sign up or log in then they will be in offline mode
-    /// Therfore, we clear any online properties such as name, email, auth token, and set their logged in status to false
-    ///
-    /// - Parameter offlineMode: The boolean flag that will determine whether the user is offline or not
-    func setOfflineMode(offlineMode: Bool) {
-        let settings = loadSettings()           // Get settings core data object
-        
-        if (offlineMode == true ) {            // Clear all online properties and set to offline
-            settings.offlineMode = true
-            settings.isLoggedIn = false
-            settings.email = ""
-            settings.name = ""
-            settings.token = ""
-
-            saveContext()
-            
-            print("User has gone offline.")
-        } else {                                // Otherwise, don't change anything but set offline to false
-            settings.offlineMode = false
-            
-            saveContext()
-        }
-    }
-    
-    /// Sets the user's name and email for their profile
-    ///
-    /// - Parameters:
-    ///   - name: User's name they set when they sign up/sign in
-    ///   - email: User's email they set when they sign up/sign in
-    func addUser(name: String, email: String, token: String) {
-        let settings = loadSettings()   // Load settings object
-        
-        // Set properties in Core Data
-        if name != "" {
-            settings.name = name        // Update user's name
-        }
-        if email != "" {                // Update user's email
-            settings.email = email
-        }
-        if token != "" {
-            settings.token = token      // Update auth token
-            settings.isLoggedIn = true  // Set logged in flag to true
-        }
-        
-        settings.isLoggedIn = true      // Set logged-in flag to true
-        settings.offlineMode = false    // Set offline flag to false
-        
-        saveContext()                   // Save settings object
-    }
-    
-    func loadUser() -> [String: String] {
-        var user : [String:String] = [:]
-        
-        let request : NSFetchRequest<Settings> = Settings.fetchRequest()
-        
-        do {
-            let result = try backgroundContext.fetch(request)                 // Fetch the Settings object from Core Data
-            user["name"] = result[0].name                           // Grab name
-            user["email"] = result[0].email                         // Grab email
-        } catch {
-            print("Error loading Settings from context: \(error)")
-        }
-        
-        return user                                                 // Return the user info
-    }
+//    func loadSettings() -> Settings {
+//        // Will be instantiated to the result of the fetch request
+//		var result : [Settings]?
+//
+//        let request : NSFetchRequest<Settings> = Settings.fetchRequest()
+//
+//        do {
+//            result = try backgroundContext.fetch(request)
+//        } catch {
+//            print("Error loading Settings from core date: \(error)")
+//        }
+//
+//
+//        if result == nil || result!.count == 0 {
+//			// Initialize a new Settings entity if one doesn't exist already
+//			return createSettingsEntity()
+//		} else {
+//			// Return the settings entity
+//			return result![0]
+//		}
+//    }
+//
+//	/// Creates a new Settings Entity
+//	func createSettingsEntity() -> Settings {
+//
+//
+//
+//		let newSettings = Settings(context: self.backgroundContext)		// Init Settings entity
+//		newSettings.kitchenTableViewSort = KitchenSorter.date.rawValue			// Set the Kitchen Collection View to be sorted by expiry date
+//		saveContext()
+//
+//		return newSettings
+//	}
+//
+//
+//    /// If the user chooses to skip sign up or log in then they will be in offline mode
+//    /// Therfore, we clear any online properties such as name, email, auth token, and set their logged in status to false
+//    ///
+//    /// - Parameter offlineMode: The boolean flag that will determine whether the user is offline or not
+//    func setOfflineMode(offlineMode: Bool) {
+//        let settings = loadSettings()           // Get settings core data object
+//
+//        if (offlineMode == true ) {            // Clear all online properties and set to offline
+//            settings.offlineMode = true
+//            settings.isLoggedIn = false
+//            settings.email = ""
+//            settings.name = ""
+//            settings.token = ""
+//
+//            saveContext()
+//
+//            print("User has gone offline.")
+//        } else {                                // Otherwise, don't change anything but set offline to false
+//            settings.offlineMode = false
+//
+//            saveContext()
+//        }
+//    }
+//
+//    /// Sets the user's name and email for their profile
+//    ///
+//    /// - Parameters:
+//    ///   - name: User's name they set when they sign up/sign in
+//    ///   - email: User's email they set when they sign up/sign in
+//    func addUser(name: String, email: String, token: String) {
+//        let settings = loadSettings()   // Load settings object
+//
+//        // Set properties in Core Data
+//        if name != "" {
+//            settings.name = name        // Update user's name
+//        }
+//        if email != "" {                // Update user's email
+//            settings.email = email
+//        }
+//        if token != "" {
+//            settings.token = token      // Update auth token
+//            settings.isLoggedIn = true  // Set logged in flag to true
+//        }
+//
+//        settings.isLoggedIn = true      // Set logged-in flag to true
+//        settings.offlineMode = false    // Set offline flag to false
+//
+//        saveContext()                   // Save settings object
+//    }
+//    
+//    func loadUser() -> [String: String] {
+//        var user : [String:String] = [:]
+//
+//        let request : NSFetchRequest<Settings> = Settings.fetchRequest()
+//
+//        do {
+//            let result = try backgroundContext.fetch(request)                 // Fetch the Settings object from Core Data
+//            user["name"] = result[0].name                           // Grab name
+//            user["email"] = result[0].email                         // Grab email
+//        } catch {
+//            print("Error loading Settings from context: \(error)")
+//        }
+//
+//        return user                                                 // Return the user info
+//    }
     
     /****************************************/
     /****************************************/
@@ -178,10 +180,10 @@ class CoreDataManager {
     /****************************************/
     
     
-    /// Loads the categories that are saved in Core Data
+    /// Loads the Shopping List tab categories that are saved in Core Data
     ///
-    /// - Returns: An array of all the Category entities
-    func loadCategories() -> [Category] {
+    /// - Returns: An array of all the Category objects
+    func loadCategoriesForShoppingList() -> [Category] {
         var result: [Category] = []
         
         let request: NSFetchRequest<Category> = Category.fetchRequest()
@@ -234,6 +236,8 @@ class CoreDataManager {
         saveContext()
     }
     
+	
+	/// Deletes all Category entities from Core Data
     func deleteAllCategories() {
         let deleteFetch: NSFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
@@ -275,39 +279,53 @@ class CoreDataManager {
     /****************************************/
     /****************************************/
     
-    /// Loads the Item entities saved in Data Model based on a Category title query
+    /// Loads the Item entities saved in Data Model based on a Category name
     ///
-    /// - Parameter request: The fetch request for Item entity
-    /// - Returns: An array of Item entities
-    func fetchItems(request: NSFetchRequest<Item>) -> [Item] {
-        var result: [Item] = []
-        
-        do {
-            result = try backgroundContext.fetch(request)
-        } catch {
-            print("Error fetching items: \(error)")
-        }
-        
-        return result
-    }
+    /// - Parameter categoryName: The name of the Category you want to find Items for
+    /// - Returns: An array of Item entities in the given Category
+	func fetchItems(categoryName: String) -> [Item] {
+		// Instantiate an array that will be returned to the user
+		var result: [Item] = []
+		// Fetch Request Items
+		let request: NSFetchRequest<Item> = Item.fetchRequest()
+		// Any Item with a relationship to the Category passed in
+		let itemPredicate = NSPredicate(format: "ANY category.name in %@", [categoryName])	// Predicate requires an array of Strings for the predicate
+		request.predicate = itemPredicate
+		
+		do {
+			result = try backgroundContext.fetch(request)
+		} catch {
+			print("Error fetching items: \(error)")
+		}
+		
+		return result
+	}
     
     
     /// Queries the Core Data database for Items that have been completed
     ///
     /// - Returns: an array of Items that have been completed
     func fetchCompletedItems() -> [Item] {
-        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "completed == %@", NSNumber(booleanLiteral: true))  // predicate looks for completed attribute to be true
-        let results : [Item] = try! backgroundContext.fetch(fetchRequest)
+		var result : [Item] = []
+		let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+		// Predicate for fetch request to find Items with completed boolean = true
+        fetchRequest.predicate = NSPredicate(format: "completed == %@", NSNumber(booleanLiteral: true))
         
-        return results
+		do {
+			result = try backgroundContext.fetch(fetchRequest)
+		} catch {
+			print("Error fetching Completed Items")
+		}
+		
+        
+        return result
     }
     
     
     
-    /// Accesses Core Data and gets all the Kitchen Item entities
+    /// Fetches all the Kitchen Item entities
     ///
-    /// - Returns: A [KitchenItem] of Items that have been completed (aka purchased)
+    /// - Returns: A [KitchenItem] that have been completed (aka purchased)
     func fetchKitchenItems() -> [KitchenItem] {
         var result: [KitchenItem] = []
         
@@ -325,25 +343,34 @@ class CoreDataManager {
     
     /// Fetches Kitchen Items with a sort descriptor
     ///
-    /// - Parameter by: flag used to determine what KitchenItem attribute to sort by 'name' or 'date'
+	///	> **Example Usage**
+	///	```
+	///	collectionView.datasourceArray = fetchKitchenItemsSorted(by .date)
+	///	```
+    /// - Parameter by: flag used to determine what KitchenItem attribute to sort by
     /// - Returns: The KitchenItems sorted by KitchenItem.name or KitchenItem.expiryDate
-    func fetchKitchenItemsSorted(by: String) -> [KitchenItem] {
+	func fetchKitchenItemsSorted(by sorter: KitchenSorter, onlyExpired : Bool = false) -> [KitchenItem] {
         var results : [KitchenItem] = []
-        var sort : NSSortDescriptor?
+        var sort : NSSortDescriptor
         let request: NSFetchRequest<KitchenItem> = NSFetchRequest<KitchenItem>(entityName: "KitchenItem")
-        
-        if by == "date" {
-            sort = NSSortDescriptor(key: "expiryDate", ascending: true)         // Sort by date
-        } else if by == "name" {
-            sort = NSSortDescriptor(key: "name", ascending: true)               // Sort by name
-        } else {
-            return []
-        }
-        
-        request.sortDescriptors = [sort!]                       // Add the sort to the fetch request
+		
+		// If isExpired flag is true, filter fetch result to only expired KitchenItems
+//		if (onlyExpired) {
+//			request.predicate = NSPredicate(format: "isExpired == %@", NSNumber(booleanLiteral: true))
+//		}
+		
+		switch (sorter) {
+			case .date:
+				sort = NSSortDescriptor(key: "expiryDate", ascending: true)         // Sort by date
+			case .name:
+				sort = NSSortDescriptor(key: "name", ascending: true)               // Sort by name
+		}
+		
+		// Add the sort to the fetch request
+        request.sortDescriptors = [sort]
         
         do {
-            results = try backgroundContext.fetch(request)                // Fetch
+            results = try backgroundContext.fetch(request)
         } catch {
             print("Error fetching sorted Kitchen Items from context: \(error)")
         }
@@ -437,3 +464,4 @@ class CoreDataManager {
         }
     }
 }
+

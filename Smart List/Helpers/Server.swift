@@ -16,18 +16,25 @@ import SwiftyJSON
 struct EnvironmentInterceptor : RequestInterceptor {
 	
 	let coreData = CoreDataManager()	// refactor core data here
+	var defaults : SmartListUserDefaults!
 	
+	init(userDefaults : SmartListUserDefaults) {
+		self.defaults = userDefaults
+	}
 	
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
         var adaptedRequest = urlRequest
-        
+        var token = ""
 		
-		
-        guard let token = coreData.loadSettings().token else {            // Get the token from Core Data
-            print("token is null in Core Data")
-            completion(.success(adaptedRequest))                                            // If it doesn't exist, then run the callback
+		 // Get the token from User Defaults
+		if (defaults.token == "") {
+			// If there is no valid token, call the completion handler
+			print("Authentication token saved in User Defaults is invalid")
+            completion(.success(adaptedRequest))
             return
-        }
+		} else {
+			token = defaults.token
+		}
         
         adaptedRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") // Set the auth token for the request header
         completion(.success(adaptedRequest))                                            // Run the callback
@@ -43,7 +50,7 @@ class Server {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 60
         
-        return Session(configuration: configuration, interceptor: EnvironmentInterceptor())
+        return Session(configuration: configuration, interceptor: EnvironmentInterceptor(userDefaults: SmartListUserDefaults()))
     }()
 
     

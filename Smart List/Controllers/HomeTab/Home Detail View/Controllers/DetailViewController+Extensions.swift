@@ -20,7 +20,7 @@ extension DetailViewController {
             print(expiryDateView.datePicker.date)
             
             
-            // Set the expiration date's time to 9AM
+            // Set the expiration date's time to 1PM
             let roundedDate = Calendar.current.date(bySettingHour: 13, minute: 0, second: 0, of: expiryDateView.datePicker.date)
             
             self.item!.expiryDate = roundedDate                             // Set the expiration date of the Item

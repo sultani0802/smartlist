@@ -92,11 +92,22 @@ class KitchenCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(expiryLabel)
         contentView.addSubview(deleteButton)
         
+		// Apply layout constraitns
         setImageViewConstraints()
         setNameLabelConstraints()
         setExpiryLabelConstraints()
         setDeleteButtonConstraints()
 		
+		// Apply border with a shadow to cell
+//		applyBorderWithShadowToView()
+    }
+	
+	
+    //
+    // MARK: - Constraints
+    //
+	
+	func applyBorderWithShadowToView() {
 		self.contentView.backgroundColor = .white
 		self.contentView.layer.cornerRadius = 10.0
 		self.contentView.layer.masksToBounds = true		// The views added to the content view conform to the cell's customized layer
@@ -106,11 +117,8 @@ class KitchenCollectionViewCell: UICollectionViewCell {
 		self.layer.shadowOpacity = 0.35
 		self.layer.masksToBounds = false
 		self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.contentView.layer.cornerRadius).cgPath
-    }
-    
-    //
-    // MARK: - Constraints
-    //
+	}
+	
     func setImageViewConstraints() {
         NSLayoutConstraint.activate([
             itemImageView.topAnchor.constraint(equalTo: topAnchor),

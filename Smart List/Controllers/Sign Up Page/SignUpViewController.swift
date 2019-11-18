@@ -14,6 +14,7 @@ class SignUpViewController: UIViewController {
     var activeText : UITextField?
     var isPoppedUp : Bool = false
     private var coreData : CoreDataManager
+	private var defaults : SmartListUserDefaults!
     
     //MARK: - UI Elements
     var spinner = UIActivityIndicatorView()
@@ -42,8 +43,10 @@ class SignUpViewController: UIViewController {
     }()
 
     
-    init(coreDataManager: CoreDataManager) {
+	init(coreDataManager: CoreDataManager, userDefaults: SmartListUserDefaults) {
         self.coreData = coreDataManager
+		self.defaults = userDefaults
+		
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -171,7 +174,7 @@ class SignUpViewController: UIViewController {
     }
     
     //MARK: - UI Event Handling
-    /// Send server request to create a new user, upon success, save the user name and email in Core Data
+    /// Send server request to create a new user, upon success, save the user name and email in User Defaults
     ///
     /// - Parameter sender: The button the user tapped to trigger this action
     @objc func signUpButtonTapped(_ sender: UIButton = UIButton()) {
@@ -186,8 +189,9 @@ class SignUpViewController: UIViewController {
             Server.shared.signUpNewUser(name: bottomContainer.nameField.text!.trimmingCharacters(in: .whitespacesAndNewlines),
                                         email: bottomContainer.emailField.text!.trimmingCharacters(in: .whitespacesAndNewlines),
                                         password: bottomContainer.passwordField.text!.trimmingCharacters(in: .whitespacesAndNewlines)) {
-                newUser in
-                
+                [weak self] newUser in
+				guard let self = self else { return }
+											
                 self.view.hideSpinner(spinner: self.spinner, container: self.spinnerContainer)                                  // Hide the spinner
                                             
                 if let error = newUser["error"] {                                                                               // Server responded with error
@@ -203,14 +207,15 @@ class SignUpViewController: UIViewController {
                     }
                 }
                 else if (newUser["name"] != "" && newUser["email"] != "" && newUser["token"] != "") {                           // If the server response contains valid User information
-                    self.coreData.addUser(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)      // Save the user's information in Core Data
+//                    self.coreData.addUser(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)      // Save the user's information in Core Data
+					self.defaults.userLoggedIn(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)
                     
                     DispatchQueue.main.async {
                         self.dismiss(animated: true) {                                                                               // Hide the Sign Up View
                             // If the sign up view wasn't created from the profile tab
                             // then, create the TabBar (we are assuming the tabbar hasn't been created yet)
                             if (!self.isPoppedUp) {
-                                self.present(TabBarController(coreDataManager: self.coreData), animated: true)                                                        // Create and show the tabbar
+								self.present(TabBarController(coreDataManager: self.coreData, userDefaults: self.defaults), animated: true)                                                        // Create and show the tabbar
                             }
                         }
                     }
@@ -224,7 +229,7 @@ class SignUpViewController: UIViewController {
     ///
     @objc func loginButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true) {
-            self.present(LoginViewController(coreDataManager: self.coreData), animated: true)
+			self.present(LoginViewController(coreDataManager: self.coreData, userDefaults: self.defaults), animated: true)
         }
     }
     
@@ -234,12 +239,12 @@ class SignUpViewController: UIViewController {
     /// - Parameter sender: The button the user tapped to trigger this action
     @objc func skipButtonTapped(_ sender: UIButton) {
         print("skip sign up")
-        
-        self.coreData.setOfflineMode(offlineMode: true)    // Set offline mode to true
+		// Save offline mode to user defaults
+		self.defaults.offlineMode = true
         
         self.dismiss(animated: true) {
             if (!self.isPoppedUp) {
-                self.present(TabBarController(coreDataManager: self.coreData), animated: true)
+				self.present(TabBarController(coreDataManager: self.coreData, userDefaults: self.defaults), animated: true)
             }
         }
     }

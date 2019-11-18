@@ -178,7 +178,7 @@ extension HomeViewController {
                         self.tableView.deleteSections(indexSet, with: .automatic)           // Delete the section from the tableview
                     }
                     action.fulfill(with: .delete)                                           // Fulfill the delete action BEFORE deleting from Core Data
-                    self.viewModel.deleteCategory(categoryName: categoryName)               // Delete the Category entity & cascade to the deletion of the Item entities
+                    self.viewModel.deleteCategoryFromCoreData(categoryName: categoryName)               // Delete the Category entity & cascade to the deletion of the Item entities
                     self.toggleInstructions()
                 }
             }
