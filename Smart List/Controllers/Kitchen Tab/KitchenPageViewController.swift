@@ -272,8 +272,6 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate, Segm
             
 			self.sortDelegate?.sortKitchenItems(by: .date)
 			self.viewModel.defaults.kitchenCollectionViewSort = .date
-//			self.viewModel.loadSettings().kitchenTableViewSort = KitchenSorter.date.rawValue
-//			self.viewModel.coreData.saveContext()
         }
         
 		// Sort by name
@@ -283,8 +281,6 @@ class KitchenPageViewController: UIViewController, KitchenTabTitleDelegate, Segm
 			
 			self.sortDelegate?.sortKitchenItems(by: .name)
 			self.viewModel.defaults.kitchenCollectionViewSort = .name
-//			self.viewModel.coreData.loadSettings().kitchenTableViewSort = KitchenSorter.name.rawValue
-//			self.viewModel.coreData.saveContext()
         }
         
 		// Cancel sorting

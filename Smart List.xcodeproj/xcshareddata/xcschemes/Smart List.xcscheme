@@ -26,7 +26,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
@@ -129,6 +130,16 @@
                BlueprintIdentifier = "0CDB43A32376096D007AD24A"
                BuildableName = "Smart List_UnitHelper_Tests.xctest"
                BlueprintName = "Smart List_UnitHelper_Tests"
+               ReferencedContainer = "container:Smart List.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0CAD449B23862BBB00D151B4"
+               BuildableName = "Smart List_UserDefaults_Tests.xctest"
+               BlueprintName = "Smart List_UserDefaults_Tests"
                ReferencedContainer = "container:Smart List.xcodeproj">
             </BuildableReference>
          </TestableReference>

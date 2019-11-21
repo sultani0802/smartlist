@@ -18,6 +18,8 @@ struct Constants {
 		static let AppName = "Smart Kitchen"
         // Endpoint for the REST API
 		static let Server = "https://sultani-smartlist-api.herokuapp.com"
+		// Suite name for User Defaults
+		static let userDefaultsSuite = "userdefaults"
     }
     
 	/// UI values that are used through the app

@@ -68,7 +68,7 @@ class ProfileViewModel {
 			guard let self = self else { return }
 			
 			if let success = response["success"] {
-				self.defaults.userLoggedOut()
+				self.defaults.clearUserSession()
 				self.delegate!.didFinishLoggingOutSuccess(message: success)
 			} else {
 				let error = response["error"]

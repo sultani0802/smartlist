@@ -20,7 +20,26 @@ struct UserDefaultKeys {
 
 struct SmartListUserDefaults {
 	
-	private let defaults : UserDefaults = UserDefaults.standard
+	private let defaults : UserDefaults!
+	
+	
+	
+	//
+	// MARK: - Initializers
+	//
+	
+	/// Creates an instance of User Defaults with a specified suite. Mainly to be used for testing.
+	/// - Parameter suite: Name of the suite
+	init(suite: String) {
+		self.defaults = UserDefaults(suiteName: suite)
+	}
+	
+	/// Convenience init for default implementation of User Defaults
+	init() {
+		self.init(suite: Constants.General.userDefaultsSuite)
+	}
+	
+	
 	
 	//
 	// MARK: - User Default Properties
@@ -80,7 +99,7 @@ struct SmartListUserDefaults {
 			return KitchenSorter(rawValue: sortingMethod) ?? .date
 		}
 		set {
-			defaults.set(newValue, forKey: UserDefaultKeys.kitchenCollectionViewSortingKey)
+			defaults.set(newValue.rawValue, forKey: UserDefaultKeys.kitchenCollectionViewSortingKey)
 		}
 	}
 	
@@ -95,7 +114,7 @@ struct SmartListUserDefaults {
 	///   - name: User's name
 	///   - email: User's email
 	///   - token: Token received from REST API
-	mutating func userLoggedIn(name: String, email: String, token: String) {
+	mutating func saveUserSession(name: String, email: String, token: String) {
 		self.name = name
 		self.email = email
 		self.token = token
@@ -105,11 +124,19 @@ struct SmartListUserDefaults {
 	
 	/// Sets user session information to an empty String
 	/// > name, email, token, and loggedInStatus = ""
-	mutating func userLoggedOut() {
+	mutating func clearUserSession() {
 		self.name = ""
 		self.email = ""
 		self.token = ""
 		self.loggedInStatus = false
 		self.offlineMode = false
+	}
+	
+	
+	/// Removes the contents of the persistent domain from the user's defaults
+	/// > This is equivalent to calling removeObject(forKey:) on each key
+	/// - Parameter suiteName: The name of the suite to be cleared
+	func completeResetUserDefaults(suiteName: String) {
+		self.defaults.removePersistentDomain(forName: suiteName)
 	}
 }

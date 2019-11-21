@@ -208,7 +208,7 @@ class SignUpViewController: UIViewController {
                 }
                 else if (newUser["name"] != "" && newUser["email"] != "" && newUser["token"] != "") {                           // If the server response contains valid User information
 //                    self.coreData.addUser(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)      // Save the user's information in Core Data
-					self.defaults.userLoggedIn(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)
+					self.defaults.saveUserSession(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)
                     
                     DispatchQueue.main.async {
                         self.dismiss(animated: true) {                                                                               // Hide the Sign Up View
@@ -237,8 +237,8 @@ class SignUpViewController: UIViewController {
     /// Skip sign up and show the Kitchen Tab
     ///
     /// - Parameter sender: The button the user tapped to trigger this action
-    @objc func skipButtonTapped(_ sender: UIButton) {
-        print("skip sign up")
+    @objc func skipButtonTapped(_ sender: UIButton) {		
+		print("skip sign up")
 		// Save offline mode to user defaults
 		self.defaults.offlineMode = true
         

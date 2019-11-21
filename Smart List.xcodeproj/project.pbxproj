@@ -54,6 +54,7 @@
 		0CA3517F22557B6F0044D166 /* KitchenDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA3517E22557B6F0044D166 /* KitchenDetailViewController.swift */; };
 		0CA3518222557D870044D166 /* DetailViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA3518122557D870044D166 /* DetailViewController+Extensions.swift */; };
 		0CA3518422557E740044D166 /* KitchenDetail+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA3518322557E740044D166 /* KitchenDetail+Extensions.swift */; };
+		0CAD449F23862BBB00D151B4 /* Smart_List_UserDefaults_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAD449E23862BBB00D151B4 /* Smart_List_UserDefaults_Tests.swift */; };
 		0CAE5C6E221B761B00F764CB /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAE5C6D221B761B00F764CB /* DateHelper.swift */; };
 		0CB180C6223EE71E00927014 /* Home+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB180C5223EE71E00927014 /* Home+Delegates.swift */; };
 		0CB180C8223EFB2E00927014 /* HomeTVCell+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB180C7223EFB2E00927014 /* HomeTVCell+Delegates.swift */; };
@@ -104,6 +105,13 @@
 			remoteInfo = "Smart List";
 		};
 		0C23B590235D37AC00B02A82 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0CC7677A21F0262300752517 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0CC7678121F0262300752517;
+			remoteInfo = "Smart List";
+		};
+		0CAD44A123862BBB00D151B4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0CC7677A21F0262300752517 /* Project object */;
 			proxyType = 1;
@@ -192,6 +200,9 @@
 		0CA3517E22557B6F0044D166 /* KitchenDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenDetailViewController.swift; sourceTree = "<group>"; };
 		0CA3518122557D870044D166 /* DetailViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailViewController+Extensions.swift"; sourceTree = "<group>"; };
 		0CA3518322557E740044D166 /* KitchenDetail+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KitchenDetail+Extensions.swift"; sourceTree = "<group>"; };
+		0CAD449C23862BBB00D151B4 /* Smart List_UserDefaults_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Smart List_UserDefaults_Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CAD449E23862BBB00D151B4 /* Smart_List_UserDefaults_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smart_List_UserDefaults_Tests.swift; sourceTree = "<group>"; };
+		0CAD44A023862BBB00D151B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CAE5C6D221B761B00F764CB /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		0CB180C5223EE71E00927014 /* Home+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+Delegates.swift"; sourceTree = "<group>"; };
 		0CB180C7223EFB2E00927014 /* HomeTVCell+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeTVCell+Delegates.swift"; sourceTree = "<group>"; };
@@ -256,6 +267,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0C23B588235D37AB00B02A82 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0CAD449923862BBB00D151B4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -468,6 +486,15 @@
 			path = KitchenDetail;
 			sourceTree = "<group>";
 		};
+		0CAD449D23862BBB00D151B4 /* Smart List_UserDefaults_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				0CAD449E23862BBB00D151B4 /* Smart_List_UserDefaults_Tests.swift */,
+				0CAD44A023862BBB00D151B4 /* Info.plist */,
+			);
+			path = "Smart List_UserDefaults_Tests";
+			sourceTree = "<group>";
+		};
 		0CB180CB223F4CF300927014 /* Kitchen Tab */ = {
 			isa = PBXGroup;
 			children = (
@@ -514,6 +541,7 @@
 				0CDB438923751AD0007AD24A /* Smart List_Regex_Tests */,
 				0CDB43972375F593007AD24A /* Smart List_Spinner_UITests */,
 				0CDB43A52376096D007AD24A /* Smart List_UnitHelper_Tests */,
+				0CAD449D23862BBB00D151B4 /* Smart List_UserDefaults_Tests */,
 				0CC7678321F0262300752517 /* Products */,
 				65E6C4252016A518B15D2836 /* Pods */,
 				2DE74AC1936D1BC669290EBB /* Frameworks */,
@@ -531,6 +559,7 @@
 				0CDB438823751AD0007AD24A /* Smart List_Regex_Tests.xctest */,
 				0CDB43962375F593007AD24A /* Smart List_Spinner_UITests.xctest */,
 				0CDB43A42376096D007AD24A /* Smart List_UnitHelper_Tests.xctest */,
+				0CAD449C23862BBB00D151B4 /* Smart List_UserDefaults_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -717,6 +746,24 @@
 			productReference = 0C23B58B235D37AB00B02A82 /* SmartListCoreDataTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		0CAD449B23862BBB00D151B4 /* Smart List_UserDefaults_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0CAD44A523862BBB00D151B4 /* Build configuration list for PBXNativeTarget "Smart List_UserDefaults_Tests" */;
+			buildPhases = (
+				0CAD449823862BBB00D151B4 /* Sources */,
+				0CAD449923862BBB00D151B4 /* Frameworks */,
+				0CAD449A23862BBB00D151B4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0CAD44A223862BBB00D151B4 /* PBXTargetDependency */,
+			);
+			name = "Smart List_UserDefaults_Tests";
+			productName = "Smart List_UserDefaults_Tests";
+			productReference = 0CAD449C23862BBB00D151B4 /* Smart List_UserDefaults_Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		0CC7678121F0262300752517 /* Smart List */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0CC7679F21F0262400752517 /* Build configuration list for PBXNativeTarget "Smart List" */;
@@ -830,6 +877,10 @@
 						CreatedOnToolsVersion = 11.1;
 						TestTargetID = 0CC7678121F0262300752517;
 					};
+					0CAD449B23862BBB00D151B4 = {
+						CreatedOnToolsVersion = 11.2.1;
+						TestTargetID = 0CC7678121F0262300752517;
+					};
 					0CC7678121F0262300752517 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
@@ -878,6 +929,7 @@
 				0CDB438723751AD0007AD24A /* Smart List_Regex_Tests */,
 				0CDB43952375F593007AD24A /* Smart List_Spinner_UITests */,
 				0CDB43A32376096D007AD24A /* Smart List_UnitHelper_Tests */,
+				0CAD449B23862BBB00D151B4 /* Smart List_UserDefaults_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -898,6 +950,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0C23B589235D37AB00B02A82 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0CAD449A23862BBB00D151B4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1029,6 +1088,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0CAD449823862BBB00D151B4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0CAD449F23862BBB00D151B4 /* Smart_List_UserDefaults_Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0CC7677E21F0262300752517 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1150,6 +1217,11 @@
 			isa = PBXTargetDependency;
 			target = 0CC7678121F0262300752517 /* Smart List */;
 			targetProxy = 0C23B590235D37AC00B02A82 /* PBXContainerItemProxy */;
+		};
+		0CAD44A223862BBB00D151B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0CC7678121F0262300752517 /* Smart List */;
+			targetProxy = 0CAD44A123862BBB00D151B4 /* PBXContainerItemProxy */;
 		};
 		0CDB4380237479A5007AD24A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1291,6 +1363,48 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sultani.SmartListCoreDataTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smart List.app/Smart List";
+			};
+			name = Release;
+		};
+		0CAD44A323862BBB00D151B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HJ64Y9853R;
+				INFOPLIST_FILE = "Smart List_UserDefaults_Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sultani.Smart-List-UserDefaults-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smart List.app/Smart List";
+			};
+			name = Debug;
+		};
+		0CAD44A423862BBB00D151B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = HJ64Y9853R;
+				INFOPLIST_FILE = "Smart List_UserDefaults_Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sultani.Smart-List-UserDefaults-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1648,6 +1762,15 @@
 			buildConfigurations = (
 				0C23B593235D37AC00B02A82 /* Debug */,
 				0C23B594235D37AC00B02A82 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0CAD44A523862BBB00D151B4 /* Build configuration list for PBXNativeTarget "Smart List_UserDefaults_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0CAD44A323862BBB00D151B4 /* Debug */,
+				0CAD44A423862BBB00D151B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

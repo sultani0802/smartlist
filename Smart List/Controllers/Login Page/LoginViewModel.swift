@@ -62,7 +62,7 @@ class LoginViewModel {
             }
             
 			// Save user's session in User Defaults
-			self.defaults.userLoggedIn(name: response["name"]!, email: response["email"]!, token: token)
+			self.defaults.saveUserSession(name: response["name"]!, email: response["email"]!, token: token)
 			
             self.loginViewModelDelegate?.dismissLoginView()                                                  // Hide the login view controller through delegate
         }
