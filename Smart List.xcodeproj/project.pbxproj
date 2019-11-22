@@ -18,7 +18,7 @@
 		0C11E69F22CFED6D00CDA177 /* BottomLoginContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11E69E22CFED6D00CDA177 /* BottomLoginContainer.swift */; };
 		0C11E6A122D0104C00CDA177 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C11E6A022D0104C00CDA177 /* Launch Screen.storyboard */; };
 		0C11E6A322D036DC00CDA177 /* SettingsSignUpContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C11E6A222D036DC00CDA177 /* SettingsSignUpContainer.swift */; };
-		0C13BC4C2223581E0027BABD /* UITextfieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13BC4B2223581E0027BABD /* UITextfieldExtensions.swift */; };
+		0C13BC4C2223581E0027BABD /* TextEditingToolbarExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13BC4B2223581E0027BABD /* TextEditingToolbarExtensions.swift */; };
 		0C1FF5A8225E2CA2002D747D /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1FF5A7225E2CA2002D747D /* NotificationHelper.swift */; };
 		0C23B572235CE2AF00B02A82 /* Smart_ListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C23B571235CE2AF00B02A82 /* Smart_ListUITests.swift */; };
 		0C23B580235D038500B02A82 /* Smart_List_DateHelper_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C23B57F235D038500B02A82 /* Smart_List_DateHelper_Tests.swift */; };
@@ -75,7 +75,6 @@
 		0CDB438B23751AD0007AD24A /* Smart_List_Regex_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDB438A23751AD0007AD24A /* Smart_List_Regex_Tests.swift */; };
 		0CDB43992375F593007AD24A /* Smart_List_Spinner_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDB43982375F593007AD24A /* Smart_List_Spinner_UITests.swift */; };
 		0CDB43A72376096D007AD24A /* Smart_List_UnitHelper_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDB43A62376096D007AD24A /* Smart_List_UnitHelper_Tests.swift */; };
-		0CDB43AF2379B3FF007AD24A /* KitchenItemSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDB43AE2379B3FF007AD24A /* KitchenItemSorter.swift */; };
 		0CDB43B1237B18B9007AD24A /* KitchenPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDB43B0237B18B9007AD24A /* KitchenPageViewModel.swift */; };
 		0CDF962922D4136E007B97A8 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDF962822D4136E007B97A8 /* Spinner.swift */; };
 		0CDFA8042324196C004D966D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDFA8032324196C004D966D /* HomeViewModel.swift */; };
@@ -160,7 +159,7 @@
 		0C11E69E22CFED6D00CDA177 /* BottomLoginContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomLoginContainer.swift; sourceTree = "<group>"; };
 		0C11E6A022D0104C00CDA177 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		0C11E6A222D036DC00CDA177 /* SettingsSignUpContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSignUpContainer.swift; sourceTree = "<group>"; };
-		0C13BC4B2223581E0027BABD /* UITextfieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextfieldExtensions.swift; sourceTree = "<group>"; };
+		0C13BC4B2223581E0027BABD /* TextEditingToolbarExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditingToolbarExtensions.swift; sourceTree = "<group>"; };
 		0C1FF5A7225E2CA2002D747D /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		0C23B56F235CE2AF00B02A82 /* Smart ListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Smart ListUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C23B571235CE2AF00B02A82 /* Smart_ListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smart_ListUITests.swift; sourceTree = "<group>"; };
@@ -234,7 +233,6 @@
 		0CDB43A42376096D007AD24A /* Smart List_UnitHelper_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Smart List_UnitHelper_Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CDB43A62376096D007AD24A /* Smart_List_UnitHelper_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smart_List_UnitHelper_Tests.swift; sourceTree = "<group>"; };
 		0CDB43A82376096D007AD24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0CDB43AE2379B3FF007AD24A /* KitchenItemSorter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenItemSorter.swift; sourceTree = "<group>"; };
 		0CDB43B0237B18B9007AD24A /* KitchenPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitchenPageViewModel.swift; sourceTree = "<group>"; };
 		0CDF962822D4136E007B97A8 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		0CDFA8032324196C004D966D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -442,7 +440,6 @@
 				0CBE4B8C2200C39000A23330 /* Constants.swift */,
 				0CAE5C6D221B761B00F764CB /* DateHelper.swift */,
 				0C97799E22024068009C3161 /* HexColorExtension.swift */,
-				0CDB43AE2379B3FF007AD24A /* KitchenItemSorter.swift */,
 				0CCD9E492232E11E0075D8AD /* Levenshtein.swift */,
 				0C1FF5A7225E2CA2002D747D /* NotificationHelper.swift */,
 				0C76749C22CA7C19007E791E /* Regex.swift */,
@@ -450,7 +447,7 @@
 				0CDF962822D4136E007B97A8 /* Spinner.swift */,
 				0C5C508B22C5A13200175A57 /* SwiftGif.swift */,
 				0CD0F50F2214FC720018982E /* UIButton+Extensions.swift */,
-				0C13BC4B2223581E0027BABD /* UITextfieldExtensions.swift */,
+				0C13BC4B2223581E0027BABD /* TextEditingToolbarExtensions.swift */,
 				0C06D571221F677700E48F21 /* UIViewBordersExtension.swift */,
 				0CE00E0022288FCE00BA0C43 /* UIViewController+keyboardHiding.swift */,
 				0CBDC87F2220684100A4B7FF /* UIView+Animations.swift */,
@@ -1114,7 +1111,6 @@
 				0C5C507F22C3008100175A57 /* ProfileViewController.swift in Sources */,
 				0CC767AD21F0304900752517 /* CategoryEnum.swift in Sources */,
 				0C5C508A22C591DF00175A57 /* SignUpTopContainer.swift in Sources */,
-				0CDB43AF2379B3FF007AD24A /* KitchenItemSorter.swift in Sources */,
 				0C6F5840220DC92B00C730CB /* Home+NavBarItems.swift in Sources */,
 				0CE00E0122288FCE00BA0C43 /* UIViewController+keyboardHiding.swift in Sources */,
 				0CC767B221F0307D00752517 /* HomeTableViewCell.swift in Sources */,
@@ -1125,7 +1121,7 @@
 				0CB180CA223F4CEE00927014 /* KitchenViewController.swift in Sources */,
 				0C039491221E420400A7BEBF /* Detail+Delegates.swift in Sources */,
 				0C76749D22CA7C19007E791E /* Regex.swift in Sources */,
-				0C13BC4C2223581E0027BABD /* UITextfieldExtensions.swift in Sources */,
+				0C13BC4C2223581E0027BABD /* TextEditingToolbarExtensions.swift in Sources */,
 				0C96BF43223D904F00C9F00C /* UnitHelper.swift in Sources */,
 				0C06D572221F677700E48F21 /* UIViewBordersExtension.swift in Sources */,
 				0CC767B021F0306F00752517 /* Home+CellMethods.swift in Sources */,

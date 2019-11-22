@@ -4,31 +4,35 @@
 //
 //  Created by Haamed Sultani on Feb/1/19.
 //  Copyright © 2019 Haamed Sultani. All rights reserved.
+//
+//
 //  Thanks to Scott Gardner for the insight
 //  https://stackoverflow.com/a/33343958/3365488
 //
+//	Used to create Date objects
 
 import Foundation
 
 class DateHelper {
 
     static let shared = DateHelper()
-    private init() {}                                   // Prevents creation of multiple instances
+    private init() {}
 
 
     /// Gets today's date and time
 	///
     /// - Returns: String representation of today's date and time
 	func getCurrentDate() -> String {
-        let currentDate = Date()                        // Get current date and time
+        // Get current the date and time
+		let currentDate = Date()
         
         // Format the date
         let formatter = DateFormatter()
         formatter.dateStyle = .medium                   // Feb 19, 2019
-        formatter.timeStyle = .none                     // No time displayed
+        formatter.timeStyle = .none                     // Remove time from date object
         
-        
-        return formatter.string(from: currentDate)      // Return the date in String format
+        // Return the date in string format
+        return formatter.string(from: currentDate)
     }
     
     

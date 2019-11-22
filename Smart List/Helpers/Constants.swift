@@ -5,6 +5,8 @@
 //  Created by Haamed Sultani on Jan/1/19.
 //  Copyright © 2019 Haamed Sultani. All rights reserved.
 //
+//
+// Contains all constants that are use throughout the app
 
 import UIKit
 

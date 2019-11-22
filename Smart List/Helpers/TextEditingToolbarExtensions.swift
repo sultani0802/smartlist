@@ -1,15 +1,20 @@
 //
-//  UITextfieldExtension.swift
+//  TextEditingToolbarExtension.swift
 //  Smart List
 //
 //  Created by Haamed Sultani on Feb/1/19.
 //  Copyright © 2019 Haamed Sultani. All rights reserved.
 //
+// This file contains extensions for UITextField and UITextView that adds a "done"
+// toolbar above the keyboard when editing a UITextField or UITextView
 
 import UIKit
 
+
+//
+// MARK: - UITextField extension
+//
 extension UITextField {
-    
     
     /****************************************/
     /****************************************/
@@ -65,7 +70,9 @@ extension UITextField {
 }
 
 
-
+//
+// MARK: - UITextView Extension
+//
 extension UITextView {
     /// Adds a "Done" button above the keyboard
     ///

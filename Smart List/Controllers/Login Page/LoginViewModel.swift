@@ -24,7 +24,7 @@ class LoginViewModel {
     /****************************************/
     var coreData : CoreDataManager
 	var defaults : SmartListUserDefaults!
-    var isPoppedUp : Bool = false           // Keeps track of whether the view is in view or not
+    var isPoppedUp : Bool = false           // Keeps track of whether the view controller is in view or not
     weak var loginViewModelDelegate : LoginViewModelDelegate?
     
     /****************************************/

@@ -8,6 +8,11 @@
 
 import Foundation
 
+public enum KitchenSorter : String {
+	case name = "name"
+	case date = "date"
+}
+
 struct UserDefaultKeys {
 	static let nameKey = "name"
 	static let emailKey = "email"
@@ -21,7 +26,6 @@ struct UserDefaultKeys {
 struct SmartListUserDefaults {
 	
 	private let defaults : UserDefaults!
-	
 	
 	
 	//
