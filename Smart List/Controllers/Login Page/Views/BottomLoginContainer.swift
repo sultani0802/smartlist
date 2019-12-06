@@ -99,7 +99,7 @@ class BottomLoginContainer: UIView{
         NSLayoutConstraint.activate([
             loginButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             loginButton.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            
+			
             signUpStack.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor, constant: 8),
             signUpStack.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 25),
             

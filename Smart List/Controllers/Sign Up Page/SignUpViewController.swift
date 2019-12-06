@@ -11,10 +11,11 @@ import UIKit
 class SignUpViewController: UIViewController {
     
     //MARK: - Properties
-    var activeText : UITextField?
-    var isPoppedUp : Bool = false
-    private var coreData : CoreDataManager
-	private var defaults : SmartListUserDefaults!
+//    var activeText : UITextField?
+//    var isPoppedUp : Bool = false
+//    private var coreData : CoreDataManager
+//	private var defaults : SmartListUserDefaults!
+	private var viewModel : SignUpViewModel!
     
     //MARK: - UI Elements
     var spinner = UIActivityIndicatorView()
@@ -27,7 +28,7 @@ class SignUpViewController: UIViewController {
         
         return view
     }()
-    
+	
     var bottomContainer : SignUpBottomContainer = {
         var view = SignUpBottomContainer()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -43,9 +44,8 @@ class SignUpViewController: UIViewController {
     }()
 
     
-	init(coreDataManager: CoreDataManager, userDefaults: SmartListUserDefaults) {
-        self.coreData = coreDataManager
-		self.defaults = userDefaults
+	init(coreDataManager: CoreDataManager, userDefaults: SmartListUserDefaults, initializedBeforeTabBar: Bool = false) {
+		self.viewModel = SignUpViewModel(coreData: coreDataManager, defaults: userDefaults, initBeforeTabBar: initializedBeforeTabBar)
 		
         super.init(nibName: nil, bundle: nil)
     }
@@ -182,7 +182,8 @@ class SignUpViewController: UIViewController {
             bottomContainer.emailField.text != nil &&
             bottomContainer.passwordField.text != nil) {
             
-            self.view.showLargeSpinner(spinner: self.spinner, container: self.spinnerContainer)                                 // Show the spinner
+			// Show spinner
+            self.view.showLargeSpinner(spinner: self.spinner, container: self.spinnerContainer)
             
             
             // Make a request to Smartlist API to create a new User in the DB
@@ -208,14 +209,14 @@ class SignUpViewController: UIViewController {
                 }
                 else if (newUser["name"] != "" && newUser["email"] != "" && newUser["token"] != "") {                           // If the server response contains valid User information
 //                    self.coreData.addUser(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)      // Save the user's information in Core Data
-					self.defaults.saveUserSession(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)
+					self.viewModel.defaults.saveUserSession(name: newUser["name"]!, email: newUser["email"]!, token: newUser["token"]!)
                     
                     DispatchQueue.main.async {
                         self.dismiss(animated: true) {                                                                               // Hide the Sign Up View
                             // If the sign up view wasn't created from the profile tab
                             // then, create the TabBar (we are assuming the tabbar hasn't been created yet)
-                            if (!self.isPoppedUp) {
-								self.present(TabBarController(coreDataManager: self.coreData, userDefaults: self.defaults), animated: true)                                                        // Create and show the tabbar
+							if (!self.viewModel.initializedBeforeTabBar) {
+								self.present(TabBarController(coreDataManager: self.viewModel.coreData, userDefaults: self.viewModel.defaults), animated: true)                                                        // Create and show the tabbar
                             }
                         }
                     }
@@ -226,10 +227,9 @@ class SignUpViewController: UIViewController {
     
     
     /// Displays the login page
-    ///
     @objc func loginButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true) {
-			self.present(LoginViewController(coreDataManager: self.coreData, userDefaults: self.defaults), animated: true)
+			self.present(LoginViewController(coreDataManager: self.viewModel.coreData, userDefaults: self.viewModel.defaults), animated: true)
         }
     }
     
@@ -240,12 +240,96 @@ class SignUpViewController: UIViewController {
     @objc func skipButtonTapped(_ sender: UIButton) {		
 		print("skip sign up")
 		// Save offline mode to user defaults
-		self.defaults.offlineMode = true
+		self.viewModel.defaults.offlineMode = true
         
         self.dismiss(animated: true) {
-            if (!self.isPoppedUp) {
-				self.present(TabBarController(coreDataManager: self.coreData, userDefaults: self.defaults), animated: true)
+			if (!self.viewModel.initializedBeforeTabBar) {
+				self.present(TabBarController(coreDataManager: self.viewModel.coreData, userDefaults: self.viewModel.defaults), animated: true)
             }
         }
     }
+}
+
+
+
+
+
+//
+// MARK: - TextField Delegates
+//
+extension SignUpViewController: UITextFieldDelegate {
+	
+	@objc func keyboardWillChange(notification: Notification) {
+		guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size else {
+			return
+		}
+		
+		if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification
+		{
+			let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
+			
+			self.scrollView.contentInset = contentInsets
+			self.scrollView.scrollIndicatorInsets = contentInsets
+			
+			var aRect : CGRect = self.view.frame
+			aRect.size.height -= keyboardSize.height
+			if let activeText = self.viewModel.activeText {
+				if (aRect.contains(activeText.frame.origin)){
+					self.scrollView.scrollRectToVisible(activeText.frame, animated: true)
+				}
+			}
+		} else if notification.name == UIResponder.keyboardWillHideNotification {
+			//Once keyboard disappears, restore original positions
+			let info = notification.userInfo!
+			let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+			let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: -keyboardSize!.height, right: 0.0)
+			self.scrollView.contentInset = UIEdgeInsets.zero
+			self.scrollView.scrollIndicatorInsets = contentInsets
+			self.view.endEditing(true)
+		}
+	}
+	
+	
+	//
+	//Mark: - TextField Delegates
+	//
+	func textFieldDidBeginEditing(_ textField: UITextField) {
+		self.viewModel.activeText = textField
+	}
+	
+	func textFieldDidEndEditing(_ textField: UITextField) {
+		self.viewModel.activeText = nil
+	}
+	
+	/// This method is called everytime the user hits the Enter key on the keyboard
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		if textField == bottomContainer.nameField {
+			bottomContainer.nameField.resignFirstResponder()
+			bottomContainer.emailField.becomeFirstResponder()
+		} else if textField == bottomContainer.emailField {
+			bottomContainer.emailField.resignFirstResponder()
+			bottomContainer.passwordField.becomeFirstResponder()
+		} else if textField == bottomContainer.passwordField {
+			signUpButtonTapped()
+		}
+		
+		return true
+	}
+	
+	
+	/// Called everytime the user types inside one of textField on the Sign Up View
+	///
+	/// - Parameter textField: Reference to the textField that is being edited
+	@objc func textFieldDidChange(_ textField: UITextField) {
+		toggleSignUp()
+		
+		if (textField == bottomContainer.emailField) {                                      // If the user is typing in the email textField
+			
+			//            if let email = bottomContainer.emailField.text {
+			//                toggleEmailImage(toggle: Regex.shared.validateEmail(candidate: email))          // User regex to validate their email
+			//            }
+		} else if (textField == bottomContainer.passwordField) {                            // If the user is typing in the password textField
+			togglePasswordImage(toggle: true)
+		}
+	}
 }

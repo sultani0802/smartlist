@@ -33,18 +33,9 @@
         <attribute name="quantity" attributeType="String"/>
         <attribute name="store" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="Settings" representedClassName="Settings" syncable="YES" codeGenerationType="class">
-        <attribute name="email" optional="YES" attributeType="String"/>
-        <attribute name="isLoggedIn" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="kitchenTableViewSort" attributeType="String" defaultValueString="name"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="offlineMode" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="token" optional="YES" attributeType="String"/>
-    </entity>
     <elements>
         <element name="Category" positionX="-54" positionY="-9" width="128" height="90"/>
         <element name="Item" positionX="-218.62109375" positionY="-11.0625" width="128" height="240"/>
         <element name="KitchenItem" positionX="-108" positionY="117" width="128" height="210"/>
-        <element name="Settings" positionX="-135" positionY="90" width="128" height="135"/>
     </elements>
 </model>

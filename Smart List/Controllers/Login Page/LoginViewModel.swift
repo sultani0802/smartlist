@@ -37,26 +37,36 @@ class LoginViewModel {
 		self.defaults = userDefaults
     }
     
-    
+	
+	/// Sends a request to the server to log the user in. If the login was successful, save the authentication token, name, and email into user defaults
+	/// - Parameters:
+	///   - email: The email for the account
+	///   - password: The password for the account
     func loginUser(email: String, password: String) {
-        self.loginViewModelDelegate?.showSpinner()                                                   // Show the loading spinner
+        // Show the spinner
+		self.loginViewModelDelegate?.showSpinner()
         
+		// Send request to server to login user
         Server.shared.loginUser(email: email, password: password) {
             response in
             
-            self.loginViewModelDelegate?.hideSpinner()                                                   // Hide the loading spinner
+			// Hide the spinner once you receive a response from the server
+            self.loginViewModelDelegate?.hideSpinner()
             
-            guard let token = response["token"] else {                                                  // If unsuccessful request
+			// Guard that the response has a token
+            guard let token = response["token"] else {
                 var message : String
                 
-                if let error = response["error"] {                                                          // Get error message from server
+				// Get the error response
+                if let error = response["error"] {
                     message = error
                     print("Error when trying to login. Error: \(error)")
                 } else {
                     message = "Something went wrong when logging in. Please try again."
                 }
                 
-                self.loginViewModelDelegate?.showAlert(title: "Error", message: message)                     // Show an alert through delegate
+				// Display an alert that the login failed
+                self.loginViewModelDelegate?.showAlert(title: "Error", message: message)
                 
                 return
             }
@@ -64,7 +74,8 @@ class LoginViewModel {
 			// Save user's session in User Defaults
 			self.defaults.saveUserSession(name: response["name"]!, email: response["email"]!, token: token)
 			
-            self.loginViewModelDelegate?.dismissLoginView()                                                  // Hide the login view controller through delegate
+			// Dimiss the login view controller
+            self.loginViewModelDelegate?.dismissLoginView()
         }
     }
 }

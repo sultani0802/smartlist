@@ -257,13 +257,11 @@ class ProfileViewController: UIViewController {
         present(alertController, animated: true, completion: nil)                           // Present the alert
     }
     
-    
+     
     @objc func signUpButtonTapped(_ button: UIButton) {
-		let signUpVC = SignUpViewController(coreDataManager: self.viewModel.coreData, userDefaults: self.viewModel.defaults)
-        signUpVC.isPoppedUp = true
-        DispatchQueue.main.async {
-            self.present(signUpVC, animated: true)
-        }
+		let signUpVC = SignUpViewController(coreDataManager: self.viewModel.coreData, userDefaults: self.viewModel.defaults, initializedBeforeTabBar : true)
+		
+		self.present(signUpVC, animated: true)
     }
     
     @objc func loginButtonTapped(_ button: UIButton) {
@@ -272,9 +270,7 @@ class ProfileViewController: UIViewController {
         let notificationName = Notification.Name(Constants.NotificationKey.LoginViewPoppedUpNotificationKey)
         NotificationCenter.default.post(name: notificationName, object: nil)
         
-        DispatchQueue.main.async {
-            self.present(loginVC, animated: true)
-        }
+		self.present(loginVC, animated: true)
     }
 }
 

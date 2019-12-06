@@ -40,6 +40,7 @@
 		0C5C509322C5B26500175A57 /* SignUpBottomContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C509222C5B26500175A57 /* SignUpBottomContainer.swift */; };
 		0C66EEF622C2F5E700AAB96C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC767A721F026B600752517 /* HomeViewController.swift */; };
 		0C6F5840220DC92B00C730CB /* Home+NavBarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */; };
+		0C7032F32398A9E900EF0FC8 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7032F22398A9E900EF0FC8 /* SignUpViewModel.swift */; };
 		0C76749D22CA7C19007E791E /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C76749C22CA7C19007E791E /* Regex.swift */; };
 		0C833AC322C85311001BD9A9 /* upgrade.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0C833AC222C85311001BD9A9 /* upgrade.gif */; };
 		0C93047422D9402D003FF6CA /* Profile+SectionMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C93047322D9402D003FF6CA /* Profile+SectionMethods.swift */; };
@@ -84,7 +85,6 @@
 		0CF439B422CFB1D800D73C36 /* Login+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF439B322CFB1D800D73C36 /* Login+Keyboard.swift */; };
 		0CF47D9621F3E8240084C1BA /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0CF47D9421F3E8240084C1BA /* DataModel.xcdatamodeld */; };
 		0CF6B5802210ECA30049CF63 /* Home+SectionMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF6B57F2210ECA30049CF63 /* Home+SectionMethods.swift */; };
-		0CF86C6C22C6684000AD6712 /* SignUp+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF86C6B22C6684000AD6712 /* SignUp+Keyboard.swift */; };
 		6AD46FD32B7849D34129B106 /* Pods_Smart_List.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0672B81491D7590A183BA6 /* Pods_Smart_List.framework */; };
 /* End PBXBuildFile section */
 
@@ -185,6 +185,7 @@
 		0C5C509022C5A31E00175A57 /* cook.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cook.gif; sourceTree = "<group>"; };
 		0C5C509222C5B26500175A57 /* SignUpBottomContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBottomContainer.swift; sourceTree = "<group>"; };
 		0C6F583F220DC92B00C730CB /* Home+NavBarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+NavBarItems.swift"; sourceTree = "<group>"; };
+		0C7032F22398A9E900EF0FC8 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		0C76749C22CA7C19007E791E /* Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		0C833AC222C85311001BD9A9 /* upgrade.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = upgrade.gif; sourceTree = "<group>"; };
 		0C93047322D9402D003FF6CA /* Profile+SectionMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profile+SectionMethods.swift"; sourceTree = "<group>"; };
@@ -242,7 +243,6 @@
 		0CF439B322CFB1D800D73C36 /* Login+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login+Keyboard.swift"; sourceTree = "<group>"; };
 		0CF47D9521F3E8240084C1BA /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		0CF6B57F2210ECA30049CF63 /* Home+SectionMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home+SectionMethods.swift"; sourceTree = "<group>"; };
-		0CF86C6B22C6684000AD6712 /* SignUp+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignUp+Keyboard.swift"; sourceTree = "<group>"; };
 		0CFB374522CC0E7300D11947 /* Smart List.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Smart List.entitlements"; sourceTree = "<group>"; };
 		4056A61150399B24007E5368 /* Pods-Smart List.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smart List.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Smart List/Pods-Smart List.debug.xcconfig"; sourceTree = "<group>"; };
 		57987DCAE25D18D1C486881E /* Pods-Smart List.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smart List.release.xcconfig"; path = "Pods/Target Support Files/Pods-Smart List/Pods-Smart List.release.xcconfig"; sourceTree = "<group>"; };
@@ -409,8 +409,8 @@
 		0C5C508522C590AB00175A57 /* Sign Up Page */ = {
 			isa = PBXGroup;
 			children = (
+				0C7032F22398A9E900EF0FC8 /* SignUpViewModel.swift */,
 				0C5C508622C590CC00175A57 /* SignUpViewController.swift */,
-				0CF86C6B22C6684000AD6712 /* SignUp+Keyboard.swift */,
 				0C5C508822C5910100175A57 /* Views */,
 			);
 			path = "Sign Up Page";
@@ -1103,7 +1103,6 @@
 				0CA19E03238195EF0080FB34 /* SmartListUserDefaults.swift in Sources */,
 				0CBDC8802220684100A4B7FF /* UIView+Animations.swift in Sources */,
 				0CDB43B1237B18B9007AD24A /* KitchenPageViewModel.swift in Sources */,
-				0CF86C6C22C6684000AD6712 /* SignUp+Keyboard.swift in Sources */,
 				0CDFA8042324196C004D966D /* HomeViewModel.swift in Sources */,
 				0CA2CCF32226D5970093DA1A /* ExpiryPopUpView.swift in Sources */,
 				0C11B9BC22138E420003A87D /* DetailMidContainer.swift in Sources */,
@@ -1124,6 +1123,7 @@
 				0C13BC4C2223581E0027BABD /* TextEditingToolbarExtensions.swift in Sources */,
 				0C96BF43223D904F00C9F00C /* UnitHelper.swift in Sources */,
 				0C06D572221F677700E48F21 /* UIViewBordersExtension.swift in Sources */,
+				0C7032F32398A9E900EF0FC8 /* SignUpViewModel.swift in Sources */,
 				0CC767B021F0306F00752517 /* Home+CellMethods.swift in Sources */,
 				0CF47D9621F3E8240084C1BA /* DataModel.xcdatamodeld in Sources */,
 				0C08646F221C623A0017AA6D /* PopUpCardView.swift in Sources */,

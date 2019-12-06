@@ -14,7 +14,9 @@ class LoginViewController: UIViewController {
     
     //MARK: - UI ELEMENTS
     var activeText: UITextField?        // Keeps track of which textfield is currently being edited
-    var spinner = UIActivityIndicatorView()
+	lazy var spinner : UIActivityIndicatorView = {
+		return UIActivityIndicatorView()
+	}()
     var spinnerContainer = UIView()
     var scrollView: UIScrollView = {
         var view = UIScrollView()
@@ -49,11 +51,13 @@ class LoginViewController: UIViewController {
         return view
     }()
     
-    // MARK: - Initialization
+    // MARK: - Initializers
 	init(coreDataManager : CoreDataManager, userDefaults: SmartListUserDefaults) {
         viewModel = LoginViewModel(coreDataManager: coreDataManager, userDefaults: userDefaults)
         super.init(nibName: nil, bundle: nil)
-        registerForPoppedUpNotification()                       // Register for popped up notification
+        
+		// Observe notification of LoginViewController popping up
+		observePopUpNotification()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,7 +66,8 @@ class LoginViewController: UIViewController {
     
     deinit {
         print("Deinitializing LoginViewController")
-        NotificationCenter.default.removeObserver(self)         // Remove notification observers
+		// Remove notificaton observers
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - View Methods
@@ -70,7 +75,8 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
 		view.backgroundColor = Constants.Visuals.ColorPalette.OffWhite
-        viewModel.loginViewModelDelegate = self                 // Conform to View Model Protocol
+        // Conform to view model protocol
+		viewModel.loginViewModelDelegate = self
         
         setupViews()
         registerForKeyboardEvents()
@@ -79,7 +85,7 @@ class LoginViewController: UIViewController {
     
     // MARK: - UI Setup Methods
     
-    /// Adds all the UI Elements to the view and configures the constraints
+    /// Add all the UI Elements to the view and configure the constraints
     private func setupViews() {
         // Configure scroll view
         view.addSubview(scrollView)
@@ -121,7 +127,8 @@ class LoginViewController: UIViewController {
             ])
     }
     
-    
+	
+	/// Sets the delegates of the textfields to this class and registers for keyboard events
     private func registerForKeyboardEvents() {
         midLoginContainer.emailField.delegate = self
         midLoginContainer.passwordField.delegate = self
@@ -135,17 +142,20 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
-    private func registerForPoppedUpNotification() {
-        let notificationName = Notification.Name(Constants.NotificationKey.LoginViewPoppedUpNotificationKey)
+	
+	/// Observes the notification that is sent when the LoginViewController is popped up
+    private func observePopUpNotification() {
+		let notificationName = Notification.Name(Constants.NotificationKey.LoginViewPoppedUpNotificationKey)
         NotificationCenter.default.addObserver(self, selector: #selector(setPoppedUpToTrue), name: notificationName, object: nil)
     }
     
+	
+	/// Sets the isPoppedUp flag to true
     @objc private func setPoppedUpToTrue() {
         self.viewModel.isPoppedUp = true
-        print("login view was popped up")
     }
     
-    /// Logs the user in by sending a request to the server and saving the auth token
+    /// Logs the user in by sending a request to the server and saving the user's session into user defaults
     ///
     /// - Parameter sender: The button that activated this ui event
     @objc func loginButtonTapped(_ sender: UIButton = UIButton()) {
@@ -176,8 +186,6 @@ class LoginViewController: UIViewController {
     ///
     /// - Parameter sender: The button the user tapped to trigger this action
     @objc func skipButtonTapped(_ sender: UIButton) {
-        print("skip sign up")
-        
 		// Save offline mode to User Defaults
 		self.viewModel.defaults.offlineMode = true
         
@@ -205,13 +213,17 @@ extension LoginViewController : LoginViewModelDelegate {
     /// Displays a large spinner view
     /// Called from LoginViewModel
     func showSpinner() {
-        self.view.showLargeSpinner(spinner: self.spinner, container: self.spinnerContainer)
+		DispatchQueue.main.async {
+			self.view.showLargeSpinner(spinner: self.spinner, container: self.spinnerContainer)
+		}
     }
     
     /// Hides the spinner currently in view
     /// Called from LoginViewModel
     func hideSpinner() {
-        self.view.hideSpinner(spinner: self.spinner, container: self.spinnerContainer)
+		DispatchQueue.main.async {
+			self.view.hideSpinner(spinner: self.spinner, container: self.spinnerContainer)
+		}
     }
     
     /// Displays an alert; called from LoginViewModel
@@ -220,7 +232,8 @@ extension LoginViewController : LoginViewModelDelegate {
     ///   - title: Title of the alert
     ///   - message: Message of the alert
     func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title,                                 // Alert user of an error
+        
+		let alertController = UIAlertController(title: title,
             message: message,
             preferredStyle: .alert)
         
@@ -229,7 +242,7 @@ extension LoginViewController : LoginViewModelDelegate {
         alertController.addAction(okAction)
         
         DispatchQueue.main.async {
-            self.present(alertController, animated: true)                                       // Show the alert
+            self.present(alertController, animated: true)
         }
     }
     
